@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var ejs = require('ejs');
 const dotenv = require('dotenv').config();
-
+const sqlite = require('sqlite3').verbose()
 
 var app = express();
 
@@ -24,6 +24,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // setup routers
 const { routes } = require("./routes/index");
 routes(app);	
+
+
+let db = new sqlite.Database('./prisma/dev.db')
 // ||||| ||||| ||||| ||||| ||||| ||||| ||||| ||||| 
 // ||||| ||||| ||||| ||||| ||||| ||||| ||||| |||||
 
@@ -45,7 +48,7 @@ app.use(function(err, req, res, next) {
 
 const port = process.env.PORT || process.env.DEV_PORT;
 app.listen(port, async function () {
-	console.log('listen on port ', port);
+	console.log('listen on port ->', port);
 })
 
 module.exports = app;

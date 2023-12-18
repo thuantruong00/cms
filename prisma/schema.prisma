@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// enum UserStatus {
+//   active
+//   inactive
+//   deleted
+// }
+// enum UserType {
+//   root
+//   superadmin
+//   admin
+// }
+
+model User {
+  id        String   @unique
+  email     String   @unique
+  pwd_hash  String
+  // created_at UserStatus @default(active)
+  // type UserType @default(admin)
+}
