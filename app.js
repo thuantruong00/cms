@@ -26,7 +26,7 @@ const { routes } = require("./routes/index");
 routes(app);	
 
 
-let db = new sqlite.Database('./prisma/dev.db')
+// let db = new sqlite.Database('./prisma/dev.db')
 // ||||| ||||| ||||| ||||| ||||| ||||| ||||| ||||| 
 // ||||| ||||| ||||| ||||| ||||| ||||| ||||| |||||
 

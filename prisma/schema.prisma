@@ -10,21 +10,147 @@ datasource db {
   url      = "file:./dev.db"
 }
 
-// enum UserStatus {
-//   active
-//   inactive
-//   deleted
-// }
-// enum UserType {
-//   root
-//   superadmin
-//   admin
-// }
-
 model User {
-  id        String   @unique
-  email     String   @unique
-  pwd_hash  String
-  // created_at UserStatus @default(active)
-  // type UserType @default(admin)
+  id               String             @id @unique
+  email            String             @unique
+  password_hash    String
+  fullname         String             @default("")
+  created_at       DateTime           @default(now())
+  updated_at       DateTime           @default(now())
+  last_login_time  DateTime           @default(now())
+  last_login_ip    String             @default("")
+  status           String             @default("active")
+  type             String             @default("admin")
+  Page             Page[]
+  Image            Image[]
+  Post             Post[]
+  Post_category    Post_category[]
+  Product          Product[]
+  Product_category Product_category[]
+}
+
+model Page {
+  id          Int      @id @unique
+  title       String
+  slug        String
+  description String   @default("")
+  status      String   @default("active")
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id])
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+}
+
+model Content {
+  id         Int      @id @unique
+  name       String
+  value      String   @default("")
+  type       String
+  class      String   @default("")
+  display    Boolean  @default(true)
+  attr_href  String   @default("")
+  updated_at DateTime @default(now())
+  page_id    Int
+}
+
+model Image {
+  id            Int             @id @unique
+  url           String
+  name          String
+  size          Int
+  resolution    String          @default("")
+  updated_at    DateTime        @default(now())
+  user_id       String
+  user          User            @relation(fields: [user_id], references: [id])
+  Product_image Product_image[]
+}
+
+model Post {
+  id      Int    @id @unique
+  title   String
+  slug    String
+  excerpt String @default("")
+  content String @default("")
+  status  String @default("active")
+
+  user_id String
+  user    User   @relation(fields: [user_id], references: [id])
+  category    Category_on_post[]
+  image_id   Int
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+}
+
+model Post_category {
+  id          Int      @id @unique
+  name        String
+  slug        String
+  description String   @default("")
+  user_id     String
+  user        User     @relation(fields: [user_id], references: [id])
+  post Category_on_post[]
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+}
+
+model Category_on_post {
+  post_id Int
+  post Post @relation(fields: [post_id], references: [id])
+  post_category_id Int
+  post_categfory Post_category @relation(fields: [post_category_id], references: [id])
+  @@id([post_id, post_category_id])
+}
+
+model Product {
+  id             String           @id @unique
+  name           String
+  slug           String
+  description    String           @default("")
+  detail         String           @default("")
+  price          Int              @default(0)
+  stock_quantity Int              @default(0)
+  order Int @default(0)
+  status         String           @default("active")
+  user_id        String
+  user           User             @relation(fields: [user_id], references: [id])
+
+  category       Category_on_product[]
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @default(now())
+  unit           String
+  is_sale_off    Boolean          @default(false)
+  sale_off_desc  String           @default("")
+  Product_image  Product_image?
+  stock_status String @default("on-stock")
+  label String
+}
+
+model Product_image {
+  id         Int     @id @unique
+  product_id String  @unique
+  product    Product @relation(fields: [product_id], references: [id])
+  image_id   Int
+  image      Image   @relation(fields: [image_id], references: [id])
+  order      Int
+}
+
+model Product_category {
+  id          Int               @id @unique
+  slug        String
+  description String            @default("")
+  user_id     String
+  user        User              @relation(fields: [user_id], references: [id])
+  parent_id   Int               @unique
+  parent      Product_category  @relation("parent_category", fields: [parent_id], references: [id])
+  parent_obj    Product_category? @relation("parent_category")
+  created_at  DateTime          @default(now())
+  updated_at  DateTime
+  Product     Category_on_product[]
+}
+model Category_on_product {
+  product_id String
+  product Product @relation(fields: [product_id], references: [id])
+  product_category_id Int
+  product_categfory Product_category @relation(fields: [product_category_id], references: [id])
+  @@id([product_id, product_category_id])
 }
