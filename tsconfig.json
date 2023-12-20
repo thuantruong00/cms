@@ -1,12 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "es2016",
+    "lib": ["esnext"],
     "module": "commonjs",
-    "outDir": "./dist",
-    "rootDir": "./",
+    "sourceMap": true,
+    // "outDir": "dist",
+    "newLine": "crlf",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "esModuleInterop": true
-  },
-  "include": ["/**/*.ts"],
-  "exclude": ["node_modules"]
+    "skipLibCheck": true
+  }
 }
