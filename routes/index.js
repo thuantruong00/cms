@@ -3,7 +3,7 @@ const websiteRoute = require('./website/index');
 
 
 function routes(app) {
-	app.use('/admin', cmsRoute);
+	app.use('/cms', cmsRoute);
 	app.use('/', websiteRoute);
 
 }

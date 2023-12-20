@@ -9,6 +9,12 @@ const prisma = new PrismaClient();
 // ===== ===== ===== =====
 // ===== ===== router ===== =====
 router.get('/',
+    (req, res) => {
+        res.render('test2', {layout:"./layouts/website.ejs", page_title:"this is my website"})
+    }
+);
+
+router.get('/a',
     async (req, res) => {
 
         try {
