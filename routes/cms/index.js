@@ -1,46 +1,75 @@
 var express = require('express');
 var router = express.Router();
 const cors = require('cors')
+
 // ===== ===== ===== =====
 const cors_conf = require("../../config/config.json").cors;
 
-// ===== ===== ===== =====
+// ===== ===== controller ===== =====
+const sidebarController = require('../../core/controllers/cms/sidebarController')
+
 // ===== ===== router ===== =====
 router.get('/login',
     (req, res) => {
-        res.render('admin-login', {page_title:"login"})
+        
+        res.render('login', { page_title: "login" })
     }
 );
-router.get('/admin',
+router.get('/',
+
     (req, res) => {
-        res.render('admin-account', {page_title:"admin-account", href:"account"})
+        console.log("a")
+        sidebarController.getSidebarContent(req, res, "account")
     }
 );
-router.get('/admin/account',    
+router.get('/account',
     (req, res) => {
-        res.render('admin-account', {page_title:"admin-account", href:"account"})
+        sidebarController.getSidebarContent(req, res, "account")
     }
 );
-router.get('/admin/static-list',    
+router.get('/static-list',
     (req, res) => {
-        res.render('admin-static-content-list', {page_title:"admin-static-content-list", href:"static-list"})
+        sidebarController.getSidebarContent(req, res, 'static-list')
     }
 );
-router.get('/admin/static-noti',    
+router.get('/static-noti',
     (req, res) => {
-        res.render('admin-static-content-noti', {page_title:"admin-static-content-noti", href:"static-noti"})
+        sidebarController.getSidebarContent(req, res, 'static-noti')
     }
 );
 
 
-router.get('/admin/post-list',    
+router.get('/post-list',
     (req, res) => {
-        res.render('admin-post-list', {page_title:"admin-post-list", href:"post-list"})
+        sidebarController.getSidebarContent(req, res, 'post-list')
     }
 );
-router.get('/admin/post-category',    
+router.get('/post-category',
     (req, res) => {
-        res.render('admin-post-category', {page_title:"admin-post-category", href:"post-category"})
+        sidebarController.getSidebarContent(req, res, 'post-category')
+    }
+);
+
+router.get('/product-list',
+    (req, res) => {
+        sidebarController.getSidebarContent(req, res, 'product-list')
+    }
+);
+router.get('/product-category',
+    (req, res) => {
+        sidebarController.getSidebarContent(req, res, 'product-category')
+    }
+);
+
+
+router.get('/image',
+    (req, res) => {
+        sidebarController.getSidebarContent(req, res, "image")
+    }
+);
+router.get('/custom',
+    (req, res) => {
+        sidebarController.getSidebarContent(req, res, "custom")
     }
 );
 
@@ -48,7 +77,7 @@ router.post('/test',
     cors(cors_conf),
     (req, res) => {
         // res.render('layout')
-        res.send({a:"oke"})
+        res.send({ a: "oke" })
     }
 );
 

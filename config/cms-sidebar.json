@@ -1,27 +1,89 @@
 [
     {
-        "page_id":"a1",
-        "title":"Tài khoản",
-        "href":"account",
-        "child":[]
+        "page_id": "a1",
+        "title": "Tài khoản",
+        "href": "account",
+        "page_name":"cms-page/account",
+        "child": []
     },
     {
-        "page_id":"a2",
-        "title":"Nội dung tĩnh",
-        "href":"account",
-        "child":[
+        "page_id": "a2",
+        "title": "Nội dung tĩnh",
+        "href": "static-list",
+        "page_name":"cms-page/static-content-list",
+        "child": [
             {
-                "page_id":"a21",
-                "title":"Danh sách",
-                "href":"account",
-                "child":[]
+                "page_id": "a21",
+                "title": "Danh sách",
+                "href": "static-list",
+                "page_name":"cms-page/static-content-list",
+                "child": []
             },
             {
-                "page_id":"a22",
-                "title":"Thông báo",
-                "href":"account",
-                "child":[]
+                "page_id": "a22",
+                "title": "Thông báo",
+                "href": "static-noti",
+                "page_name":"cms-page/static-content-noti",
+                "child": []
             }
         ]
+    },
+    {
+        "page_id": "a3",
+        "title": "Bài viết",
+        "href": "post-list",
+        "page_name":"cms-page/post-list",
+        "child": [
+            {
+                "page_id": "a31",
+                "title": "Danh sách",
+                "href": "post-list",
+                "page_name":"cms-page/post-list",
+                "child": []
+            },
+            {
+                "page_id": "a32",
+                "title": "Danh mục bài viết",
+                "href": "post-category",
+                "page_name":"cms-page/post-category",
+                "child": []
+            }
+        ]
+    },
+    {
+        "page_id": "a4",
+        "title": "Hình ảnh",
+        "href": "image",
+        "page_name":"cms-page/image",
+        "child": []
+    },
+    {
+        "page_id": "a5",
+        "title": "Sản phẩm",
+        "href": "product-list",
+        "page_name":"cms-page/product-list",
+        "child": [
+            {
+                "page_id": "a51",
+                "title": "Danh sách",
+                "href": "product-list",
+                "page_name":"cms-page/product-list",
+                "child": []
+            },
+            {
+                "page_id": "a52",
+                "title": "Danh mục sản phẩm",
+                "href": "product-category",
+                "page_name":"cms-page/product-category",
+                "child": []
+            }
+        ]
+    },
+    {
+        "page_id": "a6",
+        "title": "Custom",
+        "href": "custom",
+        "page_name":"cms-page/custom",
+        "child": []
     }
 ]

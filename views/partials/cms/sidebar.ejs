@@ -1,54 +1,11 @@
 <div class="wrap-sidebar">
     <div class="sidebar">
         <ul>
-            <% const menu=
-            [ 
-                { "page_id" :"a1", "title" :"Tài khoản", "href" :"account", "child" :[] }, 
-                { 
-                    "page_id":"a2", 
-                    "title" :"Nội dung tĩnh", 
-                    "href" :"static-list", 
-                    "child" :
-                    [ 
-                        { 
-                            "page_id" :"a21", "title" :"Danh sách", 
-                            "href" :"static-list", 
-                            "child" :[] 
-                        }, 
-                        { 
-                            "page_id" :"a22", 
-                            "title" :"Thông báo", 
-                            "href":"static-noti", 
-                            "child" :[] 
-                        } 
-                    ] 
-                },
-                { 
-                    "page_id":"a3", 
-                    "title" :"Bài viết", 
-                    "href" :"post-list", 
-                    "child" :
-                    [ 
-                        { 
-                            "page_id" :"a31", "title" :"Danh sách", 
-                            "href" :"post-list", 
-                            "child" :[] 
-                        }, 
-                        { 
-                            "page_id" :"a32", 
-                            "title" :"Danh mục bài viết", 
-                            "href":"post-category", 
-                            "child" :[] 
-                        } 
-                    ] 
-                } 
-            ] %>
-
                 <% 
-                for (const key of menu) { 
+                for (const key of sidebar) { 
                     %>
                     <li>
-                        <div class="line <%=key.href==href?'active':''%>">
+                        <div class="line <%=key.page_name==page_parent_active?'active':''%>">
                             <a href="<%=key.href%>"><%=key.title%></a>
                             <% 
                             if(key.child.length>0){ %>
@@ -58,12 +15,12 @@
                                 </a>
 
                         </div>
-                        <div class="wrap-child d-none" id="<%=key.page_id%>">
+                        <div class="wrap-child <%=key.page_name==page_parent_active?'':'d-none'%>" id="<%=key.page_id%>">
                             <ul>
                                 <%
                                     for (const key2 of key.child) {
                                         %>
-                                        <li class="<%=key2.href==href?'active':''%>"><a href="<%=key2.href%>"><%=key2.title%></a></li>
+                                        <li class="<%=key2.page_name==page_name?'active':''%>"><a href="<%=key2.href%>"><%=key2.title%></a></li>
                                         <%
                                     }
                                 %>
