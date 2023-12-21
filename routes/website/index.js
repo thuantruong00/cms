@@ -7,12 +7,15 @@ const { PrismaClient } = require('@prisma/client');
 const cors_conf = require("../../config/config.json").cors;
 
 const prisma = new PrismaClient();
+
+const sidebarControl = require("../../services/cms/sidebarControl")
+
 // ===== ===== ===== =====
 // ===== ===== router ===== =====
 router.get('/',
   (req, res) => {
 
-
+    // sidebarControl.getSidebarContent("a1")
 
     res.render('website-page/test2', { layout: "./layouts/website.ejs", page_title: "this is my website" })
   }

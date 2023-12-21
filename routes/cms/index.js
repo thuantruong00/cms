@@ -1,77 +1,95 @@
+// _____ _____[]_____[]_____[ module ]_____[]_____[]_____ _____
 var express = require('express');
 var router = express.Router();
 const cors = require('cors')
 
-// ===== ===== ===== =====
+// _____ _____[]_____[]_____[ * ]_____[]_____[]_____ _____
 const cors_conf = require("../../config/config.json").cors;
 
-// ===== ===== controller ===== =====
-const sidebarController = require('../../core/controllers/cms/sidebarController')
+// _____ _____[]_____[]_____[ controller ]_____[]_____[]_____ _____
+const accountController = require('../../controllers/cms/accountController')
+const imagesController = require('../../controllers/cms/imagesController')
+const customController = require('../../controllers/cms/customController')
 
-// ===== ===== router ===== =====
+const staticContentController = require('../../controllers/cms/staticContentController')
+const staticContentNotificationController = require('../../controllers/cms/staticContentNotificationController')
+
+const postCategoryController = require('../../controllers/cms/postCategoryController')
+const postController = require('../../controllers/cms/postController')
+
+const productCategoryController = require('../../controllers/cms/productCategoryController')
+const productController = require('../../controllers/cms/productController')
+const productDetailController = require('../../controllers/cms/productDetailController')
+
+// _____ _____[]_____[]_____[ router ]_____[]_____[]_____ _____
 router.get('/login',
     (req, res) => {
-        
-        res.render('login', { page_title: "login" })
+
+        res.render('login', { head: { page_title: "login" } })
     }
 );
 router.get('/',
 
     (req, res) => {
-        console.log("a")
-        sidebarController.getSidebarContent(req, res, "account")
+        accountController.action(req, res);
     }
 );
 router.get('/account',
     (req, res) => {
-        sidebarController.getSidebarContent(req, res, "account")
+        accountController.action(req, res);
     }
 );
-router.get('/static-list',
+router.get('/static-content',
     (req, res) => {
-        sidebarController.getSidebarContent(req, res, 'static-list')
+        staticContentController.action(req, res)
     }
 );
-router.get('/static-noti',
+router.get('/static-content-notification',
     (req, res) => {
-        sidebarController.getSidebarContent(req, res, 'static-noti')
+        staticContentNotificationController.action(req, res)
     }
 );
 
 
-router.get('/post-list',
+router.get('/post',
     (req, res) => {
-        sidebarController.getSidebarContent(req, res, 'post-list')
+        postController.action(req, res)
     }
 );
 router.get('/post-category',
     (req, res) => {
-        sidebarController.getSidebarContent(req, res, 'post-category')
+        postCategoryController.action(req, res)
     }
 );
 
-router.get('/product-list',
+router.get('/product',
     (req, res) => {
-        sidebarController.getSidebarContent(req, res, 'product-list')
+        productController.action(req, res)
     }
 );
 router.get('/product-category',
     (req, res) => {
-        sidebarController.getSidebarContent(req, res, 'product-category')
+        productCategoryController.action(req, res)
     }
 );
 
 
-router.get('/image',
+router.get('/images',
     (req, res) => {
-        sidebarController.getSidebarContent(req, res, "image")
+        imagesController.action(req, res)
     }
 );
 router.get('/custom',
     (req, res) => {
-        sidebarController.getSidebarContent(req, res, "custom")
+        customController.action(req, res)
     }
 );
+router.get('/product/:id',
+    (req, res) => {
+        productDetailController.action(req, res)
+    }
+);
+
 
 router.post('/test',
     cors(cors_conf),

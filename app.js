@@ -39,23 +39,6 @@ routes(app);
 
 // let db = new sqlite.Database('./prisma/dev.db')
 
-// Configure express-session middleware
-app.use(session({
-  secret: 'cat cat cat', // Change this to a random and secure value
-  resave: false,
-  saveUninitialized: true,
-  secure: false, path: '/', maxAge: 6000000,
-  cookie:{
-    sameSite:"strict"
-  },
-  genid: function(req) {
-    return genuuid() // use UUIDs for session IDs
-  },
-}));
-// Initialize Passport
-app.use(passport.initialize());
-app.use(passport.session());
-
 // ||||| ||||| ||||| ||||| ||||| ||||| ||||| |||||
 // ||||| ||||| ||||| ||||| ||||| ||||| ||||| |||||
 

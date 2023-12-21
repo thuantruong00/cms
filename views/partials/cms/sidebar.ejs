@@ -5,7 +5,7 @@
                 for (const key of sidebar) { 
                     %>
                     <li>
-                        <div class="line <%=key.page_name==page_parent_active?'active':''%>">
+                        <div class="line <%=key.page_id==active_page.page_parent_active?'active':''%>">
                             <a href="<%=key.href%>"><%=key.title%></a>
                             <% 
                             if(key.child.length>0){ %>
@@ -15,12 +15,12 @@
                                 </a>
 
                         </div>
-                        <div class="wrap-child <%=key.page_name==page_parent_active?'':'d-none'%>" id="<%=key.page_id%>">
+                        <div class="wrap-child <%=key.page_id==active_page.page_parent_active?'':'d-none'%>" id="<%=key.page_id%>">
                             <ul>
                                 <%
                                     for (const key2 of key.child) {
                                         %>
-                                        <li class="<%=key2.page_name==page_name?'active':''%>"><a href="<%=key2.href%>"><%=key2.title%></a></li>
+                                        <li class="<%=key2.page_id==active_page.page_id?'active':''%>"><a href="<%=key2.href%>"><%=key2.title%></a></li>
                                         <%
                                     }
                                 %>

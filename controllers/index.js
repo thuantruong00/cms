@@ -1,0 +1,1 @@
+export { default as sidebarController } from './cms/sidebarController';
