@@ -51,7 +51,7 @@ async function getSidebarContent(id) {
         console.log(error)
         return error_page
     }
-    console.log("ssss", active_page)
+    // console.log("ssss", active_page)
     if(active_page != undefined){
         return {
             active_page:
@@ -67,19 +67,6 @@ async function getSidebarContent(id) {
     else{
         return error_page
     }
-    // res.render(active_page.page_name,
-    //     {
-    //         active_page:
-    //         {
-    //             page_title: active_page.title,
-    //             page_name: active_page.page_name,
-    //             page_parent_active: page_parent_active,
-    //         },
-    //         sidebar: sidebar_content,
-    //         layout: "./layouts/cms.ejs"
-    //     }
-
-    // )
 }
 
 module.exports.getSidebarContent = getSidebarContent;

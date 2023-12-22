@@ -11,7 +11,10 @@ const sidebarControl = require("../../services/cms/sidebarControl")
 async function action(req, res) {
     let res_sidebar_ctrl = await sidebarControl.getSidebarContent("a1")
     // console.log(res_sidebar_ctrl)
-
+    // console.log({
+    //     ...res_sidebar_ctrl,
+    //     layout: "./layouts/cms.ejs",
+    // })
     res.render(res_sidebar_ctrl.active_page.page_name,
         {
             ...res_sidebar_ctrl,
