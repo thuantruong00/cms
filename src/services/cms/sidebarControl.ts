@@ -1,6 +1,6 @@
-const sidebar_content = require('../../config/cms-sidebar.json');
+const sidebar_content = require('../../../config/cms-sidebar.json');
 
-async function getSidebarContent(id) {
+const getSidebarContent = async (id: number) => {
   // console.log(sidebar_content)
   let active_page = undefined;
   let page_parent_active;
@@ -9,9 +9,9 @@ async function getSidebarContent(id) {
       title: 'Lỗi',
       page_name: './cms/error',
       page_parent_active: 'a0',
-      page_id: 'a0',
+      page_id: 'a0'
     },
-    sidebar: sidebar_content,
+    sidebar: sidebar_content
   };
   try {
     for (const key of sidebar_content) {
@@ -52,13 +52,13 @@ async function getSidebarContent(id) {
         title: active_page.title,
         page_name: active_page.page_name,
         page_parent_active: page_parent_active,
-        page_id: active_page.page_id,
+        page_id: active_page.page_id
       },
-      sidebar: sidebar_content,
+      sidebar: sidebar_content
     };
   } else {
     return error_page;
   }
-}
+};
 
-module.exports.getSidebarContent = getSidebarContent;
+export default getSidebarContent;

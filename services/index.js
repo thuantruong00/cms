@@ -1,1 +1,0 @@
-export { default as sidebarControl } from './cms/sidebarControl';
