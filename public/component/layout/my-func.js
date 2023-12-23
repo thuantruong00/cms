@@ -8,12 +8,12 @@ $(".my-dropdown-button").click(function(){
     $(menu_id).toggleClass('d-none')
 })
 
-$(".sidebar>ul>li").each(function(e){
-    console.log(this)
-    let is_active = $(this).find('.active')
-    console.log(is_active.length)
-    if(is_active.length>0){
-        $(this).addClass('active')
-        $(this).find('.wrap-child').removeClass("d-none")
-    }
-})
+// $(".sidebar>ul>li").each(function(e){
+//     console.log(this)
+//     let is_active = $(this).find('.active')
+//     console.log(is_active.length)
+//     if(is_active.length>0){
+//         $(this).addClass('active')
+//         $(this).find('.wrap-child').removeClass("d-none")
+//     }
+// })
