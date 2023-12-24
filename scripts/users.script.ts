@@ -6,11 +6,11 @@ const prisma = new PrismaClient();
 
 async function main() {
   for (let user of users) {
-    let { id, ...rest } = user;
+    let { id, password_hash, ...rest } = user;
     await prisma.user.create({
       data: {
-        ...rest,
-      },
+        ...rest
+      }
     });
   }
 }
