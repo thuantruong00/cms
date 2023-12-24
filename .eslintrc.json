@@ -5,9 +5,8 @@
   },
   // "extends": "standard-with-typescript",
   "parserOptions": {
-    "ecmaVersion": 12,
-    "sourceType": "commonjs"
+    "ecmaVersion": "latest",
+    "sourceType": "module"
   },
   "rules": {}
 }
-
