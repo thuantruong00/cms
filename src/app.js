@@ -9,7 +9,6 @@ const ejs = require('ejs');
 const expressLayouts = require('express-ejs-layouts');
 
 const dotenv = require('dotenv').config();
-
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -50,6 +49,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // setup routers
 const { routes } = require('./routes/index');
+const { configDotenv } = require('dotenv');
 routes(app);
 
 // catch 404 and forward to error handler
