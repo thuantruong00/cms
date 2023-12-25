@@ -4,8 +4,8 @@
     "lib": ["esnext"],
     "module": "commonjs",
     "sourceMap": true,
-    "outDir": "./dist",
-    "newLine": "crlf",
+    "outDir": "./public",
+    "newLine": "lf",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -15,7 +15,8 @@
       "~/*": ["src/*"]
     },
     "types": ["node"],
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "resolveJsonModule": true
   },
   "ts-node": {
     "require": ["tsconfig-paths/register"]
