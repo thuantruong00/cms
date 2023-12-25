@@ -50,14 +50,16 @@ model page {
 }
 
 model section_of_page {
-  id         Int      @id
-  name       String
-  value      String   @default("")
-  type       String
-  class      String   @default("")
-  display    Boolean  @default(true)
-  attr_href  String   @default("")
-  updated_at DateTime @updatedAt
+  id              Int       @id
+  name            String
+  value           String    @default("")
+  type            String
+  class           String    @default("")
+  display         Boolean   @default(true)
+  attr_href       String    @default("")
+  attr_target     String?
+  updated_at      DateTime  @updatedAt
+  expiration_date DateTime?
 
   page_id Int
   page    page @relation(fields: [page_id], references: [id])
