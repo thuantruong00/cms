@@ -1,7 +1,6 @@
 // _____ _____[]_____[]_____[ module ]_____[]_____[]_____ _____
+const sidebar = require('../../services/cms/sidebarControl')
 
-const sidebarControl = require("../../services/cms/sidebarControl")
-// import sidebarControl from "../../services";
 
 // _____ _____[]_____[]_____[ var - config - ... ]_____[]_____[]_____ _____
 
@@ -9,16 +8,22 @@ const sidebarControl = require("../../services/cms/sidebarControl")
 // _____ _____[]_____[]_____[ * ]_____[]_____[]_____ _____
 
 async function action(req, res) {
-    let res_sidebar_ctrl = await sidebarControl.getSidebarContent("a51")
-    // console.log(res_sidebar_ctrl)
-
-    res.render(res_sidebar_ctrl.active_page.page_name,
+    let sidebar_data = await sidebar("a51", "superadmin"); 
+    
+    res.render("cms-page/product",
         {
-            ...res_sidebar_ctrl,
-            layout: "./layouts/cms.ejs",
+            ...sidebar_data,
+            layout: "./layouts/cms-layout.ejs",
         }
 
     )
+    // res.render(sidebar_data.active_page.page_name,
+    //     {
+    //         ...sidebar_data,
+    //         layout: "./layouts/cms.ejs",
+    //     }
+
+    // )
 }
 
 exports.action = action;

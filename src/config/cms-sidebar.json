@@ -50,6 +50,13 @@
             },
             {
                 "page_id": "a42",
+                "title": "Bài viết mới",
+                "href": "/cms/new-post",
+                "page_name":"cms-page/new-post",
+                "child": []
+            },
+            {
+                "page_id": "a43",
                 "title": "Danh mục bài viết",
                 "href": "/cms/post-category",
                 "page_name":"cms-page/post-category",
@@ -73,6 +80,13 @@
             },
             {
                 "page_id": "a52",
+                "title": "Sản phẩm mới",
+                "href": "/cms/new-product",
+                "page_name":"cms-page/new-product",
+                "child": []
+            },
+            {
+                "page_id": "a53",
                 "title": "Danh mục sản phẩm",
                 "href": "/cms/product-category",
                 "page_name":"cms-page/product-category",

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <%- include('../partials/cms/meta.ejs') %>
+
+    <title><%= active_page.title  %></title>
+
+    <%- include('../partials/cms/head-import.ejs') %>
+
+
+
+
+</head>
+
+<body>
+    <!-- ----- ----- header ----- ------->
+    <div class="body-contain d-flex">
+        <div class="main">
+            <%- body %>
+        </div>
+    </div>
+
+
+
+    <!-- footer -->
+    <%- include('../partials/cms/footer.ejs') %>
+
+</body>
+
+</html>
+<%- include('../partials/cms/foot-import.ejs') %>

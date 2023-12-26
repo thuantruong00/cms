@@ -4,7 +4,7 @@ var path = require('path');
 const cors = require('cors');
 const { PrismaClient } = require('@prisma/client');
 // ===== ===== ===== =====
-const cors_conf = require('../../../config/config.json').cors;
+const cors_conf = require('../../config/config.json').cors;
 
 const prisma = new PrismaClient();
 
