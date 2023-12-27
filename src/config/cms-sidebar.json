@@ -1,0 +1,104 @@
+[
+ {
+  "page_id": "a1",
+  "title": "Quản lý tài khoản",
+  "href": "/cms/account",
+  "page_name": "cms-page/account",
+  "child": []
+ },
+ {
+  "page_id": "a2",
+  "title": "Nội dung tĩnh",
+  "href": "/cms/static-content",
+  "page_name": "cms-page/static-content",
+  "child": [
+   {
+    "page_id": "a21",
+    "title": "Quản lý nội dung tĩnh",
+    "href": "/cms/static-content",
+    "page_name": "cms-page/static-content",
+    "child": []
+   },
+   {
+    "page_id": "a22",
+    "title": "Thông báo",
+    "href": "/cms/static-content-notification",
+    "page_name": "cms-page/static-content-notification",
+    "child": []
+   }
+  ]
+ },
+ {
+  "page_id": "a3",
+  "title": "Hình ảnh",
+  "href": "/cms/images",
+  "page_name": "cms-page/images",
+  "child": []
+ },
+ {
+  "page_id": "a4",
+  "title": "Bài viết",
+  "href": "/cms/post",
+  "page_name": "cms-page/post",
+  "child": [
+   {
+    "page_id": "a41",
+    "title": "Quản lý bài viết",
+    "href": "/cms/post",
+    "page_name": "cms-page/post",
+    "child": []
+   },
+   {
+    "page_id": "a42",
+    "title": "Bài viết mới",
+    "href": "/cms/new-post",
+    "page_name": "cms-page/new-post",
+    "child": []
+   },
+   {
+    "page_id": "a43",
+    "title": "Danh mục bài viết",
+    "href": "/cms/post-category",
+    "page_name": "cms-page/post-category",
+    "child": []
+   }
+  ]
+ },
+
+ {
+  "page_id": "a5",
+  "title": "Sản phẩm",
+  "href": "/cms/product",
+  "page_name": "cms-page/product",
+  "child": [
+   {
+    "page_id": "a51",
+    "title": "Quản lý sản phẩm",
+    "href": "/cms/product",
+    "page_name": "cms-page/product",
+    "child": []
+   },
+   {
+    "page_id": "a52",
+    "title": "Sản phẩm mới",
+    "href": "/cms/new-product",
+    "page_name": "cms-page/new-product",
+    "child": []
+   },
+   {
+    "page_id": "a53",
+    "title": "Danh mục sản phẩm",
+    "href": "/cms/product-category",
+    "page_name": "cms-page/product-category",
+    "child": []
+   }
+  ]
+ },
+ {
+  "page_id": "a6",
+  "title": "Chỉnh sửa nâng cao",
+  "href": "/cms/custom",
+  "page_name": "cms-page/custom",
+  "child": []
+ }
+]
