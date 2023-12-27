@@ -7,9 +7,11 @@
 
     <%- include('../partials/cms/meta.ejs') %>
 
-    <title><%= active_page.title  %></title>
+        <title>
+            <%= active_page.title %>
+        </title>
 
-    <%- include('../partials/cms/head-import.ejs') %>
+        <%- include('../partials/cms/head-import.ejs') %>
 
 
 
@@ -19,17 +21,17 @@
 <body>
     <!-- ----- ----- header ----- ------->
     <%- include('../partials/cms/header.ejs') %>
-    <div class="body-contain d-flex">
-        <%- include('../partials/cms/sidebar.ejs') %>
-        <div class="main">
-            <%- body %>
+        <div class="body-contain d-flex">
+            <%- include('../partials/cms/sidebar.ejs') %>
+                <div class="main">
+                    <%- body %>
+                </div>
         </div>
-    </div>
 
 
 
-    <!-- footer -->
-    <%- include('../partials/cms/footer.ejs') %>
+        <!-- footer -->
+        <%- include('../partials/cms/footer.ejs') %>
 
 </body>
 

@@ -4,7 +4,7 @@ import { passport } from '~/config';
 import { UserModel } from '~/models';
 
 export const SignInViewHandler = async (req: Request, res: Response) => {
-  return res.render('');
+  return res.render('login', { layout: 'center-layout' });
 };
 
 export const SignInHandler = async (req: Request, res: Response) => {
