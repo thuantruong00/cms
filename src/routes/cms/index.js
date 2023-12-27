@@ -27,10 +27,19 @@ const productDetailController = require('../../controllers/cms/productDetailCont
 const productCategoryDetailController = require('../../controllers/cms/productCategoryDetailController');
 const newProductController = require('../../controllers/cms/newProductController');
 
-import { SignInViewHandler } from '~/controllers';
+
+import { SignInViewHandler, SignInHandler, SignOutHandler } from '~/controllers';
 
 // _____ _____[]_____[]_____[ router ]_____[]_____[]_____ _____
-router.get('/sign-in', SignInViewHandler);
+router.get('sign-in', SignInViewHandler);
+router.post('sign-in', SignInHandler);
+router.get('sign-out', SignOutHandler);
+
+router.get('/login', (req, res) => {
+  res.render('login', { head: { page_title: 'login' } });
+});
+router.get(
+  '/',
 
 router.get('/', (req, res) => {
   accountController.action(req, res);
