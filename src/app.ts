@@ -6,8 +6,8 @@ import morgan from 'morgan';
 import expressLayouts from 'express-ejs-layouts';
 import session from 'express-session';
 
-import { errorHandler } from './middlewares';
-import { passport } from '~/config';
+// import { passport } from '~/config';
+const passport = require('~/config/passport/passport.config.js');
 
 dotenv.config();
 
@@ -39,15 +39,17 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 // setting the express ejs layout
 app.use(expressLayouts);
-app.set('layout', './layouts/website.ejs');
+// app.set('layout', './layouts/website.ejs');
+app.set('layout', 'layouts/default-layout');
 // setting static content
 app.use(express.static(path.join(__dirname, 'statics')));
 
 /* ===== Router ===== */
-const { routes } = require('./routes/index');
+const routes = require('./routes/index.js');
 routes(app);
 
 // error handling
+const { errorHandler } = require('~/middlewares/errors.middleware.js');
 app.use(errorHandler);
 
 export default app;

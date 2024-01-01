@@ -4,8 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <%- include('../partials/cms/meta.ejs') %>
-        <%- include('../partials/cms/head-import.ejs') %>
+        <%- include('../partials/cms/import-header.ejs') %>
 
             <title>
                 <%= active_page.title %>
@@ -14,19 +15,13 @@
 </head>
 
 <body>
-    <!-- ----- ----- header ----- ------->
-    <div class="body-contain d-flex">
-        <div class="main">
-            <%- body %>
-        </div>
-    </div>
-
-
-
-    <!-- footer -->
-    <%- include('../partials/cms/footer.ejs') %>
+    <%- body %>
+        <!-- footer -->
+        <%- include('../partials/cms/footer.ejs') %>
 
 </body>
 
+<%- include('../partials/cms/import-footer.ejs') %>
+    <script src="/cms/scripts/login.js"></script>
+
 </html>
-<%- include('../partials/cms/foot-import.ejs') %>

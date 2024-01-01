@@ -1,11 +1,9 @@
-const cmsRoute = require('./cms/index');
-const websiteRoute = require('./website/index');
+// const websiteRoute = require('./website/index');
+const { cmsRouter } = require('./cms/index.js');
 
+const routes = (app) => {
+  app.use('/cms', cmsRouter);
+  // app.use('/', websiteRoute);
+};
 
-function routes(app) {
-	app.use('/cms', cmsRoute);
-	app.use('/', websiteRoute);
-
-}
-
-module.exports.routes = routes;
+module.exports = routes;

@@ -17,7 +17,7 @@ export default interface User {
   type: string;
 }
 
-export const findUserById = async (id: string): Promise<User | null> => {
+const findUserById = async (id: string): Promise<User | null> => {
   try {
     return await client.user.findUnique({
       where: {
@@ -30,7 +30,7 @@ export const findUserById = async (id: string): Promise<User | null> => {
   }
 };
 
-export const findUserByUsername = async (username: string): Promise<User | null> => {
+const findUserByUsername = async (username: string): Promise<User | null> => {
   try {
     return await client.user.findUnique({
       where: {
@@ -42,3 +42,18 @@ export const findUserByUsername = async (username: string): Promise<User | null>
     return null;
   }
 };
+
+const findUserByIdandUpdate = async (userId: string, dataModified: any): Promise<User | null> => {
+  try {
+    return await client.user.update({
+      where: {
+        id: userId
+      },
+      data: {}
+    });
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+module.exports = { findUserById, findUserByUsername };
