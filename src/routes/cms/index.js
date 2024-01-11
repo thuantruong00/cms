@@ -27,16 +27,22 @@ const cors_conf = require('../../config/config.json').cors;
 // const newProductController = require('../../controllers/cms/newProductController');
 
 const { SignInHandler, SignInViewHandler, SignOutHandler } = require('~/controllers/cms/auth.controller.js');
-const { AccountViewHandler } = require('~/controllers/cms/account.controller.js');
+const {
+  AccountViewHandler,
+  UpdateAccountHandler,
+  CreateAccountHandler
+} = require('~/controllers/cms/account.controller.js');
 
 const { isAuthenticated } = require('~/middlewares/auth.middleware.js');
 
 // _____ _____[]_____[]_____[ router ]_____[]_____[]_____ _____
+router.get('/', isAuthenticated, AccountViewHandler);
+router.get('/a', isAuthenticated, UpdateAccountHandler);
+
+router.post('/create-account', CreateAccountHandler);
 router.get('/sign-in', SignInViewHandler);
 router.post('/sign-in', SignInHandler);
 router.get('/sign-out', SignOutHandler);
-
-router.get('/', isAuthenticated, AccountViewHandler);
 
 // router.get('/account', (req, res) => {
 //   accountController.action(req, res);

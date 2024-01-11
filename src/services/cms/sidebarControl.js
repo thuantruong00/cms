@@ -1,5 +1,5 @@
-const sidebar_content = require('../../config/cms-sidebar.json');
-const block_table_json = require('../../config/table-role.json').block;
+const sidebar_content = require('~/config/cms-sidebar.json');
+const block_table_json = require('~/config/table-role.json').block;
 
 const getSidebarContent = async (page_id, user_type) => {
   // (<page_id_now>,<user_type>)
@@ -9,6 +9,7 @@ const getSidebarContent = async (page_id, user_type) => {
   let page_parent_active;
   let block_table = block_table_json[user_type];
   // console.log(block_table)
+
   let error_page = {
     active_page: {
       title: 'Lỗi',
@@ -18,6 +19,7 @@ const getSidebarContent = async (page_id, user_type) => {
     },
     sidebar: sidebar_content
   };
+
   try {
     for (const key of sidebar_content) {
       if (active_page == undefined) {

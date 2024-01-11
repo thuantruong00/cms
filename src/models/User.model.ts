@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-
+import crypto from 'crypto';
 const client = new PrismaClient();
 
 export default interface User {
@@ -16,6 +16,32 @@ export default interface User {
   status: string;
   type: string;
 }
+
+const hashPassword = (plain_text: string) => {
+  // creating a unique salt for a particular user
+  const salt = crypto.randomBytes(16).toString('hex');
+
+  // hashing user's salt and password
+  const hash = crypto.pbkdf2Sync(plain_text, salt, 1000, 64, 'sha512').toString('hex');
+
+  return [hash, salt];
+};
+
+const createUser = async (username: string, password: string, email: string): Promise<User | null> => {
+  const [passwordHash, salt] = hashPassword(password);
+  try {
+    return await client.user.create({
+      data: {
+        username: username.trim(),
+        password_hash: passwordHash,
+        salt: salt,
+        email
+      }
+    });
+  } catch (error) {
+    return null;
+  }
+};
 
 const findUserById = async (id: string): Promise<User | null> => {
   try {
@@ -56,4 +82,13 @@ const findUserByIdandUpdate = async (userId: string, dataModified: any): Promise
     return null;
   }
 };
-module.exports = { findUserById, findUserByUsername };
+
+const getAllUsers = async (): Promise<User[] | null> => {
+  try {
+    return await client.user.findMany();
+  } catch (error) {
+    console.log({ error });
+    return null;
+  }
+};
+module.exports = { findUserById, findUserByUsername, getAllUsers, createUser };

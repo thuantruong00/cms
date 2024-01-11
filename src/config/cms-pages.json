@@ -1,0 +1,89 @@
+[
+  {
+    "id": "a1",
+    "title": "Quản lý tài khoản",
+    "href": "/cms/account",
+    "child": []
+  },
+  {
+    "id": "a2",
+    "title": "Nội dung tĩnh",
+    "href": "/cms/static-content",
+    "child": [
+      {
+        "id": "a21",
+        "title": "Quản lý nội dung tĩnh",
+        "href": "/cms/static-content",
+        "child": []
+      },
+      {
+        "id": "a22",
+        "title": "Thông báo",
+        "href": "/cms/static-content-notification",
+        "child": []
+      }
+    ]
+  },
+  {
+    "id": "a3",
+    "title": "Hình ảnh",
+    "href": "/cms/images",
+    "child": []
+  },
+  {
+    "id": "a4",
+    "title": "Bài viết",
+    "href": "/cms/post",
+    "child": [
+      {
+        "id": "a41",
+        "title": "Quản lý bài viết",
+        "href": "/cms/post",
+        "child": []
+      },
+      {
+        "id": "a42",
+        "title": "Bài viết mới",
+        "href": "/cms/new-post",
+        "child": []
+      },
+      {
+        "id": "a43",
+        "title": "Danh mục bài viết",
+        "href": "/cms/post-category",
+        "child": []
+      }
+    ]
+  },
+  {
+    "id": "a5",
+    "title": "Sản phẩm",
+    "href": "/cms/product",
+    "child": [
+      {
+        "id": "a51",
+        "title": "Quản lý sản phẩm",
+        "href": "/cms/product",
+        "child": []
+      },
+      {
+        "id": "a52",
+        "title": "Sản phẩm mới",
+        "href": "/cms/new-product",
+        "child": []
+      },
+      {
+        "id": "a53",
+        "title": "Danh mục sản phẩm",
+        "href": "/cms/product-category",
+        "child": []
+      }
+    ]
+  },
+  {
+    "id": "a6",
+    "title": "Chỉnh sửa nâng cao",
+    "href": "/cms/custom",
+    "child": []
+  }
+]

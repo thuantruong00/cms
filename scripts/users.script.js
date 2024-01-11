@@ -1,15 +1,25 @@
 import { PrismaClient } from '@prisma/client';
 
-import users from './users.fake.json';
-import { hashing } from '../src/utils';
+const crypto = require('crypto');
+const users = require('./users.fake.json');
 
 const prisma = new PrismaClient();
+
+const hashPassword = (plain_text) => {
+  // creating a unique salt for a particular user
+  const salt = crypto.randomBytes(16).toString('hex');
+
+  // hashing user's salt and password
+  const hash = crypto.pbkdf2Sync(plain_text, salt, 1000, 64, 'sha512').toString('hex');
+
+  return [hash, salt];
+};
 
 async function main() {
   for (let user of users) {
     let { id, password_hash, ...rest } = user;
 
-    const [hashing_pwd, salt] = hashing(password_hash);
+    const [hashing_pwd, salt] = hashPassword(password_hash);
     await prisma.user.create({
       data: {
         password_hash: hashing_pwd,

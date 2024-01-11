@@ -1,1 +1,133 @@
-<h3>admin account</h3>
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <!-- -->
+      <div class="wrap-form">
+        <div class="filter-btn-list">
+          <ul>
+            <li>
+              <a href="#" class="wrap-arrow my-dropdown-button dropdown-btn-buble fill-btn"
+                dropdown-menu-name="#value7">
+                Loại tài khoản: tất cả
+                <img class="arrow-down" src="./cms/images/index/arrow-down-dark.png" alt="">
+              </a>
+              <div class="dropdown-child-buble wrap-child d-none" id="value7">
+                <ul>
+                  <li><a href="#11">tất cả</a></li>
+                  <li><a href="#11">superadmin</a></li>
+                  <li><a href="#12">admin</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <a href="#" class="wrap-arrow my-dropdown-button dropdown-btn-buble fill-btn"
+                dropdown-menu-name="#value8">
+                Trạng thái: active
+                <img class="arrow-down" src="./cms/images/index/arrow-down-dark.png" alt="">
+              </a>
+              <div class="dropdown-child-buble wrap-child d-none" id="value8">
+                <ul>
+                  <li><a href="#1">active</a></li>
+                  <li><a href="#2">inactive</a></li>
+                  <li><a href="#3">archived</a></li>
+                  <li><a href="#4">deleted</a></li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <a href="#" class="fill-btn">
+                Tạo tài khoản mới
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- -->
+      <div class="bg-wrap-form">
+        <div class="list-row">
+          <!-- -->
+          <ul class="title-row">
+            <li>
+              <a href="#">
+                <input type="checkbox" name="" id="">
+              </a>
+            </li>
+            <li>
+              <a href="#">Số thứ tự</a>
+            </li>
+            <li>
+              <a href="#">Tên tài khoản</a>
+            </li>
+            <li>
+              <a href="#" class="wrap-arrow">
+                Loại tài khoản
+              </a>
+            </li>
+            <li>
+              <a href="#" class="wrap-arrow">
+                Trạng thái
+              </a>
+            </li>
+            <li>
+              <a href="#">Ngày tạo</a>
+            </li>
+          </ul>
+
+          <!-- -->
+          <% payload.forEach((item, idx)=> {%>
+            <ul>
+
+              <li>
+                <a href="#">
+                  <input type="checkbox" name="" id="<%= item.id %>">
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <%- idx + 1 %>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <%= item.username %>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="wrap-arrow my-dropdown-button dropdown-btn-buble" dropdown-menu-name="#value1">
+                  <%= item.role %>
+                    <img class="arrow-down" src="./cms/images/index/arrow-down-dark.png" alt="">
+                </a>
+                <div class="dropdown-child-buble wrap-child d-none" id="value1">
+                  <ul>
+                    <li><a href="#11">superadmin</a></li>
+                    <li><a href="#12">admin</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <a href="#" class="wrap-arrow my-dropdown-button dropdown-btn-buble" dropdown-menu-name="#value2">
+                  <%= item.status %>
+                    <img class="arrow-down" src="./cms/images/index/arrow-down-dark.png" alt="">
+                </a>
+                <div class="dropdown-child-buble wrap-child d-none" id="value2">
+                  <ul>
+                    <li><a href="#1">active</a></li>
+                    <li><a href="#2">inactive</a></li>
+                    <li><a href="#3">archived</a></li>
+                    <li><a href="#4">deleted</a></li>
+                  </ul>
+                </div>
+              </li>
+              <li>
+                <a href="#">
+                  <%= item.created_at %>
+                </a>
+              </li>
+            </ul>
+            <% }); %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

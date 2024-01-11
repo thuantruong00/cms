@@ -21,19 +21,16 @@ $(document).ready(() => {
       },
       success: (res) => {
         $('div.section-res').addClass('success');
-        $('div.section-res span').text('Đăng nhập thành công.');
+        $('div.section-res span').text('Đăng nhập thành công. Đang chuyển hướng...');
 
         //
         setTimeout(() => {
           $('div.section-res').removeClass('success');
-        }, 10000);
-
-        //
-        // window.location.href = '/cms';
+          window.location.href = '/cms';
+        }, 1000);
       },
       error: (xhr, status, error) => {
         if (xhr.status === 401) {
-          // console.error(xhr.responseText);
           $('div.section-res').addClass('error');
           $('div.section-res span').text('Tên đăng nhập hoặc mật khẩu không đúng.');
 

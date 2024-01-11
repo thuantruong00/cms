@@ -20,7 +20,7 @@ const SignInHandler = async (req, res) => {
       }
 
       // If login is successful, send a response with user details
-      return res.redirect('/cms');
+      return res.status(200).json({ success: true, msg: 'Welcome!' });
     });
   })(req, res);
 };
