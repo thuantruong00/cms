@@ -1,11 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 
-const crypto = require('crypto');
-const users = require('./users.fake.json');
+import crypto from 'crypto';
+import users from './users.fake.json';
 
 const prisma = new PrismaClient();
 
-const hashPassword = (plain_text: string) => {
+const hashPassword = (plain_text: string): string[] => {
   // creating a unique salt for a particular user
   const salt = crypto.randomBytes(16).toString('hex');
 
