@@ -3,7 +3,7 @@
         <div
         style="height: 20px; width: 50px; padding: 10px; margin: 20px;">
             <button id="back-btn" style="font-size: 15px;" 
-            onclick="document.location.href = '/cms/static-content'">Back</button>
+            onclick="document.location.href = '/cms/static-content/<%=type%>'">Back</button>
         </div>
         <form class="col-8" > 
             <% if (arraySectionByPageId.length == "0") { %>
@@ -72,18 +72,21 @@
         })
 
         $.ajax({
-                url: '/cms/static-content/<%=pageId%>/update-form',
+                url: '/cms/static-content/<%=type%>/<%=pageId%>/update-form',
                 data: {...data},
                 type: "post",
                 cache: false,
                 
                 success: function (result) {
-                    alert('Chinh sua thanh cong')
+                    if(result.data.status) {
+                        alert('Chinh sua thanh cong')
+                    }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
+                    
                     alert('Chinh sua that bai')
                 }
-            });
+        });
     });
 
    

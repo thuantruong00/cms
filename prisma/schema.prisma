@@ -59,6 +59,7 @@ model section_of_page {
   display         Boolean   @default(true)
   attr_href       String    @default("")
   attr_target     String?
+  attributes      String?   
   updated_at      DateTime  @updatedAt
   expiration_date DateTime?
 

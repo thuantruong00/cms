@@ -14,9 +14,9 @@ export default interface Page {
   user_id: string;
 }
 
-const createInitPage = async (dataInit: any, id: string): Promise<Page[] | null> => {
+const createInitPage = async (dataInit: any, id: string): Promise<object> => {
   try {
-    const createdRecords: Page[] = [];
+    const payload: Page[] = [];
 
     for (const item of dataInit) {
       // Use create to insert individual records into the database
@@ -24,35 +24,63 @@ const createInitPage = async (dataInit: any, id: string): Promise<Page[] | null>
         data: { ...item, user_id: id }
       });
 
-      createdRecords.push(createdRecord);
+      payload.push(createdRecord);
     }
 
-    return createdRecords;
-  } catch (error) {
-    return null;
+    return {
+      status: true,
+      message: 'Success create page',
+      payload
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      status: false,
+      message: 'Failed create page',
+      payload: null
+    };
   }
 };
 
-const findPageByType = async (type: any): Promise<Page[] | null> => {
+const getAllPageByType = async (type: any): Promise<object> => {
   try {
-    return await client.page.findMany({
+    const payload = await client.page.findMany({
       where: {
         type
       }
     });
+    return {
+      status: true,
+      message: 'Success get page by type',
+      payload
+    };
   } catch (e) {
     console.log(e);
-    return null;
+    return {
+      status: false,
+      message: 'Failed get page by type',
+      payload: null
+    };
   }
 };
 
-const getAllPages = async (): Promise<Page[] | null> => {
+const getAllPages = async (): Promise<object> => {
   try {
-    return await client.page.findMany();
-  } catch (error) {
-    return null;
+    const payload = await client.page.findMany();
+    return {
+      status: true,
+      message: 'Success get all page ',
+      payload
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      status: false,
+      message: 'Failed get all page',
+      payload: null
+    };
   }
 };
 
-module.exports = { createInitPage, getAllPages, findPageByType };
+module.exports = { createInitPage, getAllPages, getAllPageByType };
 

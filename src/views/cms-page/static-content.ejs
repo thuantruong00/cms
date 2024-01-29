@@ -1,7 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-8">
-              
+        <div class="col-8"> 
             <div class="wrap-form">
                 <div class="filter-btn-list">
                 </div>
@@ -14,9 +13,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                     
+                        <% const path = '/cms/static-content/' + type + '/'; %>
                         <% for (const item of pageArrayByPage) { %>
-                            <% const href = '/cms/static-content/'+ item.id; %>
+                            <% const href = path + item.id; %>
                             <% var i = 1 %>
                         <tr>
                             <th scope="row"><%=item.id%></th>
@@ -28,10 +27,6 @@
                     </tbody>
                 </table>
             </div>
-
-
-         
-
         </div>
     </div>
 </div>

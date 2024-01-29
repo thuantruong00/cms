@@ -14,19 +14,22 @@ async function action(req, res) {
     return acc;
   }, []);
 
-  console.log(arrayObjects)
-
-  arrayObjects.map(async (item) => { 
-    await updateSectionOfPage({
+  console.log(arrayObjects);
+  const dataArray = arrayObjects.map((item) => {
+    return {
       ...item,
       id: Number(item.id),
       display: item.display === 'false' ? false : true
-    });
+    };
   });
 
-  res.send({
-    data: 'ok'
-  })
+  const resDB = await updateSectionOfPage(dataArray);
+  var payload = [];
+  if (resDB.status) {
+    res.send({
+      data: resDB
+    });
+  }
 }
 
 exports.action = action;

@@ -9,9 +9,13 @@ const { findAllSectionOfPagesByPageId } = require('../../models/SectionOfPage.mo
 async function action(req, res) {
   let sidebar_data = await sidebarControl('a21', 'root');
   const pageId = req.params.id;
-  const arraySectionByPageId = await findAllSectionOfPagesByPageId(Number(pageId));
-  res.render('cms-page/static-content-detail-page', {
+  const type = req.params.type;
+
+  const resDB = await findAllSectionOfPagesByPageId(Number(pageId));
+  const arraySectionByPageId = resDB.payload;
+  res.render('cms-page/static-content-detail', {
     arraySectionByPageId,
+    type,
     ...sidebar_data,
     pageId,
     layout: './layouts/cms-layout.ejs'

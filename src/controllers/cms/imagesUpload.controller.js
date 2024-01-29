@@ -1,9 +1,7 @@
 // _____ _____[]_____[]_____[ module ]_____[]_____[]_____ _____
-const { getSizeImage } = require('../../middlewares/sizeOf.middleware');
 const { createRandomString } = require('../../middlewares/createRandomString.middleware');
 const { createImage } = require('../../models/Image.model');
 const sizeOf = require('image-size');
-const { findUserByRole, createUserRoot } = require('../../models/User.model.ts');
 
 // _____ _____[]_____[]_____[ var - config - ... ]_____[]_____[]_____ _____
 
@@ -26,7 +24,7 @@ async function action(req, res) {
         const randomString = createRandomString(6);
         const fileName = item.name;
         const fileExtension = fileName.split('.').pop();
-        const id_user = '88e5bbe7-443d-46d5-826e-7f85698f2f5d';
+        const id_user = 'a3ff18af-6a9a-45e4-af3a-16025d6adc42';
         const sizeImageUpload = item.size;
         const pathName = `./src/statics/website/images/${folderName}/${randomString}.${fileExtension}`;
         // if (file.size > 20000000) {

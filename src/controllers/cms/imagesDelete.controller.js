@@ -23,9 +23,8 @@ async function action(req, res) {
       }
     }
     const resDB = await deleteImageMany(array);
-    console.log(resDB);
     if (resDB.status) {
-      res.send(resDB.payload);
+      res.send(resDB);
     } else {
       //handle failure
     }

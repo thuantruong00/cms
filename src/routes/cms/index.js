@@ -14,16 +14,14 @@ const cors_conf = require('../../config/config.json').cors;
 const accountController = require('../../controllers/cms/account.controller.js');
 
 // const accountController = require('~/controllers/cms/accountController');
-const imagesController = require('../../controllers/cms/imagesController');
-const uploadImageController = require('../../controllers/cms/uploadImage.controller.js');
-const deleteImageController = require('../../controllers/cms/deleteImage.controller.js');
+const imagesReadController = require('../../controllers/cms/imagesRead.controller.js');
+const uploadImageController = require('../../controllers/cms/imagesUpload.controller.js');
+const deleteImageController = require('../../controllers/cms/imagesDelete.controller.js');
 
 const customController = require('../../controllers/cms/customController');
 
 const staticContentController = require('../../controllers/cms/staticContentController');
-const staticContentDetailPageController = require('../../controllers/cms/staticContentDetailPageController');
-const staticContentBlockController = require('../../controllers/cms/staticContentBlockController');
-const staticContentDetailBlockController = require('../../controllers/cms/staticContentDetailBlock.controller');
+const staticContentDetailController = require('../../controllers/cms/staticContentDetailController');
 const staticContentUpdateForm = require('../../controllers/cms/staticContentUpdateForm.controller');
 
 const postCategoryController = require('../../controllers/cms/postCategoryController');
@@ -60,33 +58,17 @@ router.get('/account', (req, res) => {
   accountController.action(req, res);
 });
 
-
-router.get('/static-content', (req, res) => {
+//route static content
+router.get('/static-content/:type', (req, res) => {
   staticContentController.action(req, res);
 });
-router.get('/static-content/:id', (req, res) => {
-  staticContentDetailPageController.action(req, res);
+router.get('/static-content/:type/:id', (req, res) => {
+  staticContentDetailController.action(req, res);
 });
-router.get('/static-content-block', (req, res) => {
-  staticContentBlockController.action(req, res);
-});
-router.get('/static-content-block/:id', (req, res) => {
-  staticContentDetailBlockController.action(req, res);
+router.post('/static-content/:type/:id/update-form', (req, res) => {
+  staticContentUpdateForm.action(req, res);
 });
 
-//update form
-router.post('/static-content/:id/update-form', (req, res) => {
-  staticContentUpdateForm.action(req, res);
-});
-router.get('/static-content/:id/update-form', (req, res) => {
-  staticContentDetailBlockController.action(req, res);
-});
-router.post('/static-content-block/:id/update-form', (req, res) => {
-  staticContentUpdateForm.action(req, res);
-});
-router.get('/static-content-block/:id/update-form', (req, res) => {
-  staticContentDetailBlockController.action(req, res);
-});
 
 router.get('/post', (req, res) => {
   postController.action(req, res);
@@ -120,9 +102,9 @@ router.get('/product/:id', (req, res) => {
   productDetailController.action(req, res);
 });
 
-//upload image
+//route images
 router.get('/images/:id', (req, res) => {
-  imagesController.action(req, res);
+  imagesReadController.action(req, res);
 });
 router.post('/images/upload/:id', (req, res) => {
   uploadImageController.action(req, res);

@@ -15,72 +15,102 @@ export default interface SectionOfPage {
   page_id: number;
 }
 
-const createInitSectionOfPage = async (dataInit: any): Promise<SectionOfPage[] | null> => {
+const createInitSectionOfPage = async (dataInit: any): Promise<object | null> => {
   try {
-    const createdRecords: SectionOfPage[] = [];
+    const payload: SectionOfPage[] = [];
     for (const item of dataInit) {
       const createdRecord = await client.section_of_page.create({
         data: item
       });
 
-      createdRecords.push(createdRecord);
+      payload.push(createdRecord);
     }
-    return createdRecords;
-  } catch (error) {
-    console.log(error);
-    return null;
+    return {
+      status: true,
+      message: 'Get create page',
+      payload
+    };
+  } catch (e) {
+    return {
+      status: false,
+      message: 'Failed to get create page',
+      payload: null
+    };
   }
 };
 
-const findAllSectionOfPagesByPageId = async (page_id: number): Promise<SectionOfPage[] | null> => {
+const findAllSectionOfPagesByPageId = async (page_id: number): Promise<object | null> => {
   try {
-    return await client.section_of_page.findMany({
+    const payload = await client.section_of_page.findMany({
       where: {
         page_id
       }
     });
+    return {
+      status: true,
+      message: 'Get section of page by id',
+      payload
+    };
   } catch (e) {
-    return null;
+    return {
+      status: false,
+      message: 'Failed to get section of page by id',
+      payload: null
+    };
   }
 };
 
-const updateSectionOfPage = async (data: SectionOfPage): Promise<SectionOfPage | null> => {
+const updateSectionOfPage = async (data: SectionOfPage[]): Promise<object> => {
   try {
-    return await client.section_of_page.update({
-      where: {
-        id: Number(data.id),
-      },
-      data
-    });
+    const payload = [];
+    for (const item of data) {
+      const updateItem = await client.section_of_page.update({
+        where: {
+          id: item.id
+        },
+        data: item
+      });
+      if (updateItem) {
+        payload.push(updateItem);
+      }
+    }
+    return {
+      status: true,
+      message: 'Update section of page by id',
+      payload
+    };
   } catch (e) {
     console.log(e);
-    return null;
+    return {
+      status: false,
+      message: 'Failed update section of page by id',
+      payload: true
+    };
   }
 };
 
-const updateSectionOfBlock = async (data: SectionOfPage): Promise<SectionOfPage | null> => {
+const getAllSectionOfPages = async (): Promise<object> => {
   try {
-    return await client.section_of_page.update({
-      where: {
-        id: Number(data.id),
-        type: 'block'
-      },
-      data
-    });
+    const payload = await client.section_of_page.findMany();
+    return {
+      status: true,
+      message: 'Update section of page by id',
+      payload
+    };
   } catch (e) {
     console.log(e);
-    return null;
+    return {
+      status: false,
+      message: 'Failed update section of page by id',
+      payload: true
+    };
   }
 };
 
-const getAllSectionOfPages = async (): Promise<SectionOfPage[] | null> => {
-  try {
-    return await client.section_of_page.findMany();
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+module.exports = {
+  createInitSectionOfPage,
+  findAllSectionOfPagesByPageId,
+  updateSectionOfPage,
+  getAllSectionOfPages
 };
-
-module.exports = { createInitSectionOfPage, getAllSectionOfPages, findAllSectionOfPagesByPageId, updateSectionOfPage,updateSectionOfBlock };
 

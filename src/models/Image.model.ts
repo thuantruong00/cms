@@ -90,7 +90,11 @@ const getImageByID = async (id: number): Promise<object> => {
       payload
     };
   } catch (e) {
-    return {};
+    return {
+      status: false,
+      message: 'Failed delete image',
+      payload: null
+    };
   }
 };
 

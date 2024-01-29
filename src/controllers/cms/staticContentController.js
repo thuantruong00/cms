@@ -1,21 +1,30 @@
 // _____ _____[]_____[]_____[ module ]_____[]_____[]_____ _____
 const sidebarControl = require('../../services/cms/sidebarControl');
-const { findPageByType } = require('../../models/Page.model');
+const { getAllPageByType } = require('../../models/Page.model');
 
 // _____ _____[]_____[]_____[ var - config - ... ]_____[]_____[]_____ _____
 
 // _____ _____[]_____[]_____[ * ]_____[]_____[]_____ _____
 
 async function action(req, res) {
-  let sidebar_data = await sidebarControl('a21', 'root');
+  const type = req.params.type;
+  var sidebar_data = '';
+  if (type === 'page') {
+    sidebar_data = await sidebarControl('a21', 'root');
+  } else {
+    sidebar_data = await sidebarControl('a22', 'root');
+  }
   //get all
-  const pageArrayByPage = await findPageByType('page');
+  const resDB = await getAllPageByType(type);
   const paramValue = req.params.param;
-
-  // console.log(req.user.role);
+  var pageArrayByPage = [];
+  if (resDB.status) {
+    pageArrayByPage = [...resDB.payload];
+  }
 
   res.render(sidebar_data.active_page.page_name, {
     paramValue,
+    type,
     ...sidebar_data,
     pageArrayByPage,
     layout: './layouts/cms-layout.ejs'
