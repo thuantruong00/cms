@@ -1,1 +1,84 @@
-<h3>admin image</h3>
+
+<div class="">
+  <div class="ml-4 mt-2">
+    <a href="/cms/images/general" class="btn btn-primary" style="margin-right: 30px ;">General</a>
+    <a href="/cms/images/post" class="btn btn-primary" style="margin-right: 30px  ;">Post</a>
+    <a href="/cms/images/product" class="btn btn-primary" style="margin-right: 30px ;">Product</a>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  
+  <form class="d-flex justify-content-center"   method="post" enctype="multipart/form-data">
+    <input class="form-control" style="height: auto; width: 50%;" id="input-upload" name="file" type="file" multiple />
+  </form>
+  <div class="d-flex justify-content-center">
+    <a type-image="<%=type%>" id="btn-link" class="btn btn-success mt-2" style="color: #fff;">Upload</a>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <div class="d-flex">
+    <a class="btn btn-danger ml-2" style="color: #fff;" id="btn-delete" >Delete</a>
+    <a class="btn btn-warning ml-2" style="color: #fff;" id="btn-check-all" >Check all</a>
+  </div>
+  <div class="d-flex flex-wrap ml-2 mr-2" id="list-image">
+      <% arrayImage.forEach(function(item) { %>
+        <div  style="width: 50px;" class=" m-1">
+          <img  src="<%=item.url%>"  width="50" height="60"/>
+          <input id-item="<%=item.id%>" type="checkbox" id="ip-checkbox" />
+        </div>
+      <% }); %>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+<!-- <script>
+  //handle upload image
+$('#btn-link').click(function () {
+  let inputFile = $('#input-upload')[0];
+  var formData = new FormData();
+  console.log(inputFile.files.length);
+  if (inputFile.files.length == 0) {
+    alert('Select image file.');
+    return;
+  }
+
+  if (inputFile.files.length == 1) {
+    formData.append('file', inputFile.files[0]);
+  } else {
+    for (var i = 0; i < inputFile.files.length; i++) {
+      formData.append('file', inputFile.files[i]);
+    }
+  }
+
+  if (inputFile.files) {
+    $.ajax({
+      url: '/cms/upload/general',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function (result) {
+        const data = result.data;
+        data.map((item) => {
+          var img = document.createElement('img');
+          img.src = item.url;
+          img.width = 50;
+          img.height = 60;
+
+          var element = document.getElementById('list-image');
+          element.appendChild(img);
+
+          $('#input-upload').val('');
+        });
+      },
+      error: function (error) {
+        console.error('Error:', error);
+      }
+    });
+  }
+});
+
+</script> -->

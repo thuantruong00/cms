@@ -17,6 +17,8 @@ const cryto = require('crypto');
 
 const app = express();
 
+
+
 // setup body-parser
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -72,6 +74,8 @@ const port = process.env.PORT || process.env.DEV_PORT;
 
 app.listen(port, async function () {
   console.log('Server is running on ', port);
+
+
 });
 
 module.exports = app;

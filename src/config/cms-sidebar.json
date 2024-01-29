@@ -21,9 +21,9 @@
    },
    {
     "page_id": "a22",
-    "title": "Thông báo",
-    "href": "/cms/static-content-notification",
-    "page_name": "cms-page/static-content-notification",
+    "title": "Quản lý Block",
+    "href": "/cms/static-content-block",
+    "page_name": "cms-page/static-content-block",
     "child": []
    }
   ]
@@ -31,7 +31,7 @@
  {
   "page_id": "a3",
   "title": "Hình ảnh",
-  "href": "/cms/images",
+  "href": "/cms/images/general",
   "page_name": "cms-page/images",
   "child": []
  },

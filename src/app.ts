@@ -32,6 +32,8 @@ app.use(session({ secret: 'secret', saveUninitialized: true, resave: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
 /* ===== View ===== */
 // setting the view engine
 app.set('view engine', 'ejs');

@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="row">
+        <div
+        style="height: 20px; width: 50px; padding: 10px; margin: 20px;">
+            <button id="back-btn" style="font-size: 15px;" 
+            onclick="document.location.href = '/cms/static-content'">Back</button>
+        </div>
+        <form class="col-8" > 
+            <% if (arraySectionByPageId.length == "0") { %>
+                <h2>Page has not content</h2>
+              <% } else { %>
+                <% for (const item of arraySectionByPageId) { %>     
+                    <div class="bg-wrap-form  <%= item.id %>">
+                        <div class="list-row tag-content">
+                            <div class="wrap-content d-flex justify-content-between align-items-center">
+                                <div class="section-content">
+                                    <label id="label-text-<%= item.id %>" for="inp0"><%= item.name %></label>
+                                    <input type="text" name="" class="input-text" id="input-text-<%=item.id %>" id-item="<%=item.id %>" value="<%= item.value %>" class="input-outline">
+                                </div>
+                                <a href="#" class="wrap-arrow my-dropdown-button outline-btn" dropdown-menu-name="#section-id-<%= item.id %>">
+                                    Mở rộng
+                                    <img class="arrow-down" src="./cms/images/index/arrow-down-dark.png" alt="">
+                                </a>
+                            </div>
+                            <div class="extension d-none" id="section-id-<%= item.id %>">
+                                <div class="item">
+                                    <label for="inp1">CSS Class</label>
+                                    <input type="text" name="" value="<%=item.class%>" id="input-css-<%=item.id %>" class="input-outline">
+                                </div>
+                                <div class="item">
+                                    <label for="inp2">Link</label>
+                                    <input type="text" name="" value="<%=item.attr_href%>" id="input-link-<%=item.id %>" class="input-outline">
+                                </div>
+                                <div class="item">
+                                    <label for="inp3">Target</label>
+                                    <input type="text" name="" value="<%=item.attr_target%>" id="input-target-<%=item.id %>" class="input-outline">
+                                </div>
+                                <form class="item checkbox-item">
+                                    <label for="inp4">Không hiển thị</label>
+                                    <input type="checkbox" name=""  id="input-checkbox-<%=item.id%>"
+                                    <% if (!item.display) { %> checked <% } %>  />
+                                </div>
+                            </div>
+                        </div>
+                        
+                <% } %>
+                <p id="length-array" style="display: none;"><%= arraySectionByPageId.length %></p>
+                <!-- <a href="/cms/static-content/<%= pageId %>/update-form">Luu</a> -->
+                <button id="submit" type="submit">Submit</button>
+              <% } %>
+            
+         
+                </form>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script>
+    $('#submit').click(function () {
+        let data = []
+       
+        $(".bg-wrap-form").each(function(index, element) {
+           const id = $(this).find('.input-text').attr('id-item')
+            data.push({
+                id: id,
+                value: $(`#input-text-${id}`).val(),
+                class: $(`#input-css-${id}`).val(),
+                attr_href: $(`#input-link-${id}`).val(),
+                attr_target: $(`#input-target-${id}`).val(),
+                display: !$(`#input-checkbox-${id}`).is(':checked')
+            })
+        })
+
+        $.ajax({
+                url: '/cms/static-content/<%=pageId%>/update-form',
+                data: {...data},
+                type: "post",
+                cache: false,
+                
+                success: function (result) {
+                    alert('Chinh sua thanh cong')
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    alert('Chinh sua that bai')
+                }
+            });
+    });
+
+   
+</script>

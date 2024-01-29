@@ -7,12 +7,10 @@ const { findPageByType } = require('../../models/Page.model');
 // _____ _____[]_____[]_____[ * ]_____[]_____[]_____ _____
 
 async function action(req, res) {
-  let sidebar_data = await sidebarControl('a21', 'root');
-  //get all
-  const pageArrayByPage = await findPageByType('page');
+  let sidebar_data = await sidebarControl('a22', 'root');
+  const pageArrayByPage = await findPageByType('block');
   const paramValue = req.params.param;
 
-  // console.log(req.user.role);
 
   res.render(sidebar_data.active_page.page_name, {
     paramValue,
@@ -23,4 +21,3 @@ async function action(req, res) {
 }
 
 exports.action = action;
-

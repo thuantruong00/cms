@@ -1,0 +1,148 @@
+const dataInitSectionPage = [
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 1
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 1
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 2
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 2
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 3
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 3
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 4
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 4
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 5
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 5
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 6
+  },
+  {
+    name: 'name_title1',
+    value: 'title1',
+    type: 'text',
+    page_id: '',
+    class: '',
+    display: true,
+    attr_href: '',
+    attr_target: '',
+    expiration_date: null,
+    page_id: 6
+  },
+];
+
+module.exports = { dataInitSectionPage };

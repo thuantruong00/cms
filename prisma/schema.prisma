@@ -37,6 +37,7 @@ model page {
   id          Int      @id @default(autoincrement())
   name        String   @unique
   title       String
+  type        String   @default("page")
   slug        String
   description String   @default("")
   status      String   @default("active")
@@ -50,7 +51,7 @@ model page {
 }
 
 model section_of_page {
-  id              Int       @id
+  id              Int       @id @default(autoincrement())
   name            String
   value           String    @default("")
   type            String
@@ -73,6 +74,7 @@ model image {
   size       Int
   resolution String   @default("")
   created_at DateTime @default(now())
+  type       String
 
   user_id String
   user    user   @relation(fields: [user_id], references: [id])

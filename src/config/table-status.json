@@ -5,5 +5,5 @@
   "page_status": ["active", "inactive"],
   "product_status": ["active", "inactive", "archived", "deleted"],
   "stock_status": ["on-stock", "out-stock", "contact"],
-  "content_type": ["text", "image", "link", "block", "notification"]
+  "content_type": ["text", "image", "link", "block", "notification","list"]
 }

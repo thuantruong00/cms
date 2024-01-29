@@ -43,6 +43,24 @@ const createUser = async (username: string, password: string, email: string): Pr
   }
 };
 
+const createUserRoot = async (): Promise<User | null> => {
+  const [passwordHash, salt] = hashPassword('123123');
+  try {
+    return await client.user.create({
+      data: {
+        username: 'root',
+        password_hash: passwordHash,
+        salt: salt,
+        email: '',
+        type: 'root',
+        fullname: 'rootuser'
+      }
+    });
+  } catch (error) {
+    return null;
+  }
+};
+
 const findUserById = async (id: string): Promise<User | null> => {
   try {
     return await client.user.findUnique({
@@ -83,6 +101,19 @@ const findUserByIdandUpdate = async (userId: string, dataModified: any): Promise
   }
 };
 
+const findUserByRole = async (type: string): Promise<User[] | null> => {
+  try {
+    return await client.user.findMany({
+      where: {
+        type
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+};
+
 const getAllUsers = async (): Promise<User[] | null> => {
   try {
     return await client.user.findMany();
@@ -91,4 +122,6 @@ const getAllUsers = async (): Promise<User[] | null> => {
     return null;
   }
 };
-module.exports = { findUserById, findUserByUsername, getAllUsers, createUser };
+
+module.exports = { findUserById, findUserByUsername, findUserByRole, getAllUsers, createUser, createUserRoot };
+
