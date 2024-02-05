@@ -1,145 +1,35 @@
 
 <div class="">
   <div class="ml-4 mt-2">
-    <a href="/cms/images/general" class="btn btn-primary" style="margin-right: 30px ;">General</a>
-    <a href="/cms/images/post" class="btn btn-primary" style="margin-right: 30px  ;">Post</a>
-    <a href="/cms/images/product" class="btn btn-primary" style="margin-right: 30px ;">Product</a>
+    <a href="/cms/images/general" class="btn btn-primary mr-2" >General</a>
+    <a href="/cms/images/post" class="btn btn-primary mr-2" >Post</a>
+    <a href="/cms/images/product" class="btn btn-primary mr-2" >Product</a>
   </div>
   <br/>
   <br/>
   <br/>
   
   <form class="d-flex justify-content-center"   method="post" enctype="multipart/form-data">
-    <input class="form-control" style="height: auto; width: 50%;" id="input-upload" name="file" type="file" multiple />
+    <input class="form-control input-form-control input-upload"    name="file" type="file" multiple />
   </form>
   <div class="d-flex justify-content-center">
-    <a type-image="<%=type%>" id="btn-link" class="btn btn-success mt-2" style="color: #fff;">Upload</a>
+    <a type-image="<%=type%>"  class="btn btn-success mt-2 btn-link">Upload</a>
   </div>
   <br/>
   <br/>
   <br/>
   <div class="d-flex">
-    <a class="btn btn-danger ml-2" style="color: #fff;" id="btn-delete" >Delete</a>
-    <a class="btn btn-warning ml-2" style="color: #fff;" id="btn-check-all" >Check all</a>
+    <a class="btn btn-danger ml-2 btn-delete"  >Delete</a>
+    <a class="btn btn-warning ml-2 btn-check-all" >Check all</a>
   </div>
-  <div class="d-flex flex-wrap ml-2 mr-2" id="list-image">
-      <% arrayImage.forEach(function(item) { %>
-        <div  style="width: 50px;" class=" m-1">
-          <img  src="<%=item.url%>"  width="50" height="60"/>
-          <input id-item="<%=item.id%>" type="checkbox" id="ip-checkbox" />
-        </div>
-      <% }); %>
+  <div class="d-flex flex-wrap ml-2 mr-2 mt-3" id="list-image">
+    <% if (typeof arrayImage !== 'undefined' && arrayImage.length > 0) { %>
+        <% arrayImage.forEach(function(item) { %>
+          <div class="wrap-image mr-1 mt-1" >
+            <img  src="<%=item.url%>" class="image-upload"  />
+            <input id-item="<%=item.id%>" type="checkbox" id="ip-checkbox" />
+          </div>
+        <% }); %>
+      <%}%>
   </div>
 </div>
-
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
-<script>
-  //handle upload image
-  $('#btn-link').click(function () {
-    const type = $('#btn-link').attr('type-image');
-  
-    let inputFile = $('#input-upload')[0];
-    var formData = new FormData();
-    if (inputFile.files.length == 0) {
-      alert('Select image file.');
-      return;
-    }
-  
-    if (inputFile.files.length == 1) {
-      formData.append('file', inputFile.files[0]);
-    } else {
-      for (var i = 0; i < inputFile.files.length; i++) {
-        formData.append('file', inputFile.files[i]);
-      }
-    }
-  
-    if (inputFile.files) {
-      $.ajax({
-        url: `/cms/images/upload/${type}`,
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (result) {
-          console.log(result);
-          const data = result.resData;
-          console.log(data);
-          data.map((item) => {
-            var div = document.createElement('div');
-            div.style.width = '50px';
-            div.setAttribute('class', 'm-1');
-  
-            var img = document.createElement('img');
-            img.src = item.url;
-            img.width = 50;
-            img.height = 60;
-  
-            var input = document.createElement('input');
-            input.type = 'checkbox';
-            input.setAttribute('id-item', item.id);
-  
-            var element = document.getElementById('list-image');
-  
-            div.appendChild(img);
-            div.appendChild(input);
-            element.appendChild(div);
-  
-            $('#input-upload').val('');
-          });
-          alert(`Uploaded ${data.length} ${data.length > 1 ? 'items' : 'item'}`);
-        },
-        error: function (error) {
-          console.error('Error:', error);
-        }
-      });
-    }
-  });
-  
-  //handle delete image
-  $('#btn-delete').click(function () {
-    const data = [];
-    const type = $('#btn-link').attr('type-image');
-  
-    $("input[type='checkbox']").each(function (index, element) {
-      if ($(element).is(':checked')) {
-        data.push(Number($(this).attr('id-item')));
-        $(this).parent().remove();
-      }
-    });
-  
-    if (data.length > 0) {
-      var formData = new FormData();
-      for (var i = 0; i < data.length; i++) {
-        // console.log('data: ',data[i])
-        formData.append('id', data[i]);
-      }
-  
-      $.ajax({
-        url: `/cms/images/delete/${type}`,
-        type: 'POST',
-        data: formData,
-        processData: false,
-        contentType: false,
-        success: function (result) {
-          console.log(result);
-          alert(`Deleted ${result.payload.count} items`);
-        },
-        error: function (error) {
-          console.error('Error: ', error);
-        }
-      });
-    } else {
-      alert('No item is selected');
-      return;
-    }
-  });
-  
-  //handle check all image
-  $('#btn-check-all').click(function () {
-    $("input[type='checkbox']").each(function (index, element) {
-      $(this).prop('checked', true);
-    });
-  });
-  
-</script>

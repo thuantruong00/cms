@@ -23,4 +23,20 @@ $(window).click(function () {
   }
 });
 
+function handleUploadFile(type) {
+  let data = $(`#input-${type}-file`).val();
+  $.ajax({
+    url: `/cms/custom/upload/${type}`,
+    data: { d: data },
+    type: 'post',
+    cache: false,
+
+    success: function (result) {
+      alert(result.message);
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      alert('Chinh sua that bai');
+    }
+  });
+}
 

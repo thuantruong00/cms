@@ -14,16 +14,18 @@
                     </thead>
                     <tbody>
                         <% const path = '/cms/static-content/' + type + '/'; %>
-                        <% for (const item of pageArrayByPage) { %>
-                            <% const href = path + item.id; %>
-                            <% var i = 1 %>
-                        <tr>
-                            <th scope="row"><%=item.id%></th>
-                            <td><%= item.name %></td>
-                            <td><a href="<%= href %>">Edit</a></td>
-                        </tr>
-                        <%  i++; 
-                         } %>
+                        <% if (typeof pageArrayByPage !== 'undefined' && pageArrayByPage.length > 0) { %>
+                            <% for (const item of pageArrayByPage) { %>
+                                <% const href = path + item.id; %>
+                                <% var i = 1 %>
+                            <tr>
+                                <th scope="row"><%=item.id%></th>
+                                <td><%= item.name %></td>
+                                <td><a href="<%= href %>">Edit</a></td>
+                            </tr>
+                            <%  i++; 
+                            } %>
+                        <%}%>
                     </tbody>
                 </table>
             </div>

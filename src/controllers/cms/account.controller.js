@@ -21,8 +21,9 @@ const CreateAccountHandler = async (req, res, next) => {
 const AccountViewHandler = [
   authorize(['root', 'superadmin']),
   async (req, res, next) => {
+    console.log(req)
     //
-    const sidebarData = await sidebarControl('a1', 'superadmin');
+    const sidebarData = await sidebarControl('a1', 'root');
 
     // query db to get all users
     const users = await getAllUsers();

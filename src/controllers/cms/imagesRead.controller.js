@@ -7,7 +7,8 @@ const { getImageByType } = require('../../models/Image.model');
 // _____ _____[]_____[]_____[ * ]_____[]_____[]_____ _____
 
 async function action(req, res) {
-  let sidebar_data = await sidebarControl('a3', 'superadmin');
+  console.log(req)
+  let sidebar_data = await sidebarControl('a3', 'root');
   const type = req.params.id;
   var pathFolder = `./src/statics/website/images/${type}/`;
   var fs = require('fs');

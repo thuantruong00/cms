@@ -1,0 +1,35 @@
+<div class="bg-wrap-form  <%= item.id %>">
+    <div class="list-row tag-content">
+        <div class="wrap-content d-flex justify-content-between align-items-center">
+            <div class="section-content">
+                <div class="">
+                    <label id="label-text-<%= item.id %>" for="inp0"><%= item.name %></label>
+                    <label id="label-text-<%= item.id %>" for="inp0">Type: <%= item.type %></label>
+                  </div>
+                <input type="text" name="" class= "input-outline input-text" id="input-text-<%=item.id %>" id-item="<%=item.id %>" value="<%= item.value %>" class="input-outline">
+            </div>
+            <a href="#" class="wrap-arrow my-dropdown-button outline-btn" dropdown-menu-name="#section-id-<%= item.id %>">
+                Mở rộng
+                <img class="arrow-down" src="./cms/images/index/arrow-down-dark.png" alt="">
+            </a>
+        </div>
+        <div class="extension d-none" id="section-id-<%= item.id %>">
+            <div class="item">
+                <label for="inp1">CSS Class</label>
+                <input type="text" name="" value="<%=item.class%>" id="input-css-<%=item.id %>" class="input-outline">
+            </div>
+            <div class="item">
+                <label for="inp2">Link</label>
+                <input type="text" name="" value="<%=item.attr_href%>" id="input-link-<%=item.id %>" class="input-outline">
+            </div>
+            <div class="item">
+                <label for="inp3">Target</label>
+                <input type="text" name="" value="<%=item.attr_target%>" id="input-target-<%=item.id %>" class="input-outline">
+            </div>
+            <form class="item checkbox-item">
+                <label for="inp4">Không hiển thị</label>
+                <input type="checkbox" name=""  id="input-checkbox-<%=item.id%>"
+                <% if (!item.display) { %> checked <% } %>  />
+        </div>
+    </div>
+</div>

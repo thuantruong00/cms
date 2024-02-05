@@ -1,22 +1,40 @@
 // _____ _____[]_____[]_____[ module ]_____[]_____[]_____ _____
-const sidebarControl = require('../../services/cms/sidebarControl')
-
+const sidebarControl = require('../../services/cms/sidebarControl');
+const fs = require('fs').promises;
 
 // _____ _____[]_____[]_____[ var - config - ... ]_____[]_____[]_____ _____
 
-
 // _____ _____[]_____[]_____[ * ]_____[]_____[]_____ _____
 
+function readCssFile(cssFilePath) {
+  return fs
+    .readFile(cssFilePath, 'utf8')
+    .then((cssContent) => {
+      return cssContent;
+    })
+    .catch((error) => {
+      console.error(`Error reading CSS file: ${error}`);
+      throw error;
+    });
+}
+
 async function action(req, res) {
-    let sidebar_data = await sidebarControl("a6", "superadmin"); 
+  var cssFilePath = `./src/statics/cms/styles/custom.css`;
+  var jsFilePath = `./src/statics/cms/scripts/custom.js`;
 
-    res.render(sidebar_data.active_page.page_name,
-        {
-            ...sidebar_data,
-            layout: "./layouts/cms-layout.ejs",
-        }
+  const dataCss = await readCssFile(cssFilePath);
 
-    )
+  const dataJs = await readCssFile(jsFilePath);
+
+  let sidebar_data = await sidebarControl('a6', 'superadmin');
+
+  res.render(sidebar_data.active_page.page_name, {
+    dataCss,
+    dataJs,
+    ...sidebar_data,
+    layout: './layouts/cms-layout.ejs'
+  });
 }
 
 exports.action = action;
+

@@ -14,7 +14,6 @@ async function action(req, res) {
     return acc;
   }, []);
 
-  console.log(arrayObjects);
   const dataArray = arrayObjects.map((item) => {
     return {
       ...item,

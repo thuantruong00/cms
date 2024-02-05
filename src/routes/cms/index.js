@@ -13,12 +13,13 @@ const cors_conf = require('../../config/config.json').cors;
 
 const accountController = require('../../controllers/cms/account.controller.js');
 
-// const accountController = require('~/controllers/cms/accountController');
+// const accountController = require('../../controllers/cms/accountController');
 const imagesReadController = require('../../controllers/cms/imagesRead.controller.js');
 const uploadImageController = require('../../controllers/cms/imagesUpload.controller.js');
 const deleteImageController = require('../../controllers/cms/imagesDelete.controller.js');
 
 const customController = require('../../controllers/cms/customController');
+const customUploadFileController = require('../../controllers/cms/customUploadFile.controller.js');
 
 const staticContentController = require('../../controllers/cms/staticContentController');
 const staticContentDetailController = require('../../controllers/cms/staticContentDetailController');
@@ -47,6 +48,7 @@ const { isAuthenticated } = require('~/middlewares/auth.middleware.js');
 
 // _____ _____[]_____[]_____[ router ]_____[]_____[]_____ _____
 router.get('/', isAuthenticated, AccountViewHandler);
+router.get('/account', isAuthenticated, AccountViewHandler);
 router.get('/a', isAuthenticated, UpdateAccountHandler);
 
 router.post('/create-account', CreateAccountHandler);
@@ -54,9 +56,9 @@ router.get('/sign-in', SignInViewHandler);
 router.post('/sign-in', SignInHandler);
 router.get('/sign-out', SignOutHandler);
 
-router.get('/account', (req, res) => {
-  accountController.action(req, res);
-});
+// router.get('/account', (req, res) => {
+//   accountController.action(req, res);
+// });
 
 //route static content
 router.get('/static-content/:type', (req, res) => {
@@ -113,8 +115,12 @@ router.post('/images/delete/:id', (req, res) => {
   deleteImageController.action(req, res);
 });
 
+//route custom file
 router.get('/custom', (req, res) => {
   customController.action(req, res);
+});
+router.post('/custom/upload/:type', (req, res) => {
+  customUploadFileController.action(req, res);
 });
 
 // router.post('/test', cors(cors_conf), (req, res) => {
