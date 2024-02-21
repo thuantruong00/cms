@@ -1,7 +1,11 @@
 <div class="wrap-view-image">
   <div class="d-flex justify-content-between">
     <div class="ml-4 mt-2">
-      <div class="btn btn-primary">General</div>
+      <%if(typeUpload == 'general') {%>
+        <div class="btn btn-primary">General</div>
+      <%} else if(typeUpload = 'post') {%>
+        <div class="btn btn-primary">Post</div>
+      <%}%>
     </div>
     <div class="mr-4 mt-2">
       <button class="btn-close-modal btn btn-danger">Close</button>
@@ -15,18 +19,24 @@
     <input class="form-control input-form-control input-upload"   name="file" type="file" multiple />
   </form>
   <div class="d-flex justify-content-center">
-    <a type-image="general"  class=" btn btn-success mt-2 btn-upload-image" >Upload</a>
+    <a type-image="<%=typeUpload%>"  class=" btn btn-success mt-2 btn-upload-image" >Upload</a>
   </div>
   <br />
   <br />
   <br />
   <div class="d-flex">
-    <a class="btn btn-success ml-2 btn-submit">Submit</a>
+    <%if(typeUpload == 'general') {%>
+      <a class="btn btn-success ml-4 mb-2 btn-submit btn-up-post">Submit</a>
+
+    <%} else if(typeUpload = 'post') {%>
+      <a class="btn btn-success ml-4 mb-2 btn-up-post">Submit</a>
+
+    <%}%>
   </div>
-  <div class="d-flex flex-wrap ml-2 mr-2" id="list-image">
+  <div class="d-flex flex-wrap ml-4 mr-2" id="list-image">
    <% if (typeof arrayImage !== 'undefined' && arrayImage.length > 0) { %>
         <% arrayImage.forEach(function(item) { %>
-        <div   class=" m-1 wrap-image">
+        <div   class=" mr-1 mb-1 mt-1 wrap-image">
             <img  src="<%=item.url%>"  class="image-upload"/>
             <input id-item="<%=item.id%>" name="image-check" url="<%=item.url%>" type="radio" id="ip-checkbox" />
         </div>

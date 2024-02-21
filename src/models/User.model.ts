@@ -101,9 +101,9 @@ const findUserByIdandUpdate = async (userId: string, dataModified: any): Promise
   }
 };
 
-const findUserByRole = async (type: string): Promise<User[] | null> => {
+const findUserByRole = async (type: string): Promise<User | null> => {
   try {
-    return await client.user.findMany({
+    return await client.user.findFirst({
       where: {
         type
       }

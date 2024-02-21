@@ -98,6 +98,27 @@ const getImageByID = async (id: number): Promise<object> => {
   }
 };
 
+const getImageByUrl = async (url: string): Promise<object> => {
+  try {
+    const payload = await prisma.image.findFirst({
+      where: {
+        url
+      }
+    });
+    return {
+      status: true,
+      message: 'Success get image by id',
+      payload
+    };
+  } catch (e) {
+    return {
+      status: false,
+      message: 'Failed delete image',
+      payload: null
+    };
+  }
+};
+
 const deleteImageMany = async (data: number[]): Promise<object> => {
   try {
     const payload = await prisma.image.deleteMany({
@@ -122,5 +143,5 @@ const deleteImageMany = async (data: number[]): Promise<object> => {
   }
 };
 
-module.exports = { createImage, getAllImage, deleteImageMany, getImageByType, getImageByID };
+module.exports = { createImage, getAllImage, getImageByType, getImageByID, getImageByUrl, deleteImageMany };
 

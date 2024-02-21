@@ -1,8 +1,8 @@
 const dataInitSectionPage = [
   {
     name: 'name_title1',
-    value: 'title1',
-    type: 'text',
+    value: '',
+    type: 'image',
     page_id: '',
     class: '',
     display: true,
@@ -13,8 +13,8 @@ const dataInitSectionPage = [
   },
   {
     name: 'name_title2',
-    value: 'title2',
-    type: 'text',
+    value: '',
+    type: 'image',
     page_id: '',
     class: '',
     display: true,

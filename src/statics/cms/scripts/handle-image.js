@@ -3,12 +3,11 @@ $('.btn-close-modal').click(function () {
   $('.wrap-modal').toggleClass('d-none');
 });
 
-function handleOpenModal(id,url) {
+function handleOpenModal(id, url) {
   $('.wrap-view-image').attr('id-modal', id + '');
   $('.wrap-modal').toggleClass('d-none');
 
-  if(url!='') {
-    
+  if (url != '') {
   }
 }
 
@@ -45,15 +44,17 @@ function handleUploadToDB(type, pageId) {
 }
 
 //handle view-image
+
 $('.btn-submit').click(function () {
   if (!$("input[name='image-check']").is(':checked')) {
     alert('Nothing to submit!');
   } else {
     var id = $('.wrap-view-image').attr('id-modal');
+    console.log(id)
     id = id.substring(1);
     const url = $('input[type=radio]:checked').attr('url');
     $(`#input-text-${id}`).val(url);
-    $(`#img-${id}`).attr("src", url);
+    $(`#img-${id}`).attr('src', url);
     $('.wrap-modal').toggleClass('d-none');
     $('.wrap-view-image').removeAttr('id-modal');
   }
@@ -154,7 +155,7 @@ $('.btn-link').click(function () {
         data.map((item) => {
           var div = document.createElement('div');
           div.style.width = '50px';
-          div.addClass('m-1');
+          div.setAttribute('class', 'm-1');
           var img = document.createElement('img');
           img.src = item.url;
           img.width = 50;

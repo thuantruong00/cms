@@ -8,7 +8,9 @@ const sidebarControl = require('../../services/cms/sidebarControl')
 // _____ _____[]_____[]_____[ * ]_____[]_____[]_____ _____
 
 async function action(req, res) {
-    let sidebar_data = await sidebarControl("a53", "superadmin"); 
+  const role_current_user = process.env.BY_PASS_USER || req.user.role;
+
+    let sidebar_data = await sidebarControl("a53", role_current_user); 
 
     res.render('cms-page/product-category-detail',
         {

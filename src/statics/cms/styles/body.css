@@ -311,6 +311,7 @@
   background-color: rgba(38, 37, 37, 0.4);
   top: 0;
   left: 0;
+  z-index: 3;
 }
 
 .modal-upload {
@@ -361,4 +362,9 @@
 .image-show {
   width: 70px;
   height: 90px;
+}
+.btn-back {
+  position: absolute;
+  top: 50px;
+  left: 220px;
 }

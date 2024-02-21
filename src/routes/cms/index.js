@@ -14,6 +14,8 @@ const cors_conf = require('../../config/config.json').cors;
 const accountController = require('../../controllers/cms/account.controller.js');
 
 // const accountController = require('../../controllers/cms/accountController');
+
+//images
 const imagesReadController = require('../../controllers/cms/imagesRead.controller.js');
 const uploadImageController = require('../../controllers/cms/imagesUpload.controller.js');
 const deleteImageController = require('../../controllers/cms/imagesDelete.controller.js');
@@ -21,15 +23,28 @@ const deleteImageController = require('../../controllers/cms/imagesDelete.contro
 const customController = require('../../controllers/cms/customController');
 const customUploadFileController = require('../../controllers/cms/customUploadFile.controller.js');
 
+//static-content
 const staticContentController = require('../../controllers/cms/staticContentController');
 const staticContentDetailController = require('../../controllers/cms/staticContentDetailController');
 const staticContentUpdateForm = require('../../controllers/cms/staticContentUpdateForm.controller');
 
+//idk
 const postCategoryController = require('../../controllers/cms/postCategoryController');
+const postCategoryDetailController = require('../../controllers/cms/postCategoryDetailController');
+
+//new-post
+const newPostController = require('../../controllers/cms/newPostController');
+const newPostCreateController = require('../../controllers/cms/newPostCreate.controller.js');
+//post-detail
 const postController = require('../../controllers/cms/postController');
 const postDetailController = require('../../controllers/cms/postDetailController');
-const postCategoryDetailController = require('../../controllers/cms/postCategoryDetailController');
-const newPostController = require('../../controllers/cms/newPostController');
+const postDetailDeleteController = require('../../controllers/cms/postDetailDelete.controller.js');
+const postDetailEditController = require('../../controllers/cms/postDetailEdit.controller.js');
+
+//category-post
+const postCategoryCreateController = require('../../controllers/cms/postCategoryCreate.controller.js');
+const postCategoryDeleteController = require('../../controllers/cms/postCategoryDelete.controller.js');
+const postCategoryUpdateController = require('../../controllers/cms/postCategoryUpdate.controller.js');
 
 const productCategoryController = require('../../controllers/cms/productCategoryController');
 const productController = require('../../controllers/cms/productController');
@@ -71,23 +86,48 @@ router.post('/static-content/:type/:id/update-form', (req, res) => {
   staticContentUpdateForm.action(req, res);
 });
 
-
-router.get('/post', (req, res) => {
-  postController.action(req, res);
-});
+//post (create)
 router.get('/new-post', (req, res) => {
   newPostController.action(req, res);
 });
+router.post('/new-post', (req, res) => {
+  newPostCreateController.action(req, res);
+});
+
+//manage post (detail, edit, delete)
+router.get('/post', (req, res) => {
+  postController.action(req, res);
+});
+router.get('/post/:id', (req, res) => {
+  postDetailController.action(req, res);
+});
+router.post('/post/delete/:id', (req, res) => {
+  postDetailDeleteController.action(req, res);
+});
+router.post('/post/edit/:id', (req, res) => {
+  postDetailEditController.action(req, res);
+});
+
+//category post
+router.post('/post-category', (req, res) => {
+  postCategoryCreateController.action(req, res);
+});
+router.post('/post-category/delete/:id', (req, res) => {
+  postCategoryDeleteController.action(req, res);
+});
+router.post('/post-category/update/:id', (req, res) => {
+  postCategoryUpdateController.action(req, res);
+});
+
+//idk
 router.get('/post-category', (req, res) => {
   postCategoryController.action(req, res);
 });
 router.get('/post-category/:id', (req, res) => {
   postCategoryDetailController.action(req, res);
 });
-router.get('/post/:id', (req, res) => {
-  postDetailController.action(req, res);
-});
 
+//product
 router.get('/product', (req, res) => {
   productController.action(req, res);
 });
@@ -112,7 +152,7 @@ router.post('/images/upload/:id', (req, res) => {
   uploadImageController.action(req, res);
 });
 router.post('/images/delete/:id', (req, res) => {
-  deleteImageController.action(req, res);
+  deleteImageController.action(req, res); 
 });
 
 //route custom file

@@ -1,43 +1,43 @@
-<div class="container">
-    <div class="row">
-        <div class="wrap-back-btn">
-            <button  class="btn btn-primary back-btn" 
-            onclick="document.location.href = '/cms/static-content/<%=type%>'">Back</button>
-        </div>
-        <form class="col-8" > 
-            <% if (arraySectionByPageId.length == "0") { %>
-                <h2>Page has not content</h2>
-              <% } else { %>
-                <%var i = 1%>
-                <% for (const item of arraySectionByPageId) { %>  
-                    <% if (item.type == "text") { %>
-                        <% i = 0%>
-                        <%- include('../partials/cms/form-static-content/form-type-text.ejs', {item}) %>
-                    <% } else if (item.type == "link") { %>
-                        <% i = 0%>
-                        <%- include('../partials/cms/form-static-content/form-type-link.ejs', {item}) %>
-                    <% } else if (item.type == "image") { %>
-                        <% i = 0%>
-                        <%- include('../partials/cms/form-static-content/form-type-image.ejs', {item}) %>
+<div class="col-12">
+    <div class=" ">
+            <div class="container d-flex justify-content-center mt-5">
+            <form class="col-8" > 
+                <% if (arraySectionByPageId.length == 0) { %>
+                    <h2>Page has not content</h2>
+                  <% } else { %>
+                    <%var i = 1%>
+                    <% for (const item of arraySectionByPageId) { %>  
+                        <% if (item.type == "text") { %>
+                            <% i = 0%>
+                            <%- include('../partials/cms/form-static-content/form-type-text.ejs', {item}) %>
+                        <% } else if (item.type == "link") { %>
+                            <% i = 0%>
+                            <%- include('../partials/cms/form-static-content/form-type-link.ejs', {item}) %>
+                        <% } else if (item.type == "image") { %>
+                            <% i = 0%>
+                            <%- include('../partials/cms/form-static-content/form-type-image.ejs', {item}) %>
+                        <% } %>
+                    <% } %>
+                    <p id="length-array" class="d-none"><%= arraySectionByPageId.length %></p>
+                    <% if(i == 0) { %>
+                        <div class="container d-flex justify-content-center mt-5">
+                            <a  class="btn btn-primary"   onclick="handleUploadToDB('<%=type%>','<%=pageId%>')">Submit</a></div
+                       >
                     <% } %>
                 <% } %>
-                <p id="length-array" class="d-none"><%= arraySectionByPageId.length %></p>
-                <% if(i == 0) { %>
-                    <a  class="btn btn-primary"   onclick="handleUploadToDB('<%=type%>','<%=pageId%>')">Submit</a>
-                <% } %>
-            <% } %>
-        </form>
+            </form>
+        </div>
+       <div class="wrap-modal d-none" >
+            <div class="modal-upload"  >
+                <%const typeUpload = 'general'%>
+                <%- include('../partials/cms/view-image.ejs', {arrayImage,typeUpload}) %>
+            </div> 
+       </div>
     </div>
-   <div class="wrap-modal d-none" >
-        <div class="modal-upload"  >
-            <%- include('../partials/cms/view-image.ejs', {arrayImage}) %>
-        </div> 
-   </div>
 </div>
 
-<style>
-   
-</style>
 
+    <button  class="btn btn-primary btn-back" 
+    onclick="document.location.href = '/cms/static-content/<%=type%>'">Back</button>
 
 

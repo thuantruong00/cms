@@ -1,8 +1,44 @@
-<h3>admin post  list</h3>
-<ul>
-    <li>
-        <a href="/cms/post/id1">post 1</a>
-        <a href="/cms/post/id2">post 2</a>
-        <a href="/cms/post/id3">post 3</a>
-    </li>
-</ul>
+<div class="d-flex justify-content-center mt-5">
+    <table class="table col-10">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Slug</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for( const item of arrayPosts) { %>
+          <tr id="row-id-<%=item.id%>">
+            <th scope="row"><%=item.id%></th>
+            <td id="name-id-<%=item.id%>"><%=item.title%></td>
+            <td id="slug-id-<%=item.id%>"><%=item.slug%></td>
+            <td>
+                <a class="btn btn-success" href="/cms/post/<%=item.id%>">Edit</a>
+                <a class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">Delete</a>
+            </td>
+          </tr>
+          <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="confirmModalLabel">Confirm action</h5>
+                  <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Do you want delete this category?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" onclick="handleDeletePost(`<%=item.id%>`)">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%}%>
+        </tbody>
+      </table>
+</div>

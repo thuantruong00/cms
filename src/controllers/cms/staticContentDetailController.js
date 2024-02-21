@@ -3,27 +3,30 @@ const sidebarControl = require('../../services/cms/sidebarControl');
 const { findAllSectionOfPagesByPageId } = require('../../models/SectionOfPage.model');
 const { getImageByType } = require('../../models/Image.model');
 
-
 // _____ _____[]_____[]_____[ var - config - ... ]_____[]_____[]_____ _____
 
 // _____ _____[]_____[]_____[ * ]_____[]_____[]_____ _____
 
 async function action(req, res) {
-  let sidebar_data = await sidebarControl('a21', 'root');
+  const role_current_user = process.env.BY_PASS_USER || req.user.role;
+  let sidebar_data = await sidebarControl('a21', role_current_user);
   const pageId = req.params.id;
   const type = req.params.type;
 
-  const resDBImage = await getImageByType('general')
+  const resDBImage = await getImageByType('general');
   var arrayImage = [];
   if (resDBImage.status) {
     arrayImage = [...resDBImage.payload];
   } else {
     //handle failure
   }
-  
 
   const resDB = await findAllSectionOfPagesByPageId(Number(pageId));
-  const arraySectionByPageId = resDB.payload;
+  let arraySectionByPageId = [];
+  if (resDB.status) {
+    arraySectionByPageId = [...resDB.payload];
+  }
+
   res.render('cms-page/static-content-detail', {
     arraySectionByPageId,
     arrayImage,

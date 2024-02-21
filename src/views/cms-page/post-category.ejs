@@ -1,8 +1,75 @@
-<h3>admin post  category</h3>
-<ul>
-    <li>
-        <a href="/cms/post-category/id1">post 1</a>
-        <a href="/cms/post-category/id2">post 2</a>
-        <a href="/cms/post-category/id3">post 3</a>
-    </li>
-</ul>
+<div class="container d-flex justify-content-center mt-5">
+    <div class="">
+        <div class="col-12">
+            <div class="row ">
+                <div  class="col-6">
+                    <label>Name</label>
+                    <br/>
+                    <input  class="form-control" id="ip-name" onchange="handleOnChangePostName(this.value)" />
+                </div>
+              
+                <div class="col-6">
+                    <label>Slug</label>
+                    <br/>
+                    <input  class="form-control" id="ip-slug" />
+                </div>
+         </div>
+        <div class="mt-3">
+              <label>Description</label>
+              <br/>
+              <textarea class="col-12 form-control" id="ip-description" rows="3"></textarea>
+        </div>
+        <div class="d-flex justify-content-center">
+            <button class="btn btn-success mt-3" onclick="handleSubmitCategoryPost()">Submit</button></div>
+       </div>
+    </div>
+</div>
+
+<div class="d-flex justify-content-center mt-5">
+    <table class="table col-10">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Slug</th>
+            <th scope="col">Description</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% for( const item of arrayCategory) { %>
+          <tr id="row-id-<%=item.id%>">
+            <th scope="row"><%=item.id%></th>
+            <td id="name-id-<%=item.id%>"><%=item.name%></td>
+            <td id="slug-id-<%=item.id%>"><%=item.slug%></td>
+            <td id="description-id-<%=item.id%>"><%=item.description%></td>
+            <td>
+                <a class="btn btn-success" onclick="handleFillEditCategory(`<%=item.id%>`)">Edit</a>
+                <button type="button" class="btn btn-danger"  data-toggle="modal" data-target="#confirmModal">Delete</button>
+            </td>
+          </tr>
+          <!-- Modal -->
+          <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="confirmModalLabel">Confirm action</h5>
+                  <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Do you want delete this category?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" onclick="handleDeleteCategory(`<%=item.id%>`)">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%}%>
+        </tbody>
+      </table>
+</div>
+

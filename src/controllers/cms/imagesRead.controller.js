@@ -7,14 +7,14 @@ const { getImageByType } = require('../../models/Image.model');
 // _____ _____[]_____[]_____[ * ]_____[]_____[]_____ _____
 
 async function action(req, res) {
-  console.log(req)
-  let sidebar_data = await sidebarControl('a3', 'root');
+  const role_current_user = process.env.BY_PASS_USER || req.user.role;
+  let sidebar_data = await sidebarControl('a3', role_current_user);
   const type = req.params.id;
   var pathFolder = `./src/statics/website/images/${type}/`;
   var fs = require('fs');
   var files = fs.readdirSync(pathFolder);
-  const resDB = await getImageByType(type);
 
+   const resDB = await getImageByType(type);
   var arrayImage = [];
   if (resDB.status) {
     arrayImage = [...resDB.payload];

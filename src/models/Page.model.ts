@@ -33,7 +33,6 @@ const createInitPage = async (dataInit: any, id: string): Promise<object> => {
       payload
     };
   } catch (e) {
-    console.log(e);
     return {
       status: false,
       message: 'Failed create page',

@@ -40,3 +40,223 @@ function handleUploadFile(type) {
   });
 }
 
+//post category
+function handleOnChangePostName(val) {
+  let postName = val.trim().toLowerCase();
+  let slug = postName.replaceAll(' ', '-');
+  document.getElementById('ip-slug').value = `/cms/${slug}`;
+}
+
+function handleSubmitCategoryPost() {
+  let postName = $('#ip-name').val();
+  let postSlug = $('#ip-slug').val();
+  let postDescription = $('#ip-description').val();
+
+  if (postName.trim() == '' || postSlug.trim() == '' || postDescription.trim() == '') {
+    alert('Missing parameter');
+    return;
+  }
+
+  let data = {
+    postName,
+    postSlug,
+    postDescription
+  };
+
+  $.ajax({
+    url: `/cms/post-category`,
+    data,
+    type: 'post',
+    cache: false,
+    success: function (result) {
+      alert(result.resDB.message);
+      document.getElementById('ip-name').value = ` `;
+      document.getElementById('ip-slug').value = ``;
+      document.getElementById('ip-description').value = ``;
+
+      location.reload();
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('error');
+    }
+  });
+}
+
+function handleDeleteCategory(id) {
+  $.ajax({
+    url: `/cms/post-category/delete/${id}`,
+    type: 'post',
+    data: id,
+    cache: false,
+    success: function (result) {
+      $('.btn-close').click();
+      setTimeout(() => {
+        alert(result.deleteByIdRes.message);
+      }, 200);
+      $(`#row-id-${id}`).addClass('d-none');
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('error');
+    }
+  });
+}
+
+function handleFillEditCategory(id) {
+  let postName = $(`#name-id-${id}`).html();
+  let postSlug = $(`#slug-id-${id}`).html();
+  let postDescription = $(`#description-id-${id}`).html();
+
+  document.getElementById('ip-name').value = postName;
+  document.getElementById('ip-slug').value = postSlug;
+  document.getElementById('ip-description').value = postDescription;
+
+  $(`.button-submit`).addClass('d-none');
+  $(`.button-edit`).removeClass('d-none');
+  $(`.button-edit`).attr('id-item', id);
+}
+
+function handleEditCategory(id) {
+  let postName = $('#ip-name').val();
+  let postSlug = $('#ip-slug').val();
+  let postDescription = $('#ip-description').val();
+
+  if (postName.trim() == '' || postSlug.trim() == '' || postDescription.trim() == '') {
+    alert('Missing parameter');
+    return;
+  }
+
+  let data = {
+    postName,
+    postSlug,
+    postDescription
+  };
+
+  $.ajax({
+    url: `/cms/post-category/update/${id}`,
+
+    data,
+    type: 'post',
+    cache: false,
+    success: function (result) {
+      alert(result.resUpdateCategoryById.message);
+      // document.getElementById('ip-name').value = ` `;
+      // document.getElementById('ip-slug').value = `/cms/`;
+      // document.getElementById('ip-description').value = ``;
+      location.reload();
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('error');
+    }
+  });
+}
+
+//post
+function handleCreateNewPost() {
+  let content = editorContent.getData();
+  let excerpt = editorExcerpt.getData();
+  let title = $('#ip-name').val().trim();
+  let slug = $('#ip-slug').val().trim();
+  let url = $('#image-post').attr('src');
+  let checked = $('#active-checked').is(':checked');
+  let status = checked ? 'active' : 'inactive';
+
+  let data = {
+    content,
+    excerpt,
+    title,
+    slug,
+    url,
+    status
+  };
+
+  if (content == '' || excerpt == '' || title == '' || slug == '' || url == '/cms/images/index/default-image.jpeg') {
+    alert('Missing parameter');
+    return;
+  }
+  $.ajax({
+    url: `/cms/new-post`,
+    data,
+    type: 'post',
+    cache: false,
+    success: function (result) {
+      alert(result.message);
+      location.reload();
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('error');
+    }
+  });
+}
+
+//detail post
+function handleDeletePost(id) {
+  $.ajax({
+    url: `/cms/post/delete/${id}`,
+    type: 'post',
+    cache: false,
+    success: function (result) {
+      $('.btn-close').click();
+      setTimeout(() => {
+        alert(result.resDeleteById.message);
+      }, 200);
+      $(`#row-id-${id}`).addClass('d-none');
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('error');
+    }
+  });
+}
+
+function handleEditPost(id) {
+  let content = editorContent.getData();
+  let excerpt = editorExcerpt.getData();
+  let title = $('#ip-name').val().trim();
+  let slug = $('#ip-slug').val().trim();
+  let url = $('#image-post').attr('src');
+  let checked = $('#active-checked').is(':checked');
+  let status = checked ? 'active' : 'inactive';
+  console.log(status);
+
+  let data = {
+    content,
+    excerpt,
+    title,
+    slug,
+    url,
+    status
+  };
+
+  if (content == '' || excerpt == '' || title == '' || slug == '') {
+    alert('Missing parameter');
+    return;
+  }
+  $.ajax({
+    url: `/cms/post/edit/${id}`,
+    data,
+    type: 'post',
+    cache: false,
+    success: function (result) {
+      alert(result.resUpdatePostById.message);
+      window.location.href = '/cms/post';
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('error');
+    }
+  });
+}
+
+function handleOpenModal() {
+  $('.wrap-modal').toggleClass('d-none');
+}
+
+$('.btn-up-post').click(function () {
+  if (!$("input[name='image-check']").is(':checked')) {
+    alert('Nothing to submit!');
+  } else {
+    const url = $('input[type=radio]:checked').attr('url');
+    $(`#image-post`).attr('src', url);
+    $('.wrap-modal').toggleClass('d-none');
+    $('.wrap-view-image').removeAttr('id-modal');
+  }
+});
+

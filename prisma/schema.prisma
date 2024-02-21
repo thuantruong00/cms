@@ -102,6 +102,8 @@ model post {
 
   image    image? @relation(fields: [image_id], references: [id])
   image_id Int?
+
+ 
 }
 
 model category_of_post {

@@ -9,10 +9,12 @@ const { getAllPageByType } = require('../../models/Page.model');
 async function action(req, res) {
   const type = req.params.type;
   var sidebar_data = '';
+  const role_current_user = process.env.BY_PASS_USER || req.user.role;
+
   if (type === 'page') {
-    sidebar_data = await sidebarControl('a21', 'root');
+    sidebar_data = await sidebarControl('a21', role_current_user);
   } else {
-    sidebar_data = await sidebarControl('a22', 'root');
+    sidebar_data = await sidebarControl('a22', role_current_user);
   }
   //get all
   const resDB = await getAllPageByType(type);

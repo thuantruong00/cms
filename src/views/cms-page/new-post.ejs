@@ -1,1 +1,71 @@
-<h3>admin post add new</h3>
+<div class="container d-flex justify-content-center mt-5">
+  <div class="">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-6">
+          <label>Name</label>
+          <br />
+          <input class="form-control" id="ip-name" onchange="handleOnChangePostName(this.value)" />
+        </div>
+        <div class="col-6">
+          <label>Slug</label>
+          <br />
+          <input class="form-control" id="ip-slug" />
+        </div>
+      </div>
+      <div class="mt-3">
+        <label>Excerpt</label>
+        <br />
+        <div id="editor" class="mt-3"></div>
+        <script>
+ 
+
+          ClassicEditor.create(document.querySelector('#editor'), {
+         
+
+          })
+            .then((editor) => {
+              editorExcerpt = editor;
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        </script>
+      </div>
+      <div class="mt-3">
+        <label>Content</label>
+        <br />
+        <div id="editor1" class="mt-3"></div>
+        <script>
+          ClassicEditor.create(document.querySelector('#editor1'))
+            .then((editor) => {
+              editorContent = editor;
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        </script>
+      </div>
+      <div class="mt-3">
+        <label>Image post:</label>
+        <img id="image-post" src="/cms/images/index/default-image.jpeg" class="image-show ml-2 mr-2" />
+        <a class="btn btn-success" onclick="handleOpenModal()">Choose</a>
+         
+      </div>
+      <div class="mt-3">
+        <label>Active: </label>
+        <input id="active-checked" type="checkbox" checked />
+      </div>
+      <div class="d-flex justify-content-center">
+        <button class="btn btn-success mt-3" onclick="handleCreateNewPost()">Submit</button>
+      </div>
+    </div>
+  </div>
+  <div class="wrap-modal d-none" >
+    <div class="modal-upload"  >
+        <%const typeUpload = 'post'%>
+        <%- include('../partials/cms/view-image.ejs', {arrayImage,typeUpload}) %>
+    </div> 
+</div>
+</div>
+

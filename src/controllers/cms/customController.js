@@ -26,7 +26,9 @@ async function action(req, res) {
 
   const dataJs = await readCssFile(jsFilePath);
 
-  let sidebar_data = await sidebarControl('a6', 'superadmin');
+
+  const role_current_user = process.env.BY_PASS_USER || req.user.role;
+  let sidebar_data = await sidebarControl('a6', role_current_user);
 
   res.render(sidebar_data.active_page.page_name, {
     dataCss,

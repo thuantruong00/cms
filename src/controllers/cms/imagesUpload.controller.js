@@ -1,6 +1,7 @@
 // _____ _____[]_____[]_____[ module ]_____[]_____[]_____ _____
 const { createRandomString } = require('../../middlewares/createRandomString.middleware');
 const { createImage } = require('../../models/Image.model');
+const { findUserByRole } = require('../../models/User.model');
 const sizeOf = require('image-size');
 
 // _____ _____[]_____[]_____[ var - config - ... ]_____[]_____[]_____ _____
@@ -11,7 +12,8 @@ async function action(req, res) {
   const folderName = req.params.id ? req.params.id : 'general';
   var data = [];
   var i = 0;
-
+  const user = await findUserByRole('root');
+  const id_user = user.id;
   if (!req.files) {
     res.send({
       errCode: 1,
@@ -19,12 +21,13 @@ async function action(req, res) {
     });
   } else {
     const arrayData = Array.isArray(req.files.file) ? req.files.file : [req.files.file];
+   
     if (arrayData.length > 0) {
       for (var item of arrayData) {
         const randomString = createRandomString(6);
         const fileName = item.name;
         const fileExtension = fileName.split('.').pop();
-        const id_user = 'a3ff18af-6a9a-45e4-af3a-16025d6adc42';
+       
         const sizeImageUpload = item.size;
         const pathName = `./src/statics/website/images/${folderName}/${randomString}.${fileExtension}`;
         // if (file.size > 20000000) {
@@ -37,7 +40,6 @@ async function action(req, res) {
               errCode: 1,
               message: err
             });
-            console.log('error');
           } else {
             data.push({
               title: randomString,

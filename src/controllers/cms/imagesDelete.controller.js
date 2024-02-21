@@ -3,7 +3,6 @@ const fs = require('fs');
 
 async function action(req, res) {
   const folderName = req.params.id ? req.params.id : 'general';
-  console.log(folderName);
   const data = req.body.id;
 
   const array = Array.isArray(data) ? data.map((item) => Number(item)) : [Number(data)];
@@ -14,11 +13,9 @@ async function action(req, res) {
       if (image.status) {
         const file_name = image.payload.file_name;
         const filePath = `./src/statics/website/images/${folderName}/${file_name}`;
-        console.log(filePath);
         if (fs.existsSync(filePath)) {
           fs.unlinkSync(filePath);
         } else {
-          console.log('no find');
         }
       }
     }

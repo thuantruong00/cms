@@ -1,1 +1,78 @@
-<h3>admin post detail</h3>
+<div class="container d-flex justify-content-center mt-5">
+    <div class="">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-6">
+            <label>Name</label>
+            <br />
+            <input class="form-control" value="<%=dataPostDetailById.title%>" id="ip-name" onchange="handleOnChangePostName(this.value)" />
+          </div>
+          <div class="col-6">
+            <label>Slug</label>
+            <br />
+            <input class="form-control" value="<%=dataPostDetailById.slug%>" id="ip-slug" />
+          </div>
+        </div>
+        <div class="mt-3">
+          <label>Excerpt</label>
+          <br />
+          <div id="editor" class="mt-3"></div>
+          <script>
+            ClassicEditor.create(document.querySelector('#editor'))
+              .then((editor) => {
+                editorExcerpt = editor;
+                editor.setData(`<%-dataPostDetailById.excerpt%>`);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          </script>
+        </div>
+        <div class="mt-3">
+          <label>Content</label>
+          <br />
+          <div id="editor1" class="mt-3"></div>
+          <script>
+            ClassicEditor.create(document.querySelector('#editor1'),{
+                image: {
+            toolbar: [ 'toggleImageCaption', 'imageTextAlternative', 'ckboxImageEdit' ]}
+            })
+              .then((editor) => {
+                editorContent = editor;
+                editor.setData(`<%-dataPostDetailById.content%>`);
+
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          </script>
+        </div>
+        <div class="mt-3">
+          <label>Image post:</label>
+          <img id="image-post" src="<%=dataPostDetailById.image.url%>" class="image-show ml-2 mr-2" />
+          <a class="btn btn-success" onclick="handleOpenModal()">Choose</a>
+           
+        </div>
+        <div class="mt-3">
+          <label>Active: </label>
+          <% if(dataPostDetailById.status == true) { %>
+            <input id="active-checked" type="checkbox" checked>
+          <%} else {%>
+            <input id="active-checked" type="checkbox" >
+          <%}%>
+        </div>
+        <div class="d-flex justify-content-center">
+          <a class="btn btn-success mt-3" onclick="handleEditPost(`<%=idPostDetail%>`)">Submit</a>
+        </div>
+      </div>
+    </div>
+    <div class="wrap-modal d-none" >
+      <div class="modal-upload"  >
+          <%const typeUpload = 'post'%>
+          <%- include('../partials/cms/view-image.ejs', {arrayImage,typeUpload}) %>
+      </div> 
+  </div>
+  </div>
+  
+  <button class="btn btn-primary pl-3 pr-3 btn-back" 
+  onclick="document.location.href = '/cms/post'">Back</button>
