@@ -10,7 +10,7 @@ async function action(req, res) {
   const role_current_user = process.env.BY_PASS_USER || req.user.role;
 
   let sidebar_data = await sidebarControl('a43', role_current_user);
-  const resFindAllCategory = await findAllCategory();
+  const resFindAllCategory = await findAllCategory('Other');
   var arrayCategory = [];
   if (resFindAllCategory.status) {
     arrayCategory = [...resFindAllCategory.payload];

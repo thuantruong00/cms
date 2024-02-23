@@ -1,9 +1,20 @@
 
 <div class="">
   <div class="ml-4 mt-2">
-    <a href="/cms/images/general" class="btn btn-primary mr-2" >General</a>
-    <a href="/cms/images/post" class="btn btn-primary mr-2" >Post</a>
-    <a href="/cms/images/product" class="btn btn-primary mr-2" >Product</a>
+    <%if(type=='general') { %>
+      <a href="/cms/images/general" class="btn btn-warning mr-2" >General</a>
+      <a href="/cms/images/post" class="btn btn-primary mr-2" >Post</a>
+      <a href="/cms/images/product" class="btn btn-primary mr-2" >Product</a>
+    <%} else if(type=='post'){%>
+      <a href="/cms/images/general" class="btn btn-primary mr-2" >General</a>
+      <a href="/cms/images/post" class="btn btn-warning mr-2" >Post</a>
+      <a href="/cms/images/product" class="btn btn-primary mr-2" >Product</a>
+      <%} else if(type=='product'){%>
+        <a href="/cms/images/general" class="btn btn-primary mr-2" >General</a>
+        <a href="/cms/images/post" class="btn btn-primary mr-2" >Post</a>
+        <a href="/cms/images/product" class="btn btn-warning mr-2" >Product</a>
+      <%} %>
+
   </div>
   <br/>
   <br/>

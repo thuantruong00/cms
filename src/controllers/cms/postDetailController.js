@@ -3,6 +3,8 @@
 const sidebarControl = require('../../services/cms/sidebarControl');
 const { findPostById } = require('../../models/Post.model');
 const { getImageByType } = require('../../models/Image.model');
+const { findAllCategory } = require('../../models/CategoryOfPost.model');
+const { findCategoriesOnPostsById } = require('../../models/CategoriesOnPosts.model');
 
 // _____ _____[]_____[]_____[ var - config - ... ]_____[]_____[]_____ _____
 
@@ -11,6 +13,7 @@ const { getImageByType } = require('../../models/Image.model');
 async function action(req, res) {
   const role_current_user = process.env.BY_PASS_USER || req.user.role;
   const idPostDetail = req.params.id;
+  const idCategory = req.params.category;
 
   const resFindPostById = await findPostById(Number(req.params.id));
   var dataPostDetailById = {};
@@ -28,9 +31,24 @@ async function action(req, res) {
     //handle failure
   }
 
+  const resFindAllCategory = await findAllCategory('');
+  var arrayCategory = [];
+  if (resFindAllCategory.status) {
+    arrayCategory = [...resFindAllCategory.payload];
+  } else {
+    //handle failure
+  }
+
+  const resFindCategoriesOnPostsById = await findCategoriesOnPostsById(Number(idPostDetail), Number(idCategory));
+  var idCategoryOfPost = resFindCategoriesOnPostsById.payload.post_category_id;
+  console.log(idCategoryOfPost);
+
+
   let sidebar_data = await sidebarControl('a41', role_current_user);
 
   res.render('cms-page/post-detail', {
+    idCategoryOfPost,
+    arrayCategory,
     idPostDetail,
     arrayImage,
     dataPostDetailById,

@@ -98,10 +98,10 @@ router.post('/new-post', (req, res) => {
 router.get('/post', (req, res) => {
   postController.action(req, res);
 });
-router.get('/post/:id', (req, res) => {
+router.get('/post/:id/:category', (req, res) => {
   postDetailController.action(req, res);
 });
-router.post('/post/delete/:id', (req, res) => {
+router.post('/post/delete/:id/:category', (req, res) => {
   postDetailDeleteController.action(req, res);
 });
 router.post('/post/edit/:id', (req, res) => {
@@ -152,7 +152,7 @@ router.post('/images/upload/:id', (req, res) => {
   uploadImageController.action(req, res);
 });
 router.post('/images/delete/:id', (req, res) => {
-  deleteImageController.action(req, res); 
+  deleteImageController.action(req, res);
 });
 
 //route custom file

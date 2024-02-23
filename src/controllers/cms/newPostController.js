@@ -2,6 +2,7 @@
 
 const sidebarControl = require('../../services/cms/sidebarControl');
 const { getImageByType } = require('../../models/Image.model');
+const { findAllCategory } = require('../../models/CategoryOfPost.model');
 
 // import sidebarControl from "../../services";
 
@@ -21,7 +22,16 @@ async function action(req, res) {
     //handle failure
   }
 
+  const resFindAllCategory = await findAllCategory('')
+  var arrayCategory = []
+  if (resFindAllCategory.status) {
+    arrayCategory = [...resFindAllCategory.payload];
+  } else {
+    //handle failure
+  }
+
   res.render(sidebar_data.active_page.page_name, {
+    arrayCategory,
     arrayImage,
     ...sidebar_data,
     layout: './layouts/cms-layout.ejs'

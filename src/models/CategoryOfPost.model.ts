@@ -29,12 +29,12 @@ const createCategory = async (data: CategoryOfPost): Promise<object> => {
   }
 };
 
-const findAllCategory = async (): Promise<object> => {
+const findAllCategory = async (notInclude: string): Promise<object> => {
   try {
     const payload = await prisma.category_of_post.findMany({
       where: {
         name: {
-          not: 'Other'
+          not: notInclude
         }
       }
     });

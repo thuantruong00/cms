@@ -41,10 +41,19 @@ function handleUploadFile(type) {
 }
 
 //post category
-function handleOnChangePostName(val) {
-  let postName = val.trim().toLowerCase();
-  let slug = postName.replaceAll(' ', '-');
-  document.getElementById('ip-slug').value = `/cms/${slug}`;
+function handleOnChangePostName(isCategory) {
+  let postName = $('#ip-name').val().trim().toLowerCase();
+  let slug = convertViToEn(postName.replaceAll(' ', '-'));
+  console.log(slug);
+
+  if (isCategory) {
+    document.getElementById('ip-slug').value = `/cms/${slug}`;
+  } else {
+    var selectValue = $('#select-category-option').find(':selected').text();
+    selectValue = convertViToEn(selectValue.trim().toLowerCase());
+    selectValue = selectValue.replaceAll(' ', '-');
+    document.getElementById('ip-slug').value = `/cms/${selectValue}/${slug}`;
+  }
 }
 
 function handleSubmitCategoryPost() {
@@ -90,10 +99,16 @@ function handleDeleteCategory(id) {
     cache: false,
     success: function (result) {
       $('.btn-close').click();
-      setTimeout(() => {
-        alert(result.deleteByIdRes.message);
-      }, 200);
-      $(`#row-id-${id}`).addClass('d-none');
+      if (result.deleteByIdRes.status) {
+        setTimeout(() => {
+          alert(result.deleteByIdRes.message);
+        }, 200);
+        location.reload();
+      } else {
+        setTimeout(() => {
+          alert('The category still has posts. Cant delete category ');
+        }, 200);
+      }
     },
     error: function (xhr, ajaxOptions, thrownError) {
       console.log('error');
@@ -155,10 +170,25 @@ function handleCreateNewPost() {
   let content = editorContent.getData();
   let excerpt = editorExcerpt.getData();
   let title = $('#ip-name').val().trim();
-  let slug = $('#ip-slug').val().trim();
+  let slug = convertViToEn($('#ip-slug').val().trim());
   let url = $('#image-post').attr('src');
   let checked = $('#active-checked').is(':checked');
   let status = checked ? 'active' : 'inactive';
+  var selectValue = $('#select-category-option').find(':selected').val();
+
+  if (selectValue == '') {
+    selectValue = 1;
+  }
+
+  if (content == '' || excerpt == '' || title == '' || slug == '' || url == '/cms/images/index/default-image.jpeg') {
+    alert('Missing parameter');
+    return;
+  }
+
+  if (!slug.startsWith('/cms/')) {
+    alert('Slug start with "/cms/"');
+    return;
+  }
 
   let data = {
     content,
@@ -166,13 +196,10 @@ function handleCreateNewPost() {
     title,
     slug,
     url,
-    status
+    status,
+    selectValue
   };
 
-  if (content == '' || excerpt == '' || title == '' || slug == '' || url == '/cms/images/index/default-image.jpeg') {
-    alert('Missing parameter');
-    return;
-  }
   $.ajax({
     url: `/cms/new-post`,
     data,
@@ -180,7 +207,6 @@ function handleCreateNewPost() {
     cache: false,
     success: function (result) {
       alert(result.message);
-      location.reload();
     },
     error: function (xhr, ajaxOptions, thrownError) {
       console.log('error');
@@ -189,9 +215,9 @@ function handleCreateNewPost() {
 }
 
 //detail post
-function handleDeletePost(id) {
+function handleDeletePost(idPost, idCategory) {
   $.ajax({
-    url: `/cms/post/delete/${id}`,
+    url: `/cms/post/delete/${idPost}/${idCategory}`,
     type: 'post',
     cache: false,
     success: function (result) {
@@ -199,7 +225,7 @@ function handleDeletePost(id) {
       setTimeout(() => {
         alert(result.resDeleteById.message);
       }, 200);
-      $(`#row-id-${id}`).addClass('d-none');
+      $(`#row-id-${idPost}`).addClass('d-none');
     },
     error: function (xhr, ajaxOptions, thrownError) {
       console.log('error');
@@ -207,15 +233,25 @@ function handleDeletePost(id) {
   });
 }
 
-function handleEditPost(id) {
+function handleEditPost(idPost) {
   let content = editorContent.getData();
   let excerpt = editorExcerpt.getData();
   let title = $('#ip-name').val().trim();
-  let slug = $('#ip-slug').val().trim();
+  let slug = convertViToEn($('#ip-slug').val().trim());
   let url = $('#image-post').attr('src');
   let checked = $('#active-checked').is(':checked');
   let status = checked ? 'active' : 'inactive';
-  console.log(status);
+  var selectValue = $('#select-category-option').find(':selected').val();
+
+  if (content == '' || excerpt == '' || title == '' || slug == '') {
+    alert('Missing parameter');
+    return;
+  }
+
+  if (!slug.startsWith('/cms/')) {
+    alert('Slug start with "/cms/"');
+    return;
+  }
 
   let data = {
     content,
@@ -223,15 +259,11 @@ function handleEditPost(id) {
     title,
     slug,
     url,
-    status
+    status,
+    selectValue
   };
-
-  if (content == '' || excerpt == '' || title == '' || slug == '') {
-    alert('Missing parameter');
-    return;
-  }
   $.ajax({
-    url: `/cms/post/edit/${id}`,
+    url: `/cms/post/edit/${idPost}`,
     data,
     type: 'post',
     cache: false,
@@ -259,4 +291,33 @@ $('.btn-up-post').click(function () {
     $('.wrap-view-image').removeAttr('id-modal');
   }
 });
+
+function convertViToEn(str) {
+  str = str.replace(/\s+/g, ' ');
+  str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
+  str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
+  str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
+  str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
+  str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
+  str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
+  str = str.replace(/đ/g, 'd');
+  str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, 'A');
+  str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, 'E');
+  str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, 'I');
+  str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, 'O');
+  str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, 'U');
+  str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, 'Y');
+  str = str.replace(/Đ/g, 'D');
+  return str;
+}
+
+function clearInputPost() {
+  editorContent.setData('');
+  editorContent.getData('');
+  document.getElementById('#ip-name').value = '';
+  document.getElementById('#ip-slug').value = '';
+  $('#image-post').attr('src', '/cms/images/index/default-image.jpeg');
+  $('#active-checked').prop('checked', true);
+  $('#select-id-1').attr('selected', 'selected');
+}
 

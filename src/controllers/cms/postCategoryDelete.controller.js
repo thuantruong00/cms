@@ -6,6 +6,10 @@ async function action(req, res) {
     res.send({
       deleteByIdRes
     });
+  }else {
+    res.send({
+      deleteByIdRes
+    });
   }
 }
 

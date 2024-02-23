@@ -4,18 +4,20 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Name</th>
+            <th scope="col">Category</th>
             <th scope="col">Slug</th>
             <th scope="col">Action</th>
           </tr>
         </thead>
         <tbody>
-            <% for( const item of arrayPosts) { %>
-          <tr id="row-id-<%=item.id%>">
-            <th scope="row"><%=item.id%></th>
-            <td id="name-id-<%=item.id%>"><%=item.title%></td>
-            <td id="slug-id-<%=item.id%>"><%=item.slug%></td>
+            <% for( const item of arrayCategoriesOnPosts) { %>
+          <tr id="row-id-<%=item.post_id%>">
+            <th scope="row"><%=item.post_id%></th>
+            <td id="name-id-<%=item.post_id%>"><%=item.title%></td>
+            <td id="name-id-<%=item.post_id%>"><%=item.name%></td>
+            <td id="slug-id-<%=item.post_id%>"><%=item.slug%></td>
             <td>
-                <a class="btn btn-success" href="/cms/post/<%=item.id%>">Edit</a>
+                <a class="btn btn-success" href="/cms/post/<%=item.post_id%>/<%=item.post_category_id%>">Edit</a>
                 <a class="btn btn-danger" data-toggle="modal" data-target="#confirmModal">Delete</a>
             </td>
           </tr>
@@ -33,7 +35,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-danger" onclick="handleDeletePost(`<%=item.id%>`)">Delete</button>
+                  <button type="button" class="btn btn-danger" onclick="handleDeletePost(`<%=item.post_id%>`,`<%=item.post_category_id%>`)">Delete</button>
                 </div>
               </div>
             </div>
