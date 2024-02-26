@@ -3,12 +3,9 @@ $('.btn-close-modal').click(function () {
   $('.wrap-modal').toggleClass('d-none');
 });
 
-function handleOpenModal(id, url) {
-  $('.wrap-view-image').attr('id-modal', id + '');
+function handleOpenModal(id) {
+  $('.modal-upload').attr('id-modal', id + '');
   $('.wrap-modal').toggleClass('d-none');
-
-  if (url != '') {
-  }
 }
 
 function handleUploadToDB(type, pageId) {
@@ -45,22 +42,23 @@ function handleUploadToDB(type, pageId) {
 
 //handle view-image
 
-$('.btn-submit').click(function () {
+
+
+function handleSubmitGeneral() {
+  let id = $('.modal-upload').attr('id-modal');
+
   if (!$("input[name='image-check']").is(':checked')) {
     alert('Nothing to submit!');
   } else {
-    var id = $('.wrap-view-image').attr('id-modal');
-    console.log(id)
-    id = id.substring(1);
+    $('.wrap-modal').toggleClass('d-none');
     const url = $('input[type=radio]:checked').attr('url');
     $(`#input-text-${id}`).val(url);
     $(`#img-${id}`).attr('src', url);
-    $('.wrap-modal').toggleClass('d-none');
-    $('.wrap-view-image').removeAttr('id-modal');
+    // $('.wrap-view-image').removeAttr('id-modal');
   }
-});
+}
 
-$('.btn-upload-image').click(function () {
+function handleUploadImage() {
   const type = $('.btn-upload-image').attr('type-image');
   let inputFile = $('.input-upload')[0];
   var formData = new FormData();
@@ -85,9 +83,7 @@ $('.btn-upload-image').click(function () {
       processData: false,
       contentType: false,
       success: function (result) {
-        console.log(result);
         const data = result.resData;
-        console.log(data);
         data.map((item) => {
           var div = document.createElement('div');
           div.style.width = '50px';
@@ -119,7 +115,8 @@ $('.btn-upload-image').click(function () {
       }
     });
   }
-});
+}
+
 
 //handle images.ejs
 //handle upload image
@@ -149,9 +146,7 @@ $('.btn-link').click(function () {
       processData: false,
       contentType: false,
       success: function (result) {
-        console.log(result);
         const data = result.resData;
-        console.log(data);
         data.map((item) => {
           var div = document.createElement('div');
           div.style.width = '50px';
@@ -197,7 +192,6 @@ $('.btn-delete').click(function () {
   if (data.length > 0) {
     var formData = new FormData();
     for (var i = 0; i < data.length; i++) {
-      // console.log('data: ',data[i])
       formData.append('id', data[i]);
     }
 

@@ -15,6 +15,7 @@ async function action(req, res) {
   if (resFindAllCategory.status) {
     arrayCategory = [...resFindAllCategory.payload];
   }
+
   arrayCategory = arrayCategory.reverse();
   res.render(sidebar_data.active_page.page_name, {
     arrayCategory,

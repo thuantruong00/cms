@@ -78,12 +78,15 @@ function handleSubmitCategoryPost() {
     type: 'post',
     cache: false,
     success: function (result) {
-      alert(result.resDB.message);
-      document.getElementById('ip-name').value = ` `;
-      document.getElementById('ip-slug').value = ``;
-      document.getElementById('ip-description').value = ``;
-
-      location.reload();
+      if (result.errCode == 0) {
+        document.getElementById('ip-name').value = ` `;
+        document.getElementById('ip-slug').value = ``;
+        document.getElementById('ip-description').value = ``;
+        alert(result.message);
+        location.reload();
+      } else if (result.errCode == 1) {
+        alert(result.message);
+      }
     },
     error: function (xhr, ajaxOptions, thrownError) {
       console.log('error');
@@ -99,15 +102,12 @@ function handleDeleteCategory(id) {
     cache: false,
     success: function (result) {
       $('.btn-close').click();
-      if (result.deleteByIdRes.status) {
-        setTimeout(() => {
-          alert(result.deleteByIdRes.message);
-        }, 200);
+
+      if (result.errCode == 0) {
+        alert(result.message);
         location.reload();
-      } else {
-        setTimeout(() => {
-          alert('The category still has posts. Cant delete category ');
-        }, 200);
+      } else if (result.errCode == 1) {
+        alert(result.message);
       }
     },
     error: function (xhr, ajaxOptions, thrownError) {
@@ -153,11 +153,13 @@ function handleEditCategory(id) {
     type: 'post',
     cache: false,
     success: function (result) {
-      alert(result.resUpdateCategoryById.message);
-      // document.getElementById('ip-name').value = ` `;
-      // document.getElementById('ip-slug').value = `/cms/`;
-      // document.getElementById('ip-description').value = ``;
-      location.reload();
+      console.log(result);
+      if (result.errCode == 0) {
+        alert(result.message);
+        location.reload();
+      } else if (result.errCode == 1) {
+        alert(result.message);
+      }
     },
     error: function (xhr, ajaxOptions, thrownError) {
       console.log('error');
@@ -206,7 +208,12 @@ function handleCreateNewPost() {
     type: 'post',
     cache: false,
     success: function (result) {
-      alert(result.message);
+      if (result.errCode == 0) {
+        alert(result.message);
+        location.reload();
+      } else if (result.errCode == 1) {
+        alert(result.message);
+      }
     },
     error: function (xhr, ajaxOptions, thrownError) {
       console.log('error');
@@ -221,11 +228,14 @@ function handleDeletePost(idPost, idCategory) {
     type: 'post',
     cache: false,
     success: function (result) {
-      $('.btn-close').click();
-      setTimeout(() => {
-        alert(result.resDeleteById.message);
-      }, 200);
-      $(`#row-id-${idPost}`).addClass('d-none');
+      if (result.errCode == 0) {
+        $('.btn-close').click();
+        $(`#row-id-${idPost}`).addClass('d-none');
+        alert(result.message);
+      } else {
+        $('.btn-close').click();
+        alert(result.message);
+      }
     },
     error: function (xhr, ajaxOptions, thrownError) {
       console.log('error');
@@ -268,8 +278,12 @@ function handleEditPost(idPost) {
     type: 'post',
     cache: false,
     success: function (result) {
-      alert(result.resUpdatePostById.message);
-      window.location.href = '/cms/post';
+      if (result.errCode == 0) {
+        alert(result.message);
+        window.location.href = '/cms/post';
+      } else {
+        alert(result.message);
+      }
     },
     error: function (xhr, ajaxOptions, thrownError) {
       console.log('error');
@@ -277,11 +291,11 @@ function handleEditPost(idPost) {
   });
 }
 
-function handleOpenModal() {
+function handleOpenModalPost() {
   $('.wrap-modal').toggleClass('d-none');
 }
 
-$('.btn-up-post').click(function () {
+function handleSubmitPost() {
   if (!$("input[name='image-check']").is(':checked')) {
     alert('Nothing to submit!');
   } else {
@@ -290,8 +304,148 @@ $('.btn-up-post').click(function () {
     $('.wrap-modal').toggleClass('d-none');
     $('.wrap-view-image').removeAttr('id-modal');
   }
-});
+}
 
+//Category product
+function handleOnChangeCategoryProductName(isCategory) {
+  let postName = $('#ip-category-product-name').val().trim().toLowerCase();
+  let slug = convertViToEn(postName.replaceAll(' ', '-'));
+
+  if (isCategory) {
+    document.getElementById('ip-category-product-slug').value = `/cms/${slug}`;
+  } else {
+    var selectValue = $('#select-category-option').find(':selected').text();
+    selectValue = convertViToEn(selectValue.trim().toLowerCase());
+    selectValue = selectValue.replaceAll(' ', '-');
+    document.getElementById('ip-category-product-slug').value = `/cms/${selectValue}/${slug}`;
+  }
+}
+
+function handleSubmitCategoryProduct() {
+  let name = $('#ip-category-product-name').val();
+  let slug = $('#ip-category-product-slug').val();
+  let description = $('#ip-category-product-description').val();
+  var selectValue = $('#select-category-option').find(':selected').val();
+  var parent_id = null;
+  // if (selectValue != 0) {
+  //   parent_id = selectValue;
+  // }
+
+  if (name.trim() == '' || slug.trim() == '' || description.trim() == '') {
+    alert('Missing parameter');
+    return;
+  }
+
+  let data = {
+    name,
+    slug,
+    description,
+    parent_id
+  };
+
+  $.ajax({
+    url: `/cms/product-category`,
+    data,
+    type: 'post',
+    cache: false,
+    success: function (result) {
+      if (result.errCode == 0) {
+        alert(result.message);
+        document.getElementById('ip-category-product-name').value = ` `;
+        document.getElementById('ip-category-product-slug').value = ``;
+        document.getElementById('ip-category-product-description').value = ``;
+        $('#select-id-0').attr('selected', 'selected');
+        location.reload();
+      } else if (result.errCode == 1) {
+        alert(result.message);
+      }
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('error');
+    }
+  });
+}
+
+function handleDeleteCategoryProduct(id) {
+  $.ajax({
+    url: `/cms/product-category/delete/${id}`,
+    type: 'post',
+    cache: false,
+    success: function (result) {
+      $('.btn-close').click();
+
+      if (result.errCode == 0) {
+        setTimeout(() => {
+          alert(result.message);
+        }, 200);
+        $(`#row-id-${id}`).addClass('d-none');
+      } else if (result.errCode == 1) {
+        setTimeout(() => {
+          alert(result.message);
+        }, 200);
+      }
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('error');
+    }
+  });
+}
+
+function handleFillEditCategoryProduct(id) {
+  let postName = $(`#name-id-${id}`).html();
+  let postSlug = $(`#slug-id-${id}`).html();
+  let postDescription = $(`#description-id-${id}`).html();
+
+  document.getElementById('ip-category-product-name').value = postName;
+  document.getElementById('ip-category-product-slug').value = postSlug;
+  document.getElementById('ip-category-product-description').value = postDescription;
+
+  $(`.button-submit`).addClass('d-none');
+  $(`.button-edit`).removeClass('d-none');
+  $(`.button-edit`).attr('id-item', id);
+}
+//
+function handleEditCategoryProduct(id) {
+  let name = $('#ip-category-product-name').val();
+  let slug = $('#ip-category-product-slug').val();
+  let description = $('#ip-category-product-description').val();
+
+  if (name.trim() == '' || slug.trim() == '' || description.trim() == '') {
+    alert('Missing parameter');
+    return;
+  }
+
+  let data = {
+    name,
+    slug,
+    description
+  };
+
+  $.ajax({
+    url: `/cms/product-category/update/${id}`,
+
+    data,
+    type: 'post',
+    cache: false,
+    success: function (result) {
+      if (result.errCode == 0) {
+        alert(result.message);
+        document.getElementById('ip-category-product-name').value = ` `;
+        document.getElementById('ip-category-product-slug').value = ``;
+        document.getElementById('ip-category-product-description').value = ``;
+        $('#select-id-0').attr('selected', 'selected');
+        location.reload();
+      } else if (result.errCode == 1) {
+        alert(result.message);
+      }
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('error');
+    }
+  });
+}
+
+//other function
 function convertViToEn(str) {
   str = str.replace(/\s+/g, ' ');
   str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');

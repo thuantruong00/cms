@@ -1,17 +1,27 @@
-const { deleteById } = require('../../models/Post.model');
+const { deleteById, findPostById } = require('../../models/Post.model');
 const { deleteCategoriesOnPosts } = require('../../models/CategoriesOnPosts.model');
 
 async function action(req, res) {
-  console.log(Number(req.params.id), Number(req.params.category));
+  const id = Number(req.params.id);
+  const categoryId = Number(req.params.category);
 
-  const resDeleteCategoriesOnPosts = await deleteCategoriesOnPosts(Number(req.params.id), Number(req.params.category));
-  if (resDeleteCategoriesOnPosts.status) {
-    const resDeleteById = await deleteById(Number(req.params.id));
-    if (resDeleteById.status) {
-      res.send({
-        resDeleteById
-      });
+  const resFindPostById = await findPostById(id);
+  if (resFindPostById.payload) {
+    const resDeleteCategoriesOnPosts = await deleteCategoriesOnPosts(id, categoryId);
+    if (resDeleteCategoriesOnPosts.status) {
+      const resDeleteById = await deleteById(id);
+      if (resDeleteById.status) {
+        res.send({
+          errCode: 0,
+          message: 'Delete post successfully'
+        });
+      }
     }
+  } else {
+    res.send({
+      errCode: 1,
+      message: 'Not found post to delete'
+    });
   }
 }
 

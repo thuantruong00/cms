@@ -53,6 +53,53 @@ const findAllCategory = async (notInclude: string): Promise<object> => {
   }
 };
 
+const findCategoryById = async (id: number): Promise<object> => {
+  try {
+    const payload = await prisma.category_of_post.findUnique({
+      where: {
+        id
+      }
+    });
+
+    return {
+      status: true,
+      message: 'Success get category of post by id',
+      payload
+    };
+  } catch (e) {
+    return {
+      status: false,
+      message: 'Failed get category of post by id',
+      payload: null
+    };
+  }
+};
+
+const findCategoryBySlug = async (slug: string, notId: number): Promise<object> => {
+  try {
+    const payload = await prisma.category_of_post.findMany({
+      where: {
+        slug,
+        id: {
+          not: notId
+        }
+      }
+    });
+
+    return {
+      status: true,
+      message: 'Success get all category of post',
+      payload
+    };
+  } catch (e) {
+    return {
+      status: false,
+      message: 'Failed get all category of post',
+      payload: null
+    };
+  }
+};
+
 const deleteById = async (id: number): Promise<object> => {
   try {
     const payload = await prisma.category_of_post.delete({
@@ -94,5 +141,12 @@ const updateCategoryById = async (id: number, data: CategoryOfPost): Promise<obj
   }
 };
 
-module.exports = { createCategory, findAllCategory, deleteById, updateCategoryById };
+module.exports = {
+  createCategory,
+  findAllCategory,
+  findCategoryById,
+  findCategoryBySlug,
+  deleteById,
+  updateCategoryById
+};
 

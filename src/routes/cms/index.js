@@ -35,6 +35,7 @@ const postCategoryDetailController = require('../../controllers/cms/postCategory
 //new-post
 const newPostController = require('../../controllers/cms/newPostController');
 const newPostCreateController = require('../../controllers/cms/newPostCreate.controller.js');
+
 //post-detail
 const postController = require('../../controllers/cms/postController');
 const postDetailController = require('../../controllers/cms/postDetailController');
@@ -46,7 +47,12 @@ const postCategoryCreateController = require('../../controllers/cms/postCategory
 const postCategoryDeleteController = require('../../controllers/cms/postCategoryDelete.controller.js');
 const postCategoryUpdateController = require('../../controllers/cms/postCategoryUpdate.controller.js');
 
+//category-product
 const productCategoryController = require('../../controllers/cms/productCategoryController');
+const productCategoryCreateController = require('../../controllers/cms/productCategoryCreate.controller.js')
+const productCategoryDeleteController = require('../../controllers/cms/productCategoryDelete.controller.js')
+const productCategoryUpdateController = require('../../controllers/cms/productCategoryUpdate.controller.js')
+
 const productController = require('../../controllers/cms/productController');
 const productDetailController = require('../../controllers/cms/productDetailController');
 const productCategoryDetailController = require('../../controllers/cms/productCategoryDetailController');
@@ -127,6 +133,21 @@ router.get('/post-category/:id', (req, res) => {
   postCategoryDetailController.action(req, res);
 });
 
+//category product
+router.get('/product-category', (req, res) => {
+  productCategoryController.action(req, res);
+});
+router.post('/product-category', (req, res) => {
+  productCategoryCreateController.action(req, res);
+});
+router.post('/product-category/delete/:id', (req, res) => {
+  productCategoryDeleteController.action(req, res);
+});
+router.post('/product-category/update/:id', (req, res) => {
+  productCategoryUpdateController.action(req, res);
+});
+
+
 //product
 router.get('/product', (req, res) => {
   productController.action(req, res);
@@ -134,9 +155,7 @@ router.get('/product', (req, res) => {
 router.get('/new-product', (req, res) => {
   newProductController.action(req, res);
 });
-router.get('/product-category', (req, res) => {
-  productCategoryController.action(req, res);
-});
+
 router.get('/product-category/:id', (req, res) => {
   productCategoryDetailController.action(req, res);
 });
@@ -154,6 +173,7 @@ router.post('/images/upload/:id', (req, res) => {
 router.post('/images/delete/:id', (req, res) => {
   deleteImageController.action(req, res);
 });
+
 
 //route custom file
 router.get('/custom', (req, res) => {

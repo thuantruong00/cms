@@ -52,6 +52,28 @@ const findAllPost = async (): Promise<object> => {
   }
 };
 
+const findPostBySlug = async (slug: string): Promise<object> => {
+  try {
+    const payload = await prisma.post.findFirst({
+      where: {
+        slug
+      }
+    });
+    return {
+      status: true,
+      message: 'Success find all post',
+      payload
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      status: false,
+      message: 'Failed find all post',
+      payload: null
+    };
+  }
+};
+
 const findPostById = async (id: number): Promise<object> => {
   try {
     const payload = await prisma.post.findFirst({
@@ -129,5 +151,5 @@ const updatePostById = async (id: number, data: Post): Promise<object> => {
   }
 };
 
-module.exports = { createNewPost, findAllPost, findPostById, deleteById, updatePostById };
+module.exports = { createNewPost, findAllPost, findPostBySlug, findPostById, deleteById, updatePostById };
 
