@@ -143,6 +143,9 @@ model product {
   status         String   @default("active")
   unit           String
   is_sale_off    Boolean  @default(false)
+  sale_by        String @default("price")
+  sale_off_by_percent     Int   @default(0)
+  sale_off_by_price     Int   @default(0)
   sale_off_desc  String   @default("")
   label          String
   created_at     DateTime @default(now())
@@ -154,6 +157,8 @@ model product {
   product_images image_of_product[]
   categories     categories_on_products[]
 }
+
+
 
 model category_of_product {
   id          Int      @id @default(autoincrement())
@@ -188,6 +193,8 @@ model image_of_product {
 
   product_id String
   product    product @relation(fields: [product_id], references: [id])
+
+  href_image String
 
   images image[]
 }

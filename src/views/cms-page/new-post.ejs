@@ -5,17 +5,18 @@
         <div class="col-6">
           <label>Name</label>
           <br />
-          <input class="form-control" id="ip-name" onchange="handleOnChangePostName(false)" />
+          <input class="form-control" id="ip-name" onchange="handleOnChangeName(false,false)" />
         </div>
         <div class="col-6">
           <label>Slug</label>
           <br />
-          <input class="form-control" id="ip-slug" />
+          <input class="form-control" id="ip-slug" onchange="handleOnChangeSlug(false,false)"/>
+          <p class="mt-1" >Hint: <span id="ip-hint"></span></p>
         </div>
       </div>
       <div class="mt-3">
         <label class="mr-4">Category: </label>
-        <select name="category" id="select-category-option" onchange="handleOnChangePostName(false)" class="col-3">
+        <select name="category" id="select-category-option" class="col-3">
           <% for( const item of arrayCategory) { %>
           <option id="select-id-<%=item.id%>" value="<%=item.id%>"><%=item.name%></option>
         <%}%>

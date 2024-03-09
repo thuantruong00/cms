@@ -42,8 +42,6 @@ function handleUploadToDB(type, pageId) {
 
 //handle view-image
 
-
-
 function handleSubmitGeneral() {
   let id = $('.modal-upload').attr('id-modal');
 
@@ -56,6 +54,54 @@ function handleSubmitGeneral() {
     $(`#img-${id}`).attr('src', url);
     // $('.wrap-view-image').removeAttr('id-modal');
   }
+}
+
+function handleSubmitProduct() {
+  var data = [];
+  $("input[name ='image-check']").each(function (index, element) {
+    if ($(element).is(':checked')) {
+      data.push({ url: $(element).attr('url'), id: $(element).attr('id-item') });
+    }
+  });
+
+  for (const item of data) {
+    var element = document.getElementById('images-product');
+
+    var img = document.createElement('img');
+    var btnDel = document.createElement('button');
+    var div = document.createElement('div');
+    div.setAttribute('class', 'position-relative mr-3');
+    div.setAttribute('id', 'div-id-' + item.id);
+    div.width = 70;
+    div.height = 90;
+    img.src = item.url;
+    img.width = 70;
+    img.height = 90;
+    img.setAttribute('class', 'image-chosen ');
+    img.setAttribute('item-id', item.id + '');
+    btnDel.setAttribute('id', item.id + '');
+    btnDel.append('X');
+    btnDel.setAttribute(
+      'class',
+      'position-absolute pe-auto btn-del-image translate-middle badge border border-light rounded-circle bg-danger p-1'
+    );
+    btnDel.onclick = function () {
+      document.getElementById(`div-id-${item.id}`).remove();
+    };
+    div.appendChild(img);
+    div.appendChild(btnDel);
+    element.appendChild(div);
+  }
+
+  $('.image-default').addClass('d-none');
+
+  $('.wrap-modal').toggleClass('d-none');
+}
+
+function handleRemoveImage(id) {
+  console.log(document.getElementById(id));
+  var div = document.getElementById(id);
+  div.remove();
 }
 
 function handleUploadImage() {
@@ -95,7 +141,11 @@ function handleUploadImage() {
           img.height = 60;
 
           var input = document.createElement('input');
-          input.type = 'radio';
+          if (type == 'product') {
+            input.type = 'checkbox';
+          } else {
+            input.type = 'radio';
+          }
           input.setAttribute('id-item', item.id);
           input.setAttribute('name', 'image-check');
           input.setAttribute('url', item.url);
@@ -116,7 +166,6 @@ function handleUploadImage() {
     });
   }
 }
-
 
 //handle images.ejs
 //handle upload image

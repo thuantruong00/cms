@@ -36,7 +36,7 @@ async function action(req, res) {
       } else {
         res.send({
           errCode: 1,
-          message: `Category's name already exists`
+          message: `Category's slug already exists`
         });
       }
     } else {

@@ -41,9 +41,12 @@ async function action(req, res) {
 
   const resFindCategoriesOnPostsById = await findCategoriesOnPostsById(Number(idPostDetail), Number(idCategory));
   var idCategoryOfPost = resFindCategoriesOnPostsById.payload.post_category_id;
-  console.log(idCategoryOfPost);
 
+  var hint = dataPostDetailById.slug;
+  hint = hint.split('/');
+  hint = hint[hint.length - 1];
 
+  dataPostDetailById = { ...dataPostDetailById, hint };
   let sidebar_data = await sidebarControl('a41', role_current_user);
 
   res.render('cms-page/post-detail', {

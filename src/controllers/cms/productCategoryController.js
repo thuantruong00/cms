@@ -11,7 +11,7 @@ async function action(req, res) {
 
   let sidebar_data = await sidebarControl('a53', role_current_user);
 
-  const resFindAllCategoryOfProduct = await findAllCategoryOfProduct();
+  const resFindAllCategoryOfProduct = await findAllCategoryOfProduct('Other');
 
   var arrayCategory = [];
   if (resFindAllCategoryOfProduct.status) {

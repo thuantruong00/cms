@@ -5,24 +5,25 @@
           <div class="col-6">
             <label>Name</label>
             <br />
-            <input class="form-control" id="ip-name" onchange="handleOnChangePostName(false)" />
+            <input class="form-control" id="ip-name" onchange="handleOnChangeName(false,true)" />
           </div>
           <div class="col-6">
             <label>Slug</label>
             <br />
-            <input class="form-control" id="ip-slug" />
+            <input class="form-control" id="ip-slug" onchange="handleOnChangeSlug(false,true)"/>
+            <p class="mt-1" >Hint: <span id="ip-hint"></span></p>
           </div>
         </div>
        
         <div class="mt-3">
           <label>Description</label>
           <br />
-          <div id="editor" class="mt-3"></div>
+          <div id="editorDescription" class="mt-3"></div>
           <script>
-            ClassicEditor.create(document.querySelector('#editor'), {
+            ClassicEditor.create(document.querySelector('#editorDescription'), {
             })
               .then((editor) => {
-                editorExcerpt = editor;
+                editorDescription = editor;
               })
               .catch((error) => {
                 console.error(error);
@@ -32,120 +33,188 @@
         <div class="mt-3">
           <label>Detail</label>
           <br />
-          <div id="editor1" class="mt-3"></div>
+          <div id="editorDetail" class="mt-3"></div>
           <script>
-            ClassicEditor.create(document.querySelector('#editor1'))
+            ClassicEditor.create(document.querySelector('#editorDetail'))
               .then((editor) => {
-                editorContent = editor;
+                editorDetail = editor;
               })
               .catch((error) => {
                 console.error(error);
               });
           </script>
         </div>
+
+        <div class="mt-3">
+          <label>Label</label>
+          <br />
+          <div id="editorLabel" class="mt-3"></div>
+          <script>
+            ClassicEditor.create(document.querySelector('#editorLabel'))
+              .then((editor) => {
+                editorLabel = editor;
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          </script>
+        </div>
+
         <div class="mt-3 row">
             <div class="col-6">
                 <label>Price</label>
                 <div class="input-group mb-3 ">
-                    <input type="number" class="form-control" min="1" step="10000">
+                    <input type="number" id="ip-price" class="form-control">
                     <div class="input-group-append">
                       <span class="input-group-text">VND</span>
                     </div>
                   </div>
             </div>
-            <div class="col-6">
-                <label>Active</label>
-                <div class="input-group mb-3 ">
-                    <input type="number" class="form-control" min="1" step="10000">
-                    <div class="input-group-append">
-                      <span class="input-group-text">VND</span>
-                    </div>
-                  </div>
-            </div>
+          <div class="col-6">
+            <label>Show price</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" >Options</label>
+                </div>
+                <select class="custom-select" id="select-is-show-price-option">
+                  <option value="true" selected>Show</option>
+                  <option value="false">Hidden</option>
+                </select>
+              </div>
+          </div>
         </div>
 
         <div class="mt-3 row">
-            <div class="col-6">
-                <label>Stock status</label>
-                <div class="input-group mb-3 ">
-                    <input type="number" class="form-control" min="1" step="10000">
-                    <div class="input-group-append">
-                      <span class="input-group-text">VND</span>
-                    </div>
+          <div class="col-6">
+              <label>Order</label>
+              <div class="input-group mb-3 ">
+                  <input type="number" id="ip-order" placeholder="0" class="form-control">
+                  <div class="input-group-append">
                   </div>
-            </div>
+                </div>
+          </div>
+          <div class="col-6">
+              <label>Unit</label>
+              <div class="input-group mb-3 ">
+                  <input  id="ip-unit"  class="form-control" onchange="handleOnChangeUnit($(this).val())">
+                  <div class="input-group-append">
+                  </div>
+                </div>
+          </div>
+      </div>
+
+        <div class="mt-3 row">
             <div class="col-6">
                 <label>Stock quantity</label>
                 <div class="input-group mb-3 ">
-                    <input type="number" class="form-control" min="1" step="10000">
+                    <input type="number" id="ip-quantity"  placeholder="0" class="form-control">
                     <div class="input-group-append">
-                      <span class="input-group-text">VND</span>
+                      <span class="input-group-text" id="unit-product">Unit</span>
                     </div>
                   </div>
+            </div>
+            <div class="col-6">
+              <label>Stock status</label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text">Options</label>
+                  </div>
+                  <select class="custom-select" id="select-status-stock-option">
+                    <option value="on-stock" selected>On-stock</option>
+                    <option value="contact">Contact</option>
+                  </select>
+                </div>
             </div>
         </div>
 
         <div class="mt-3 row">
-            <div class="col-6">
-                <label>Order</label>
-                <div class="input-group mb-3 ">
-                    <input type="number" class="form-control" min="1" step="10000">
-                    <div class="input-group-append">
-                      <span class="input-group-text">VND</span>
-                    </div>
-                  </div>
-            </div>
-            <div class="col-6">
-                <label>Unit</label>
-                <div class="input-group mb-3 ">
-                    <input type="number" class="form-control" min="1" step="10000">
-                    <div class="input-group-append">
-                      <span class="input-group-text">VND</span>
-                    </div>
-                  </div>
+        
+          <div class="col-6">
+            <label>Sale</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" >Options</label>
+                </div>
+                <select class="custom-select" id="select-is-sale-option" onchange="handleOnChangeIsSale()">
+                  <option value="false" selected>None</option>
+                  <option value="true">Sale</option>
+                </select>
+              </div>
+          </div>
+          <div class="col-6">
+            <label>Sale by</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" >Options</label>
+              </div>
+              <select class="custom-select" id="select-sale-option">
+                <option value="price" selected>Price</option>
+                <option value="percent">Percent</option>
+              </select>
             </div>
         </div>
+       
+      </div>
 
         <div class="mt-3 row">
+
             <div class="col-6">
-                <label>Sale off</label>
+                <label>Sale off by price</label>
                 <div class="input-group mb-3 ">
-                    <input type="number" class="form-control" min="1" step="10000">
+                    <input type="number" placeholder="0" disabled id="ip-sale-price" class="form-control">
                     <div class="input-group-append">
                       <span class="input-group-text">VND</span>
                     </div>
                   </div>
             </div>
             <div class="col-6">
-                <label>Sale price</label>
-                <div class="input-group mb-3 ">
-                    <input type="number" class="form-control" min="1" step="10000">
-                    <div class="input-group-append">
-                      <span class="input-group-text">VND</span>
-                    </div>
+              <label>Sale price by percent</label>
+              <br/>
+              <div class="input-group mb-3 ">
+                  <input type="number" max="100" min="0" placeholder="0" disabled id="ip-sale-percent" class="form-control">
+                  <div class="input-group-append">
+                    <span class="input-group-text">%</span>
                   </div>
+                </div>
             </div>
         </div>
 
         <div class="mt-3">
-            <label>Label</label>
-            <br />
-            <div id="editor2" class="mt-3"></div>
-            <script>
-              ClassicEditor.create(document.querySelector('#editor2'))
-                .then((editor) => {
-                  editor = editor;
-                })
-                .catch((error) => {
-                  console.error(error);
-                });
-            </script>
-          </div>
+          <label>Sale description</label>
+          <br />
+          <div id="editorSaleDesc" class="mt-3"></div>
+          <script>
+            ClassicEditor.create(document.querySelector('#editorSaleDesc'))
+              .then((saleEditor) => {
+                editorSaleDesc = saleEditor;
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          </script>
+        </div>
+
+        <div class="mt-3 ">
+          <label>Category</label>
+         <div class="d-flex flex-wrap">
+            <% arrayCategory.forEach(function(item) { %>
+              <div class="" style="width: 33%;overflow: hidden; text-overflow: ellipsis;"  >
+                <input type="checkbox"  value="<%=item.id%>" class="check-category">
+                <label for=" "><%=item.name%></label><br>
+              </div>
+              <% }); %>
+         </div>
+        </div>
 
         <div class="mt-3">
           <label>Image post:</label>
-          <img id="image-post" src="/cms/images/index/default-image.jpeg" class="image-show ml-2 mr-2" />
-          <a class="btn btn-success" onclick="handleOpenModalPost()">Choose</a>
+     <div class="d-flex ">
+            <div id="images-product" class="d-flex" >
+                <img  id="image-post" src="/cms/images/index/default-image.jpeg" class="image-show  mr-2 image-default" />
+            </div>
+
+     </div>
+          <a class="btn btn-success mt-2" onclick="handleOpenModalPost()">Choose</a>
            
         </div>
         <div class="mt-3">
@@ -153,7 +222,7 @@
           <input id="active-checked" type="checkbox" checked />
         </div>
         <div class="d-flex justify-content-center">
-          <button type="button" class="btn btn-success mt-3" onclick="handleCreateNewPost()">Submit</button>
+          <button type="button" class="btn btn-success mt-3" onclick="handleCreateNewProduct()">Submit</button>
         </div>
       </div>
     </div>
@@ -164,5 +233,6 @@
       </div> 
   </div>
   </div>
+
   
   

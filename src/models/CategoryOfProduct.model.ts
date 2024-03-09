@@ -12,9 +12,15 @@ export default interface CategoryOfProduct {
   parent_id: number | null;
 }
 
-const findAllCategoryOfProduct = async (): Promise<object> => {
+const findAllCategoryOfProduct = async (notInclude: string): Promise<object> => {
   try {
-    const payload = await prisma.category_of_product.findMany({});
+    const payload = await prisma.category_of_product.findMany({
+      where: {
+        name: {
+          not: notInclude
+        }
+      }
+    });
     return {
       status: true,
       message: 'Success get all category of product',
@@ -61,6 +67,24 @@ const findCategoryOfProductById = async (id: number): Promise<object> => {
     return {
       status: false,
       message: 'Failed get all category of product',
+      payload: null
+    };
+  }
+};
+
+const findCategoryOfProductBySlug = async (slug: string): Promise<object> => {
+  try {
+    const payload = await prisma.category_of_product.findFirst({ where: { slug } });
+    return {
+      status: true,
+      message: 'Success get category of product by slug',
+      payload
+    };
+  } catch (e) {
+    console.log(e);
+    return {
+      status: false,
+      message: 'Failed get category of product by slug',
       payload: null
     };
   }
@@ -129,6 +153,7 @@ module.exports = {
   findAllCategoryOfProduct,
   findCategoryOfProductById,
   findCategoryOfProductByParentId,
+  findCategoryOfProductBySlug,
   createCategoryOfProduct,
   updateCategoryOfProduct,
   deleteCategoryProductById

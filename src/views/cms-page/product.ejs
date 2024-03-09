@@ -1,8 +1,63 @@
-<h3>admin product list</h3>
-<ul>
-    <li>
-        <a href="/cms/product/id1">product 1</a>
-        <a href="/cms/product/id2">product 2</a>
-        <a href="/cms/product/id3">product 3</a>
-    </li>
-</ul>
+<div class="d-flex justify-content-center mt-5">
+    <table class="table col-12">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Category</th>
+            <th scope="col">Slug</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Status</th>
+            <th scope="col">Stock status</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% let ids = 0 %>
+            <% for( const item of arrayProductWithCategory) { %>
+                <% ids=ids+1 %>
+          <tr id="row-id-<%=item.id%>">
+            <th scope="row"><%=ids%></th>
+            <td id="name-id-<%=item.id%>"><%=item.name%></td>
+
+            <td id="name-id-<%=item.id%>">
+                <% for( const category of item.arrayCategory) { %>
+                    <p><%=category%></p>
+                    <%}%>
+                </td>
+            <td id="slug-id-<%=item.id%>"><%=item.slug%></td>
+            <td id="price-id-<%=item.id%>"><%=item.price%></td>
+            <td id="quantity-id-<%=item.id%>"><%=item.stock_quantity%></td>
+            <td id="unti-id-<%=item.id%>"><%=item.unit%></td>
+            <td id="status-id-<%=item.id%>"><%=item.status%></td>
+            <td id="stock-status-id-<%=item.id%>"><%=item.stock_status%></td>
+            <td>
+                <a class="btn btn-success mt-1" href="/cms/product/<%=item.id%>">Edit</a>
+                <a class="btn btn-danger mt-1" data-toggle="modal" data-target="#confirmModal">Delete</a>
+            </td>
+          </tr>
+          <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="confirmModalLabel">Confirm action</h5>
+                  <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Do you want delete this category?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-danger" onclick="handleDeleteProduct(`<%=item.id%>`)">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%}%>
+        </tbody>
+      </table>
+</div>

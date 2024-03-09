@@ -1,1 +1,291 @@
-<h3>admin product detail</h3>
+<div class="container d-flex justify-content-center mt-5">
+    <div class="">
+      <div class="col-12">
+        <div class="row">
+          <div class="col-6">
+            <label>Name</label>
+            <br />
+            <input class="form-control" value="<%=dataDetailProduct.name%>" id="ip-name" onchange="handleOnChangeName(false,true)" />
+          </div>
+          <div class="col-6">
+            <label>Slug</label>
+            <br />
+            <input value="<%=dataDetailProduct.slugHint%>" class="form-control" id="ip-slug" onchange="handleOnChangeSlug(false,true)"/>
+            <p class="mt-1" >Hint: <span id="ip-hint"><%=dataDetailProduct.slug%></span></p>
+
+          </div>
+        </div>
+       
+        <div class="mt-3">
+          <label>Description</label>
+          <br />
+          <div id="editorDescription" class="mt-3"></div>
+          <script>
+            ClassicEditor.create(document.querySelector('#editorDescription'), {
+            })
+              .then((editor) => {
+                editorDescription = editor;
+                editor.setData(`<%-dataDetailProduct.description%>`);
+
+              })
+              .catch((error) => {
+                console.error(error);
+            });
+          </script>
+        </div>
+        <div class="mt-3">
+          <label>Detail</label>
+          <br />
+          <div id="editorDetail" class="mt-3"></div>
+          <script>
+            ClassicEditor.create(document.querySelector('#editorDetail'))
+              .then((editor) => {
+                editorDetail = editor;
+                editor.setData(`<%-dataDetailProduct.detail%>`);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          </script>
+        </div>
+
+        <div class="mt-3">
+          <label>Label</label>
+          <br />
+          <div id="editorLabel" class="mt-3"></div>
+          <script>
+            ClassicEditor.create(document.querySelector('#editorLabel'))
+              .then((editor) => {
+                editorLabel = editor;
+                editor.setData(`<%-dataDetailProduct.label%>`);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          </script>
+        </div>
+
+        <div class="mt-3 row">
+            <div class="col-6">
+                <label>Price</label>
+                <div class="input-group mb-3 ">
+                    <input type="number" id="ip-price" value="<%=dataDetailProduct.price%>" class="form-control">
+                    <div class="input-group-append">
+                      <span class="input-group-text">VND</span>
+                    </div>
+                  </div>
+            </div>
+          <div class="col-6">
+            <label>Show price</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" >Options</label>
+                </div>
+                <select class="custom-select" id="select-is-show-price-option">
+                
+                  <% if(dataDetailProduct.is_show_price) { %>
+                    <option value="true" selected>Show</option>
+                  <option value="false">Hidden</option>
+                  <%}else {%>
+                    <option value="true" >Show</option>
+                    <option selected value="false">Hidden</option>
+                    <%}%>
+                </select>
+              </div>
+          </div>
+        </div>
+
+        <div class="mt-3 row">
+          <div class="col-6">
+              <label>Order</label>
+              <div class="input-group mb-3 ">
+                  <input type="number" value="<%=dataDetailProduct.order%>" id="ip-order" placeholder="0" class="form-control">
+                  <div class="input-group-append">
+                  </div>
+                </div>
+          </div>
+          <div class="col-6">
+              <label>Unit</label>
+              <div class="input-group mb-3 ">
+                  <input type="text" id="ip-unit"  value="<%=dataDetailProduct.unit%>" class="form-control" onchange="handleOnChangeUnit($(this).val())">
+                  <div class="input-group-append">
+                  </div>
+                </div>
+          </div>
+      </div>
+
+        <div class="mt-3 row">
+            <div class="col-6">
+                <label>Stock quantity</label>
+                <div class="input-group mb-3 ">
+                    <input type="number" id="ip-quantity" value="<%=dataDetailProduct.stock_quantity%>"  placeholder="0" class="form-control">
+                    <div class="input-group-append">
+                      <span class="input-group-text" id="unit-product"><%=dataDetailProduct.unit%></span>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-6">
+              <label>Stock status</label>
+                <div class="input-group mb-3">
+                  <div class="input-group-prepend">
+                    <label class="input-group-text">Options</label>
+                  </div>
+                  <select class="custom-select" id="select-status-stock-option">
+                    <% if(dataDetailProduct.stock_status == 'contact') { %>
+                      <option value="on-stock" >On-stock</option>
+                      <option selected value="contact">Contact</option>
+                    <%}else {%>
+                      <option value="on-stock" selected>On-stock</option>
+                      <option value="contact">Contact</option>
+                      <%}%>
+                  </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-3 row">
+          <div class="col-6">
+            <label>Sale</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" >Options</label>
+                </div>
+                <select class="custom-select" id="select-is-sale-option" onchange="handleOnChangeIsSale()">
+                  <%if(dataDetailProduct.is_sale_off) {%>
+                    <option value="false" >None</option>
+                    <option selected value="true">Sale</option>
+                  <%} else {%>
+                    <option selected value="false" >None</option>
+                    <option  value="true">Sale</option>
+                    <%}%>
+                </select>
+              </div>
+          </div>
+          <div class="col-6">
+            <label>Sale by</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <label class="input-group-text" >Options</label>
+              </div>
+              <select class="custom-select" id="select-sale-option">
+                <%if(dataDetailProduct.sale_by == 'price') {%>
+                  <option selected value="price" >Price</option>
+                  <option  value="percent">Percent</option>
+                <%} else {%>
+                  <option  value="price" >Price</option>
+                  <option selected value="percent">Percent</option>
+                  <%}%>
+              </select>
+            </div>
+          </div>
+      </div>
+
+        <div class="mt-3 row">
+            <div class="col-6">
+                <label>Sale off by price</label>
+                <div class="input-group mb-3 ">
+                    <%if(dataDetailProduct.is_sale_off) {%>
+                      <input type="number" max="100" min="0" value="<%=dataDetailProduct.sale_off_by_price%>"  id="ip-sale-price" class="form-control">
+                    <%} else {%>
+                      <input type="number" max="100" min="0" value="<%=dataDetailProduct.sale_off_by_price%>" disabled  id="ip-sale-price" class="form-control">
+                      <%}%>
+                    <div class="input-group-append">
+                      <span class="input-group-text">VND</span>
+                    </div>
+                  </div>
+            </div>
+            <div class="col-6">
+              <label>Sale off by percent</label>
+              <br/>
+              <div class="input-group mb-3 ">
+                <%if(dataDetailProduct.is_sale_off) {%>
+                  <input type="number" max="100" min="0" value="<%=dataDetailProduct.sale_off_by_percent%>"  id="ip-sale-percent" class="form-control">
+                <%} else {%>
+                  <input type="number" max="100" min="0" value="<%=dataDetailProduct.sale_off_by_percent%>" disabled id="ip-sale-percent" class="form-control">
+                  <%}%>
+                  <div class="input-group-append">
+                    <span class="input-group-text">%</span>
+                  </div>
+                </div>
+            </div>
+         
+        </div>
+
+        <div class="mt-3">
+          <label>Sale description</label>
+          <br />
+          <div id="editorSaleDesc" class="mt-3"></div>
+          <script>
+            ClassicEditor.create(document.querySelector('#editorSaleDesc'))
+              .then((editor) => {
+                editorSaleDesc = editor;
+                editor.setData(`<%-dataDetailProduct.sale_off_desc%>`);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+          </script>
+        </div>
+
+        <div class="mt-3 ">
+          <label>Category</label>
+         <div class="d-flex flex-wrap">
+           <% arrayCategory.forEach(function(item) { %>
+            <% if(dataDetailProduct.arrayCategory.includes(item.name)) { %>
+              <div class="" style="width: 33%;overflow: hidden; text-overflow: ellipsis;"  >
+                <input type="checkbox" checked value="<%=item.id%>" class="check-category">
+                <label for=" "><%=item.name%></label><br>
+              </div>
+
+              <%} else {%>
+                <div class="" style="width: 33%;overflow: hidden; text-overflow: ellipsis;"  >
+                  <input type="checkbox"   value="<%=item.id%>" class="check-category">
+                  <label for=" "><%=item.name%></label><br>
+                </div>
+                <%}%>
+                <% }); %>
+
+         </div>
+        </div>
+
+        <div class="mt-3">
+          <label>Image post:</label>
+          <div id="images-product" class=" d-flex">
+              <% dataDetailProduct.arrayImage.forEach(function(item) { %>
+                  <div style="width: 70px; height: 90px;" class="position-relative mr-3" id="div-id-<%=item%>">
+                    <img id="image-post" src="<%=item%>" class="image-show image-default image-chosen" />
+                    <button class="position-absolute pe-auto btn-del-image translate-middle badge border border-light rounded-circle bg-danger p-1" onclick="handleRemoveImage(`div-id-<%=item%>`)">X</button>
+                  </div>
+             <%}) %>
+
+        </div>
+        <a class="btn btn-success mt-2" onclick="handleOpenModalPost()">Choose</a>
+
+      </div>
+        <div class="mt-3 ">
+          <label>Active: </label>
+          <%if(dataDetailProduct.status =='active') {%>
+          <input id="active-checked" type="checkbox" checked />
+          <%} else {%>
+          <input id="active-checked" type="checkbox"  />
+
+            <%}%>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button type="button" class="btn btn-success mt-3" onclick="handleUpdateProduct(`<%=dataDetailProduct.id%>`)">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap-modal d-none" >
+      <div class="modal-upload"  >
+          <%const typeUpload = 'product'%>
+          <%- include('../partials/cms/view-image.ejs', {arrayImage,typeUpload}) %>
+      </div> 
+  </div>
+  </div>
+
+  
+    
+  <button class="btn btn-primary pl-3 pr-3 btn-back" 
+  onclick="document.location.href = '/cms/product'">Back</button>

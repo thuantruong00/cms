@@ -10,7 +10,6 @@ async function action(req, res) {
   const user_id = user.id;
 
   const resFindCategoryBySlug = await findCategoryBySlug(postSlug);
-  console.log(resFindCategoryBySlug);
 
   if (resFindCategoryBySlug.status) {
     if (resFindCategoryBySlug.payload.length == 0) {
@@ -34,7 +33,7 @@ async function action(req, res) {
     } else {
       res.send({
         errCode: 1,
-        message: 'Category do exits.' 
+        message: `Category's name already exists.`
       });
     }
   }

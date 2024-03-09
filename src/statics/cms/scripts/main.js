@@ -41,27 +41,55 @@ function handleUploadFile(type) {
 }
 
 //post category
-function handleOnChangePostName(isCategory) {
-  let postName = $('#ip-name').val().trim().toLowerCase();
-  let slug = convertViToEn(postName.replaceAll(' ', '-'));
-  console.log(slug);
+function handleOnChangeName(isCategory, isProduct) {
+  let name = $('#ip-name').val().trim().toLowerCase();
+  let slug = convertViToEn(name.replaceAll(' ', '-'));
 
   if (isCategory) {
-    document.getElementById('ip-slug').value = `/cms/${slug}`;
+    if (isProduct) {
+      document.getElementById('ip-slug').value = `${slug}`;
+      document.getElementById('ip-hint').innerText = `/cms/product-category/${slug}`;
+    } else {
+      document.getElementById('ip-slug').value = `${slug}`;
+      document.getElementById('ip-hint').innerText = `/cms/post-category/${slug}`;
+    }
   } else {
-    var selectValue = $('#select-category-option').find(':selected').text();
-    selectValue = convertViToEn(selectValue.trim().toLowerCase());
-    selectValue = selectValue.replaceAll(' ', '-');
-    document.getElementById('ip-slug').value = `/cms/${selectValue}/${slug}`;
+    if (isProduct) {
+      document.getElementById('ip-slug').value = `${slug}`;
+      document.getElementById('ip-hint').innerText = `/cms/product/${slug}`;
+    } else {
+      document.getElementById('ip-slug').value = `${slug}`;
+      document.getElementById('ip-hint').innerText = `/cms/post/${slug}`;
+    }
+  }
+}
+
+function handleOnChangeSlug(isCategory, isProduct) {
+  let name = $('#ip-slug').val().trim().toLowerCase();
+  let slug = convertViToEn(name.replaceAll(' ', '-'));
+
+  if (isCategory) {
+    if (isProduct) {
+      document.getElementById('ip-hint').innerText = `/cms/product-category/${slug}`;
+    } else {
+      document.getElementById('ip-hint').innerText = `/cms/post-category/${slug}`;
+    }
+  } else {
+    if (isProduct) {
+      document.getElementById('ip-hint').innerText = `/cms/product/${slug}`;
+    } else {
+      document.getElementById('ip-hint').innerText = `/cms/post/${slug}`;
+    }
   }
 }
 
 function handleSubmitCategoryPost() {
-  let postName = $('#ip-name').val();
-  let postSlug = $('#ip-slug').val();
-  let postDescription = $('#ip-description').val();
+  let postName = $('#ip-name').val().trim();
+  let hint = $('#ip-slug').val().trim();
+  let postSlug = $('#ip-hint').text().trim();
+  let postDescription = $('#ip-description').val().trim();
 
-  if (postName.trim() == '' || postSlug.trim() == '' || postDescription.trim() == '') {
+  if (postName == '' || postSlug == '' || postDescription == '' || hint == '') {
     alert('Missing parameter');
     return;
   }
@@ -122,8 +150,10 @@ function handleFillEditCategory(id) {
   let postDescription = $(`#description-id-${id}`).html();
 
   document.getElementById('ip-name').value = postName;
-  document.getElementById('ip-slug').value = postSlug;
   document.getElementById('ip-description').value = postDescription;
+  document.getElementById('ip-hint').innerText = postSlug;
+
+  document.getElementById('ip-slug').value = getSlugHint(postSlug);
 
   $(`.button-submit`).addClass('d-none');
   $(`.button-edit`).removeClass('d-none');
@@ -131,9 +161,9 @@ function handleFillEditCategory(id) {
 }
 
 function handleEditCategory(id) {
-  let postName = $('#ip-name').val();
-  let postSlug = $('#ip-slug').val();
-  let postDescription = $('#ip-description').val();
+  let postName = $('#ip-name').val().trim();
+  let postSlug = $('#ip-hint').text().trim();
+  let postDescription = $('#ip-description').val().trim();
 
   if (postName.trim() == '' || postSlug.trim() == '' || postDescription.trim() == '') {
     alert('Missing parameter');
@@ -172,7 +202,8 @@ function handleCreateNewPost() {
   let content = editorContent.getData();
   let excerpt = editorExcerpt.getData();
   let title = $('#ip-name').val().trim();
-  let slug = convertViToEn($('#ip-slug').val().trim());
+  let slug = convertViToEn($('#ip-hint').text().trim());
+  let hint = $('#ip-slug').val().trim();
   let url = $('#image-post').attr('src');
   let checked = $('#active-checked').is(':checked');
   let status = checked ? 'active' : 'inactive';
@@ -182,13 +213,15 @@ function handleCreateNewPost() {
     selectValue = 1;
   }
 
-  if (content == '' || excerpt == '' || title == '' || slug == '' || url == '/cms/images/index/default-image.jpeg') {
+  if (
+    content == '' ||
+    excerpt == '' ||
+    title == '' ||
+    slug == '' ||
+    hint == '' ||
+    url == '/cms/images/index/default-image.jpeg'
+  ) {
     alert('Missing parameter');
-    return;
-  }
-
-  if (!slug.startsWith('/cms/')) {
-    alert('Slug start with "/cms/"');
     return;
   }
 
@@ -221,7 +254,6 @@ function handleCreateNewPost() {
   });
 }
 
-//detail post
 function handleDeletePost(idPost, idCategory) {
   $.ajax({
     url: `/cms/post/delete/${idPost}/${idCategory}`,
@@ -247,19 +279,15 @@ function handleEditPost(idPost) {
   let content = editorContent.getData();
   let excerpt = editorExcerpt.getData();
   let title = $('#ip-name').val().trim();
-  let slug = convertViToEn($('#ip-slug').val().trim());
+  let slug = convertViToEn($('#ip-hint').text().trim());
+  let hint = $('#ip-slug').val().trim();
   let url = $('#image-post').attr('src');
   let checked = $('#active-checked').is(':checked');
   let status = checked ? 'active' : 'inactive';
   var selectValue = $('#select-category-option').find(':selected').val();
 
-  if (content == '' || excerpt == '' || title == '' || slug == '') {
+  if (content == '' || excerpt == '' || title == '' || slug == '' || hint == '') {
     alert('Missing parameter');
-    return;
-  }
-
-  if (!slug.startsWith('/cms/')) {
-    alert('Slug start with "/cms/"');
     return;
   }
 
@@ -308,30 +336,31 @@ function handleSubmitPost() {
 
 //Category product
 function handleOnChangeCategoryProductName(isCategory) {
-  let postName = $('#ip-category-product-name').val().trim().toLowerCase();
+  let postName = $('#ip-name').val().trim().toLowerCase();
   let slug = convertViToEn(postName.replaceAll(' ', '-'));
 
   if (isCategory) {
-    document.getElementById('ip-category-product-slug').value = `/cms/${slug}`;
+    document.getElementById('ip-slug').value = `/cms/${slug}`;
   } else {
     var selectValue = $('#select-category-option').find(':selected').text();
     selectValue = convertViToEn(selectValue.trim().toLowerCase());
     selectValue = selectValue.replaceAll(' ', '-');
-    document.getElementById('ip-category-product-slug').value = `/cms/${selectValue}/${slug}`;
+    document.getElementById('ip-slug').value = `/cms/${selectValue}/${slug}`;
   }
 }
 
 function handleSubmitCategoryProduct() {
-  let name = $('#ip-category-product-name').val();
-  let slug = $('#ip-category-product-slug').val();
-  let description = $('#ip-category-product-description').val();
-  var selectValue = $('#select-category-option').find(':selected').val();
+  let name = $('#ip-name').val().trim();
+  let slug = $('#ip-hint').text().trim();
+  let hint = $('#ip-slug').val().trim();
+  let description = $('#ip-description').val().trim();
+  // var selectValue = $('#select-category-option').find(':selected').val();
   var parent_id = null;
   // if (selectValue != 0) {
   //   parent_id = selectValue;
   // }
 
-  if (name.trim() == '' || slug.trim() == '' || description.trim() == '') {
+  if (name == '' || slug == '' || description == '' || hint == '') {
     alert('Missing parameter');
     return;
   }
@@ -343,6 +372,8 @@ function handleSubmitCategoryProduct() {
     parent_id
   };
 
+  console.log(data);
+
   $.ajax({
     url: `/cms/product-category`,
     data,
@@ -351,9 +382,9 @@ function handleSubmitCategoryProduct() {
     success: function (result) {
       if (result.errCode == 0) {
         alert(result.message);
-        document.getElementById('ip-category-product-name').value = ` `;
-        document.getElementById('ip-category-product-slug').value = ``;
-        document.getElementById('ip-category-product-description').value = ``;
+        document.getElementById('ip-name').value = ` `;
+        document.getElementById('ip-slug').value = ``;
+        document.getElementById('ip-description').value = ``;
         $('#select-id-0').attr('selected', 'selected');
         location.reload();
       } else if (result.errCode == 1) {
@@ -396,21 +427,24 @@ function handleFillEditCategoryProduct(id) {
   let postSlug = $(`#slug-id-${id}`).html();
   let postDescription = $(`#description-id-${id}`).html();
 
-  document.getElementById('ip-category-product-name').value = postName;
-  document.getElementById('ip-category-product-slug').value = postSlug;
-  document.getElementById('ip-category-product-description').value = postDescription;
+  document.getElementById('ip-name').value = postName;
+  document.getElementById('ip-hint').innerText = postSlug;
+  document.getElementById('ip-description').value = postDescription;
+
+  document.getElementById('ip-slug').value = getSlugHint(postSlug);
 
   $(`.button-submit`).addClass('d-none');
   $(`.button-edit`).removeClass('d-none');
   $(`.button-edit`).attr('id-item', id);
 }
-//
-function handleEditCategoryProduct(id) {
-  let name = $('#ip-category-product-name').val();
-  let slug = $('#ip-category-product-slug').val();
-  let description = $('#ip-category-product-description').val();
 
-  if (name.trim() == '' || slug.trim() == '' || description.trim() == '') {
+function handleEditCategoryProduct(id) {
+  let name = $('#ip-name').val().trim();
+  let slug = $('#ip-hint').text().trim();
+  let hint = $('#ip-slug').val().trim();
+  let description = $('#ip-description').val().trim();
+
+  if (name == '' || slug == '' || description == '' || hint == '') {
     alert('Missing parameter');
     return;
   }
@@ -430,9 +464,9 @@ function handleEditCategoryProduct(id) {
     success: function (result) {
       if (result.errCode == 0) {
         alert(result.message);
-        document.getElementById('ip-category-product-name').value = ` `;
-        document.getElementById('ip-category-product-slug').value = ``;
-        document.getElementById('ip-category-product-description').value = ``;
+        document.getElementById('ip-name').value = ` `;
+        document.getElementById('ip-slug').value = ``;
+        document.getElementById('ip-description').value = ``;
         $('#select-id-0').attr('selected', 'selected');
         location.reload();
       } else if (result.errCode == 1) {
@@ -443,6 +477,250 @@ function handleEditCategoryProduct(id) {
       console.log('error');
     }
   });
+}
+
+//Product
+function handleSubmitProduct() {
+  $('.wrap-modal').toggleClass('d-none');
+}
+
+function handleCreateNewProduct() {
+  let name = $('#ip-name').val().trim();
+  let slug = $('#ip-hint').text().trim();
+  let hint = $('#ip-slug').val().trim();
+  let description = editorDescription.getData();
+  let detail = editorDetail.getData();
+  let label = editorLabel.getData();
+  let saleDesc = editorSaleDesc.getData();
+  let price = $('#ip-price').val().trim();
+  let order = $('#ip-order').val().trim();
+  let unit = $('#ip-unit').val().trim();
+  let quantity = $('#ip-quantity').val().trim();
+  let isShow = $('#select-is-show-price-option').find(':selected').val().trim();
+  let statusStock = $('#select-status-stock-option').find(':selected').val().trim();
+  let isSale = $('#select-is-sale-option').find(':selected').val().trim();
+  let saleBy = $('#select-sale-option').find(':selected').val().trim();
+  let isActive = $('#active-checked').is(':checked');
+
+  var percentSale = 0;
+  var priceSale = 0;
+  var arrayCategory = [];
+  var arrayImage = [];
+
+  $('.check-category').each(function (index, element) {
+    if ($(this).is(':checked')) {
+      arrayCategory.push($(this).val());
+    }
+  });
+
+  $('.image-chosen').each(function (index, element) {
+    arrayImage.push($(element).attr('src'));
+  });
+
+  //validate
+  if (arrayCategory.length == 0) {
+    alert('Chose category is require');
+    return;
+  }
+  if (name == '' || slug == '' || description == '' || price == '' || unit == '' || hint == '') {
+    alert('Missing parameter.');
+    return;
+  }
+  if (!isNumeric(price) && !isNumeric(order) && !isNumeric(quantity) && !isNumeric(percentSale)) {
+    alert('Input require numeric.');
+    return;
+  }
+
+  if (arrayImage.length == 0) {
+    arrayImage = ['/cms/images/index/default-image.jpeg', ''];
+  } else if (arrayImage.length == 1) {
+    arrayImage.push('');
+  }
+  const array = {
+    arrayCategory,
+    arrayImage
+  };
+
+  percentSale = $('#ip-sale-percent').val().trim();
+  priceSale = $('#ip-sale-price').val().trim();
+
+  const data = {
+    name,
+    slug,
+    description,
+    detail,
+    label,
+    saleDesc,
+    price,
+    order,
+    unit,
+    quantity,
+    isShow,
+    statusStock,
+    isSale,
+    saleBy,
+    priceSale,
+    percentSale,
+    isActive,
+    array
+  };
+
+  $.ajax({
+    url: '/cms/new-product',
+    data,
+    cache: false,
+    type: 'post',
+    success: function (result) {
+      alert(result.message);
+      if (result.errCode == 0) {
+        location.reload();
+      } else {
+      }
+    }
+  });
+}
+
+function handleDeleteProduct(idPost) {
+  $.ajax({
+    url: `/cms/product/delete/${idPost}`,
+    type: 'post',
+    cache: false,
+    success: function (result) {
+      if (result.errCode == 0) {
+        $('.btn-close').click();
+        $(`#row-id-${idPost}`).addClass('d-none');
+        alert(result.message);
+      } else {
+        $('.btn-close').click();
+        alert(result.message);
+      }
+    },
+    error: function (xhr, ajaxOptions, thrownError) {
+      console.log('error');
+    }
+  });
+}
+
+function handleUpdateProduct(idPost) {
+  let name = $('#ip-name').val().trim();
+  let slug = $('#ip-hint').text().trim();
+  let hint = $('#ip-slug').val().trim();
+  let description = editorDescription.getData();
+  let detail = editorDetail.getData();
+  let label = editorLabel.getData();
+  let saleDesc = editorSaleDesc.getData();
+  let price = $('#ip-price').val().trim();
+  let order = $('#ip-order').val().trim();
+  let unit = $('#ip-unit').val().trim();
+  let quantity = $('#ip-quantity').val().trim();
+  let isShow = $('#select-is-show-price-option').find(':selected').val().trim();
+  let statusStock = $('#select-status-stock-option').find(':selected').val().trim();
+  let saleBy = $('#select-sale-option').find(':selected').val().trim();
+  let isSale = $('#select-is-sale-option').find(':selected').val().trim();
+  let isActive = $('#active-checked').is(':checked');
+
+  var percentSale = 0;
+  var priceSale = 0;
+  var arrayCategory = [];
+  var arrayImage = [];
+
+  $('.check-category').each(function (index, element) {
+    if ($(this).is(':checked')) {
+      arrayCategory.push($(this).val());
+    }
+  });
+
+  $('.image-chosen').each(function (index, element) {
+    arrayImage.push($(element).attr('src'));
+  });
+
+  //validate
+  if (arrayCategory.length == 0) {
+    alert('Chose category is require');
+    return;
+  }
+  if (name == '' || slug == '' || description == '' || price == '' || unit == '' || hint == '') {
+    alert('Missing parameter.');
+    return;
+  }
+  if (!isNumeric(price) && !isNumeric(order) && !isNumeric(quantity) && !isNumeric(percentSale)) {
+    alert('Input require numeric.');
+    return;
+  }
+
+  if (arrayImage.length == 0) {
+    arrayImage = ['/cms/images/index/default-image.jpeg', ''];
+  } else if (arrayImage.length == 1) {
+    arrayImage.push('');
+  }
+  const array = {
+    arrayCategory,
+    arrayImage
+  };
+
+  percentSale = $('#ip-sale-percent').val().trim();
+  priceSale = $('#ip-sale-price').val().trim();
+
+  const data = {
+    name,
+    slug,
+    description,
+    detail,
+    label,
+    saleDesc,
+    price,
+    order,
+    unit,
+    quantity,
+    isShow,
+    statusStock,
+    isSale,
+    saleBy,
+    priceSale,
+    percentSale,
+    isActive,
+    array
+  };
+  console.log(data);
+
+  $.ajax({
+    url: `/cms/product/update/${idPost}`,
+    data,
+    cache: false,
+    type: 'post',
+    success: function (result) {
+      if (result.errCode == 0) {
+        window.location.href = '/cms/product';
+        alert(result.message);
+      } else {
+        alert(result.message);
+      }
+    }
+  });
+}
+
+//action selector
+function handleOnChangeUnit(val) {
+  $('#unit-product').text(val);
+}
+
+function handleOnChangeIsSale() {
+  $('#ip-sale-price').attr('disabled', function (_, disabled) {
+    return !disabled;
+  });
+  $('#ip-sale-percent').attr('disabled', function (_, disabled) {
+    return !disabled;
+  });
+  $('#radio-sale-price').attr('disabled', function (_, disabled) {
+    return !disabled;
+  });
+  $('#radio-sale-percent').attr('disabled', function (_, disabled) {
+    return !disabled;
+  });
+}
+
+function handleDeleteImage(id) {
+  document.getElementById(id).remove();
 }
 
 //other function
@@ -473,5 +751,14 @@ function clearInputPost() {
   $('#image-post').attr('src', '/cms/images/index/default-image.jpeg');
   $('#active-checked').prop('checked', true);
   $('#select-id-1').attr('selected', 'selected');
+}
+
+function isNumeric(n) {
+  return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function getSlugHint(slug) {
+  let array = slug.split('/');
+  return array[array.length - 1];
 }
 

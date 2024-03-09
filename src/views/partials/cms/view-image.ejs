@@ -30,25 +30,25 @@
     <%if(typeUpload == 'general') {%>
       <a class="btn btn-success ml-4 mb-2" onclick="handleSubmitGeneral()">Submit</a>
 
-    <%} else if(typeUpload = 'post') {%>
+    <%} else if(typeUpload == 'post') {%>
       <a class="btn btn-success ml-4 mb-2" onclick="handleSubmitPost()">Submit</a>
 
-      <%} else if(typeUpload = 'product') {%>
-      <a class="btn btn-success ml-4 mb-2 btn-up-post">Submit</a>
+      <%} else if(typeUpload == 'product') {%>
+      <a class="btn btn-success ml-4 mb-2 " onclick="handleSubmitProduct()">Submit</a>
   
       <%}%>
   </div>
   <div class="d-flex flex-wrap ml-4 mr-2" id="list-image">
-
    <% if (typeof arrayImage !== 'undefined' && arrayImage.length > 0) { %>
         <% arrayImage.forEach(function(item) { %>
         <div   class=" mr-1 mb-1 mt-1 wrap-image">
-          <% if(typeUpload == 'product') { %>
+          <% if(typeUpload =='product') { %>
             <img  src="<%=item.url%>"  class="image-upload"/>
             <input id-item="<%=item.id%>" name="image-check" url="<%=item.url%>" type="checkbox" id="ip-checkbox" />
             <%} else {%>
+              <a><%=typeUpload%></a>
               <img  src="<%=item.url%>"  class="image-upload"/>
-              <input id-item="<%=item.id%>" name="image-check" url="<%=item.url%>" type="checkbox" id="ip-checkbox" />
+              <input id-item="<%=item.id%>" name="image-check" url="<%=item.url%>" type="radio" id="ip-checkbox" />
             <%}%>
         </div>
 

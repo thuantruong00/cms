@@ -1,4 +1,8 @@
-const { createCategoryOfProduct, findCategoryOfProductByParentId } = require('../../models/CategoryOfProduct.model');
+const {
+  createCategoryOfProduct,
+  findCategoryOfProductByParentId,
+  findCategoryOfProductBySlug
+} = require('../../models/CategoryOfProduct.model');
 const { findUserByRole } = require('../../models/User.model');
 
 async function action(req, res) {
@@ -7,7 +11,8 @@ async function action(req, res) {
     data.parent_id = null;
   } else {
     data.parent_id = Number(data.parent_id);
-    const id = data.parent_id
+    const id = data.parent_id;
+
     const resFindCategoryOfProductByParentId = await findCategoryOfProductByParentId(id);
     if (resFindCategoryOfProductByParentId.status) {
       res.send({
@@ -16,16 +21,23 @@ async function action(req, res) {
       });
     }
   }
+  const resFindCategoryOfProductBySlug = await findCategoryOfProductBySlug(data.slug);
 
   const user = await findUserByRole('root');
   const user_id = user.id;
-
-  const resCreateCategoryOfProduct = await createCategoryOfProduct({ ...data, user_id });
-  console.log(resCreateCategoryOfProduct);
-  if (resCreateCategoryOfProduct.status) {
+  if (resFindCategoryOfProductBySlug.payload === null) {
+    const resCreateCategoryOfProduct = await createCategoryOfProduct({ ...data, user_id });
+    console.log(resCreateCategoryOfProduct);
+    if (resCreateCategoryOfProduct.status) {
+      res.send({
+        errCode: 0,
+        message: resCreateCategoryOfProduct.message
+      });
+    }
+  } else {
     res.send({
-      errCode: 0,
-      message: resCreateCategoryOfProduct.message
+      errCode: 1,
+      message: `Category's slug already exists.`
     });
   }
 }

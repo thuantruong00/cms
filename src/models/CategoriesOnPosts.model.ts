@@ -32,7 +32,8 @@ const findAllCategoriesOnPosts = async (): Promise<object> => {
         post: {
           select: {
             title: true,
-            slug: true
+            slug: true,
+            status: true,
           }
         },
         post_category: {
